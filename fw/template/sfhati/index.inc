@@ -1,0 +1,1 @@
+GoTo <a href='/admin'>Admin</a> page!

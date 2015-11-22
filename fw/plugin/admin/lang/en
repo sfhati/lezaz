@@ -1,0 +1,25 @@
+style-rtl=n
+style-pullar=pull-right
+style-pullen=pull-left
+style-nopaddingleft=no-padding-right
+style-nopaddingright=no-padding-left
+style-arrowedright=arrowed-right
+style-arrowedleft=arrowed-left
+
+submit=Submit
+reset=Reset
+members=Members
+add member=Add Member
+manage members=Manage Members
+ERR_required=is required
+ERR_length=Length must be %s
+ERR_min=Length must be more than %s
+ERR_max=Length must be less than %s
+ERR_email=must be email format like email@site.com
+ERR_url=must be url format like http://site.com
+ERR_date=must be date format like dd-mm-yyyy
+ERR_number=must be a Number
+ERR_numberMin=number must be more than $s
+ERR_numberMax=number must be less than %s
+ERR_tableIn=sorry we don't find your data in our data!
+ERR_tableOut=sorry , must data find in our data
