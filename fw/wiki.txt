@@ -119,3 +119,10 @@ Ex. http://wiki.cms/t/Ace1.3.3/html/ajax/bassam&fdgfds=gfds&hgfdhgfd=hgfdh
 
 ---------template concept-----------------
 {{this}} = path of template file
+
+
+-------------install-----------------
+install folder contain 
+install.php
+install.sql 
+install.zip 

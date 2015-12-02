@@ -56,7 +56,8 @@ if (is_array($file_plugin))
         }
 
 /* * *****************process html code ******************** */
-$my_simple_tmplt = include_file_template($my_simple_tmplt);
+$lezaz = new __LEZAZ(CACHE_PATH,PLUGIN_PATH.'lezaz/plugin/');
+$my_simple_tmplt = $lezaz->include_tbl($my_simple_tmplt);
 $my_simple_tmplt = str_replace($_SESSION['SYNTAX_VAR']['OLD'], $_SESSION['SYNTAX_VAR']['NEW'], $my_simple_tmplt);
 $my_simple_tmplt = CHNG_LANGUAGE($my_simple_tmplt);
 /* * *************include term.php plugin**************** */
