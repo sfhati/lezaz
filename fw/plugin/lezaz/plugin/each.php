@@ -14,13 +14,9 @@
   %array_expression:val['word word']% // you can use ' for word contain space chr
  */
 
-function each_SYNTAX($vars) {
-    global $syntaxcode;
-    foreach ($vars as $v => $var) {
-        $vars[$v] = $syntaxcode->Syntax($var);
-    }
-
-    if (strpos($vars[0], '-sess')) {
+function each_SYNTAX($vars,$html,$type) {
+ 
+    if (strpos($vars[data]== 'session')) {
         $vars[0] = str_replace('-sess', '', $vars[0]);
         $vars_0 = '$_SESSION["' . $vars[0] . '"]';
     } else {

@@ -246,4 +246,7 @@ public function include_tbl($template_name){
     public function any($v){
         return global_var($v);
     }
+    public function func($v){
+        
+    }
 }

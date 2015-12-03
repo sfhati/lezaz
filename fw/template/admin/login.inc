@@ -9,12 +9,25 @@
         <lezaz:if condetion="lezaz~get(key)==1">
             bassam essawi lezaz~get(key) | lezaz~get(my)
             <lezaz:else/>
-            mohamad essawi lezaz~get (key)
+            mohamad essawi lezaz~get(key)
             
         ****    lezaz~#bassam(id)  ****
         #####    lezaz~any(bassam[id])  ####
+        lezaz~set(bassam,essa)
+        <lezaz:func id="get_a" function="get_cache" parm1="a" parm2="b" print="0"/>
+        lezaz~#get_a(0)
+        lezaz~func(get_cache,bassam)
         @@@    lezaz~any(bassam)  @@@
         </lezaz:if>
+        
+        lezaz:get_cache('address')
+        lezaz$get_cache
+        lezaz#get_cache('address')
+        
+        <lezaz:each array="bassam" id="bassam" data="normal,session,object">
+            lezaz~bassam(counter): lezaz~bassam(key)=lezaz~bassam(value) <br>
+        </lezaz:each>
+        lezaz~bassam(count)
 	<body class="login-layout">
 		<div class="main-container">
 			<div class="main-content">
