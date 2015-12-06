@@ -1,47 +1,16 @@
 
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
-		<!--[if lt IE 9]>
-		<script src="/template/Ace1.3.3/assets/js/html5shiv.js"></script>
-		<script src="/template/Ace1.3.3/assets/js/respond.js"></script>
-		<![endif]-->
-	</head>
-        <lezaz:if condetion="lezaz~get(key)==1">
-            bassam essawi lezaz~get(key) | lezaz~get(my)
-            <lezaz:else/>
-            mohamad essawi lezaz~get(key)
-            
-        ****    lezaz~#bassam(id)  ****
-        #####    lezaz~any(bassam[id])  ####
-        lezaz~set(bassam,essa)
-        <lezaz:func id="get_a" function="get_cache" parm1="a" parm2="b" print="0"/>
-        lezaz~#get_a(0)
-        lezaz~func(get_cache,bassam)
-        @@@    lezaz~any(bassam)  @@@
-        </lezaz:if>
-        
-        lezaz:get_cache('address')
-        lezaz$get_cache
-        lezaz#get_cache('address')
-        
-        <lezaz:each array="bassam" id="bassam" data="normal,session,object">
-            lezaz~bassam(counter): lezaz~bassam(key)=lezaz~bassam(value) <br>
-        </lezaz:each>
-        lezaz~bassam(count)
-	<body class="login-layout">
-		<div class="main-container">
-			<div class="main-content">
-				<div class="row">
-					<div class="col-sm-10 col-sm-offset-1">
-						<div class="login-container">
-							<div class="center">
-								<h1>
-                                                                    <i class="fa" style="
-    background: url(/template/admin/images/sfhati-30.png);
-    width: 30px;
-    height: 30px;
-"></i>
-									<span class="light-blue">Sfhati</span>
-									<span class="white" id="id-text2">Application</span>
-								</h1>
-		 
+
+
+------------lezaz----------------------<hr><br>
+lezaz~date(dd/mm/Y,666655544) // for function call and echo result  its mean  func(parm1,parm2) <br>
+lezaz#id // echo value for lezaz syntax use id  its mean $lezaz_id<br>
+lezaz#id[parm] // echo value for lezaz syntax use id parameter  its mean  $lezaz_id_parm<br>
+lezaz$parm // echo $parm from php files  its mean $parm <br>
+lezaz$parm1[item] // echo array item from $parm using in php files  its mean $parm[item] <br>
+lezaz:get(parm) // echo result from lezaz class its mean $lezaz->func(parm)<br>
+<br>
+ 
+<lezaz:if id='ififx' condition="1==1" result="yes,no" print="false"/><br>
+#ififx: lezaz#ififx <br>
+<lezaz:for id="id" from="1" to="10" step="-2"> lezaz#id </lezaz:for><br>

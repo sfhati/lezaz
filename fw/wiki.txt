@@ -126,3 +126,16 @@ install folder contain
 install.php
 install.sql 
 install.zip 
+
+
+------------lezaz----------------------
+lezaz~func(parm1,parm2) // for function call and echo result  its mean  func(parm1,parm2) 
+lezaz#id // echo value for lezaz syntax use id  its mean $lezaz_id
+lezaz#id(parm) // echo value for lezaz syntax use id parameter  its mean  $lezaz_id_parm
+lezaz$parm // echo $parm from php files  its mean $parm 
+lezaz$parm[item] // echo array item from $parm using in php files  its mean $parm[item] 
+lezaz:func(parm) // echo result from lezaz class its mean $lezaz->func(parm)
+
+ 
+<lezaz:if id='' condition="" result="yes,no" print="false"/>
+<lezaz:for id="id" from="1" to="10" step="-2"> lezaz#id </lezaz:for>

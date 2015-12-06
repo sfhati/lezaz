@@ -7,8 +7,15 @@
 function lezaz_if($vars,$html) {   
 
     $html = str_replace('<lezaz:else/>', "<?php }else{ ?>", $html);
+    if($vars[id]){
+        if($vars[result]){
+            $result=  explode(',', $vars[result]);
+            $return="\n".'$lezaz_'.$vars[id].'="'.$result[1]."\";\n";
+        }
+    }
     return "
-   <?php if ($vars[condetion]) { ?>
+   <?php $return if ($vars[condition]) { 
+\n".'$lezaz_'.$vars[id].'="'.$result[0]."\";\n ?>      
  $html    
 <?php } ?>
 ";

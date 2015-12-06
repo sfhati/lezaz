@@ -40,6 +40,7 @@ class __LEZAZ {
     public $cache_path = '';
     public $filename = '';
     public $plugin_dir = '';
+    public $element = '';
 
     public function __construct($cache_path = '', $plugin_dir = '') {
         if ($cache_path)
@@ -52,7 +53,9 @@ class __LEZAZ {
         if ($dh = opendir($this->plugin_dir)) {
 
             while (($file = readdir($dh)) !== false) {
-                if ($file != '.' && $file != '..' && filetype($this->plugin_dir . $file) != 'dir') {
+                $ext = explode('.', $file);
+                if ($file != '.' && $file != '..' && (filetype($this->plugin_dir . $file) != 'dir') && $ext[1] == 'php') {
+                    $this->element[] = $ext[0];
                     include($this->plugin_dir . $file);
                 }
             }
@@ -60,41 +63,45 @@ class __LEZAZ {
         }
     }
 
-    
-public function include_tbl($template_name){
-    
-    if (strpos($template_name, '}') || strpos($template_name, '/')) {
-        $template_name = str_replace('{plugin}', PLUGIN_PATH, $template_name);
-        $template_name = str_replace('{template}', TEMPLATE_PATH, $template_name);
-        $template_name = str_replace('{tmp}', TMP_PATH, $template_name);
-        $template_name = str_replace('{cache}', CACHE_PATH, $template_name);
-        $template_name = str_replace('{uploaded}', UPLOADED_PATH, $template_name);
-        $template_name = str_replace('{theme}', THEME_PATH, $template_name);
-        $template_name = str_replace('//', '/', $template_name);
-    } else {
-        $template_name = THEME_PATH . $template_name;
-    }
-    $template_name=  str_replace(array('/','\\'), DIRECTORY_SEPARATOR, $template_name);
-    if (end(explode('.', $template_name)) != 'inc')
-        $template_name = $template_name . '.inc';
-    
-    if(!file_exists($template_name)) {
-        $_SESSION[error_template]=$template_name;
-       $tempf=after_last(DIRECTORY_SEPARATOR,$template_name);
-       if($tempf)$template_name=  str_replace ($tempf, '404.inc', $template_name) ;
-       else $template_name='404.inc';
-       if(!file_exists($template_name)) { $template_name =THEME_PATH. '404.inc';}
-       if(!file_exists($template_name)) { return '[Template file not found]';}
-    }
-    
-    $export_filename = $this->openfile($template_name);
+    public function include_tbl($template_name) {
 
-    ob_start();   
-    include($export_filename);
-    return ob_get_clean();
-}
-   
-    
+        if (strpos($template_name, '}') || strpos($template_name, '/')) {
+            $template_name = str_replace('{plugin}', PLUGIN_PATH, $template_name);
+            $template_name = str_replace('{template}', TEMPLATE_PATH, $template_name);
+            $template_name = str_replace('{tmp}', TMP_PATH, $template_name);
+            $template_name = str_replace('{cache}', CACHE_PATH, $template_name);
+            $template_name = str_replace('{uploaded}', UPLOADED_PATH, $template_name);
+            $template_name = str_replace('{theme}', THEME_PATH, $template_name);
+            $template_name = str_replace('//', '/', $template_name);
+        } else {
+            $template_name = THEME_PATH . $template_name;
+        }
+        $template_name = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $template_name);
+        if (end(explode('.', $template_name)) != 'inc')
+            $template_name = $template_name . '.inc';
+
+        if (!file_exists($template_name)) {
+            $_SESSION[error_template] = $template_name;
+            $tempf = after_last(DIRECTORY_SEPARATOR, $template_name);
+            if ($tempf)
+                $template_name = str_replace($tempf, '404.inc', $template_name);
+            else
+                $template_name = '404.inc';
+            if (!file_exists($template_name)) {
+                $template_name = THEME_PATH . '404.inc';
+            }
+            if (!file_exists($template_name)) {
+                return '[Template file not found]';
+            }
+        }
+
+        $export_filename = $this->openfile($template_name);
+
+        ob_start();
+        include($export_filename);
+        return ob_get_clean();
+    }
+
     /**
      * open template file 
      *
@@ -116,16 +123,20 @@ public function include_tbl($template_name){
 
         //open file & get content to ALL_SYNTAX        
         $this->ALL_SYNTAX = implode(file($templatefile), '');
-    
+
         // if there is php code will show as content in output
         $this->ALL_SYNTAX = str_replace(array('<?', '?>'), array('&lt;?', '?&gt;'), $this->ALL_SYNTAX);
         //start translate template code
         $t = $this->Syntax($this->ALL_SYNTAX);
-      
+        //check for all none html lezaz syntax with echo parameter
+
+        $t = $this->GetSyantax($t);
+
+
         //delete old php files from cache folder
         $this->clearcache(md5($templatefile));
         //
-        $t='<?php global $lezaz; ?>'.$this->GetSyantax($t);
+        $t = '<?php global $lezaz; ?>' . $this->GetSyantax($t);
         //write php file       
         $this->filewrite($export_php_file, $t);
         return $export_php_file;
@@ -161,18 +172,27 @@ public function include_tbl($template_name){
     public function Syntax($str) {
         if (!$str)
             return '';
+        if (!is_array($this->element))
+            return $str;
         $html = str_get_html($str);
-        $e = $html->find('lezaz:if,lezaz:sql,lezaz:var,lezaz:each', 0);
+        $elemant = '';
+        foreach ($this->element as $elemnt) {
+            if ($elemant)
+                $elemant.=',lezaz:' . $elemnt;
+            else
+                $elemant = 'lezaz:' . $elemnt;
+        }
+        $e = $html->find($elemant, 0);
         if (!$e) {
             return $str;
         }
         $func = str_replace(':', "_", $e->tag);
-        if (is_callable($func)){            
-            foreach($e->attr as $k=>$v){
-                $attr[$k]=$this->GetSyantax($v,1);
+        if (is_callable($func)) {
+            foreach ($e->attr as $k => $v) {
+                $attr[$k] = $this->GetSyantax($v, 1);
             }
             $e->outertext = $func($attr, $this->Syntax($e->innertext));
-        }else
+        } else
             $e->outertext = $e->innertext;
 
         $html->save();
@@ -183,29 +203,98 @@ public function include_tbl($template_name){
      * pares first syntac form template code 
      *
      * @param string $t template code
+     * @param bool $c print result or not!
      * @return array first syntax code , command
+     * 
+      lezaz~func(parm1,parm2) // for function call and echo result  its mean  func(parm1,parm2) <br>
+      lezaz#id // echo value for lezaz syntax use id  its mean $lezaz_id<br>
+      lezaz#id(parm) // echo value for lezaz syntax use id parameter  its mean  $lezaz_id_parm<br>
+      lezaz$parm // echo $parm from php files  its mean $parm <br>
+      lezaz$parm[item] // echo array item from $parm using in php files  its mean $parm[item] <br>
+      lezaz:func(parm) // echo result from lezaz class its mean $lezaz->func(parm)<br>
      */
-    private function GetSyantax($t,$c=0) {
-        //lezaz~get(key)
-        preg_match_all("/lezaz~([^\)]*\))/", $t , $out);
-        foreach($out[0] as $val){
-            if(strpos($val, 'zaz~#')){
-               $val1=  str_replace('lezaz~#', '$lezaz_', $val);
-               $val1=  str_replace('(', '["', $val1);
-               $val1=  str_replace(')', '"]', $val1);
-            }elseif(strpos($val, 'zaz~')){
-               $val1=  str_replace('lezaz~', '$lezaz->', $val); 
-               $val1=  str_replace('(', '("', $val1); 
-               $val1=  str_replace(')', '")', $val1); 
-            }
-           
-           
-           if($c)
-           $t=  str_replace($val, $val1, $t);
-           else
-           $t=  str_replace($val, '<?php echo ' . $val1 . '; ?>', $t);               
-        }
+    private function GetSyantax($t, $c = 0) {
+
+//lezaz#id(parm) /lezaz#([^\W]*[\(][^\)]*\))/igm
+//lezaz#id      lezaz#([^\W]*)
+//lezaz$parm lezaz$parm[item]              lezaz\$([\[|\]]?[^\W][\[|\]]?)*  
+//lezaz:func(parm)            lezaz:([^\W]*[\(][^\)]*\))
+        $t = $this->syntax_dolar($t, $c);
+        $t = $this->syntax_hash($t, $c);
+        $t = $this->syntax_func($t, $c);
+        $t = $this->syntax_lezfunc($t, $c);
+
+   
+
         return $t;
+    }
+
+    // find parameters array syntax like lezaz$id(parm)
+    private function syntax_dolar($t, $c = 0) {
+        if (!preg_match("/lezaz\\$([\[|\]]?[^\W][\[|\]]?)*/im", $t, $out, PREG_OFFSET_CAPTURE))
+            return $t;
+        $word = $out[0][0];
+        $offset = $out[0][1];
+        $code = str_replace('lezaz$', '$', $word);
+        if ($c) // come form html lezaz code as parameter
+            $code = $code;
+        else // need to print result , its form template as text 
+            $code = '<?php echo ' . $code . '; ?>';
+        $t = substr_replace($t, $code, $offset, strlen($word));
+        return $this->syntax_dolar($t, $c);
+    }
+
+   // find function syntax like lezaz:get(key) 
+    private function syntax_lezfunc($t, $c = 0) {
+        if (!preg_match("/lezaz:([^\)]*\))/im", $t, $out, PREG_OFFSET_CAPTURE))
+            return $t;
+        $word = $out[0][0];
+        $offset = $out[0][1];
+        $code = '$' . str_replace(':', '->', $word);
+        preg_match('/\((.*)\)/', $word, $matches); // get parameter
+        $code = str_replace($matches[0], '', $code);
+        $param = explode(',', $matches[1]);
+            if ($c) // come form html lezaz code as parameter
+                $code = $code . '( "' . implode('","', $param) . '" )';
+            else // need to print result , its form template as text 
+                $code = '<?php echo ' . $code . '( "' . implode('","', $param) . '" ); ?>';
+        $t = substr_replace($t, $code, $offset, strlen($word));
+        return $this->syntax_lezfunc($t, $c);
+    }
+    
+  // find parameters array syntax like lezaz$id(parm)
+    private function syntax_hash($t, $c = 0) {
+        if (!preg_match("/lezaz\#([\[|\]]?[^\W][\[|\]]?)*/im", $t, $out, PREG_OFFSET_CAPTURE))
+            return $t;
+        $word = $out[0][0];
+        $offset = $out[0][1];
+        $code = '$'.str_replace('#', '_', $word);
+           if ($c) // come form html lezaz code as parameter
+                $code = $code;
+            else // need to print result , its form template as text 
+                $code = '<?php echo ' . $code . '; ?>';
+        $t = substr_replace($t, $code, $offset, strlen($word));
+        return $this->syntax_hash($t, $c);
+    }    
+    
+    // find function syntax like lezaz~get(key) 
+    private function syntax_func($t, $c = 0) {
+        if (!preg_match("/lezaz~([^\)]*\))/im", $t, $out, PREG_OFFSET_CAPTURE))
+            return $t;
+        $word = $out[0][0];
+        $offset = $out[0][1];
+        $code = str_replace('lezaz~', '', $word);
+        preg_match('/\((.*)\)/', $word, $matches); // get parameter
+        $code = str_replace($matches[0], '', $code);
+        $param = explode(',', $matches[1]);
+
+        if ($c) // come form html lezaz code as parameter
+            $code = $code . '( "' . implode('","', $param) . '" )';
+        else // need to print result , its form template as text 
+            $code = '<?php echo ' . $code . '( "' . implode('","', $param) . '" ); ?>';
+
+        $t = substr_replace($t, $code, $offset, strlen($word));
+        return $this->syntax_func($t, $c);
     }
 
     /**
@@ -236,17 +325,20 @@ public function include_tbl($template_name){
         fclose($fp);
     }
 
-    
-    public function get($v){
+    public function get($v) {
         return $_GET[$v];
     }
-    public function post($v){
+
+    public function post($v) {
         return $_POST[$v];
     }
-    public function any($v){
+
+    public function any($v) {
         return global_var($v);
     }
-    public function func($v){
+
+    public function func($v) {
         
     }
+
 }
