@@ -13,6 +13,8 @@ session_start();
 define('YOUCANINCLUDE', 'Yes');
 include "conf.php";
 
+$lezaz=new __CORE;
+
 /* * *************include init.php plugin**************** */
 
 $plugin_rowx = get_plugin();
@@ -56,8 +58,8 @@ if (is_array($file_plugin))
         }
 
 /* * *****************process html code ******************** */
-$lezaz = new __LEZAZ(CACHE_PATH,PLUGIN_PATH.'lezaz/plugin/');
-$my_simple_tmplt = $lezaz->include_tbl($my_simple_tmplt);
+
+$my_simple_tmplt = $core->lezaz->include_tbl($my_simple_tmplt);
 $my_simple_tmplt = str_replace($_SESSION['SYNTAX_VAR']['OLD'], $_SESSION['SYNTAX_VAR']['NEW'], $my_simple_tmplt);
 $my_simple_tmplt = CHNG_LANGUAGE($my_simple_tmplt);
 /* * *************include term.php plugin**************** */

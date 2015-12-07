@@ -139,3 +139,49 @@ lezaz:func(parm) // echo result from lezaz class its mean $lezaz->func(parm)
  
 <lezaz:if id='' condition="" result="yes,no" print="false"/>
 <lezaz:for id="id" from="1" to="10" step="-2"> lezaz#id </lezaz:for>
+
+
+<lezaz:if/>
+Attribute	Description        Default
+--------------------------------------------
+id           referance for this syntax use like lezaz#id             Null
+condition    condition if syntax                                     1==1
+result       result if use like yes,no paas,fail 1,0                 1,0
+print        print result attr if value = any pass like 1,true,yes   0
+
+inside code you can use <lezaz:else/> 
+
+Example
+--------
+<lezaz:if id='myid' condition="lezaz$parm==1" result="yes,no" print="false"/>
+
+<lezaz:if id='myid' condition="lezaz$parm==1" result="yes,no" print="false">
+the value for $parm = lezaz$parm and its 1 <br>
+<lezaz:else/> 
+the value for $parm = lezaz$parm and its not 1
+</lezaz:if>
+the result for if syntax is lezaz#myid
+
+
+----------------------------------------------------------------------------------
+  <lezaz:for/>
+  Attribute	Description        Default
+  --------------------------------------------
+  id         referance for this syntax use like lezaz#id             Null
+  condition  condition for syntax you can use $i as primary          $i<=to
+  form       start count for from                                    1
+  to         end count for                                           10
+  step       number of step jump                                     0
+  print        print result attr if value = any pass like 1,true,yes 0
+
+  inside code you can use lezaz#id to print for value repete
+
+  Example
+  --------
+  <lezaz:for id='idfor' form="5" to="100" step="5"/>
+
+  <lezaz:for id="idfor" from='3' condition='$i<lezaz:get(bass)' to='27' step='1' print='false'>
+  lezaz#idfor <br>
+  </lezaz:for>
+  the result syntax is lezaz#idfor as last value for this variable
+----------------------------------------------------------------------------------

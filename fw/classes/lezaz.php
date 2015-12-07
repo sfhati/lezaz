@@ -41,14 +41,17 @@ class __LEZAZ {
     public $filename = '';
     public $plugin_dir = '';
     public $element = '';
+    private $valriables = array();
 
     public function __construct($cache_path = '', $plugin_dir = '') {
         if ($cache_path)
             $this->cache_path = $cache_path;
-
+        else
+            $this->cache_path = CACHE_PATH;
         if ($plugin_dir)
             $this->plugin_dir = $plugin_dir;
-
+        else
+            $this->plugin_dir = PLUGIN_PATH . 'lezaz/plugin/';
         // include all plugin
         if ($dh = opendir($this->plugin_dir)) {
 
@@ -169,7 +172,7 @@ class __LEZAZ {
      * @param string $t syntax code
      * @return string php code  
      */
-    public function Syntax($str) {
+    private function Syntax($str) {
         if (!$str)
             return '';
         if (!is_array($this->element))
@@ -224,7 +227,7 @@ class __LEZAZ {
         $t = $this->syntax_func($t, $c);
         $t = $this->syntax_lezfunc($t, $c);
 
-   
+
 
         return $t;
     }
@@ -244,7 +247,7 @@ class __LEZAZ {
         return $this->syntax_dolar($t, $c);
     }
 
-   // find function syntax like lezaz:get(key) 
+    // find function syntax like lezaz:get(key) 
     private function syntax_lezfunc($t, $c = 0) {
         if (!preg_match("/lezaz:([^\)]*\))/im", $t, $out, PREG_OFFSET_CAPTURE))
             return $t;
@@ -254,29 +257,29 @@ class __LEZAZ {
         preg_match('/\((.*)\)/', $word, $matches); // get parameter
         $code = str_replace($matches[0], '', $code);
         $param = explode(',', $matches[1]);
-            if ($c) // come form html lezaz code as parameter
-                $code = $code . '( "' . implode('","', $param) . '" )';
-            else // need to print result , its form template as text 
-                $code = '<?php echo ' . $code . '( "' . implode('","', $param) . '" ); ?>';
+        if ($c) // come form html lezaz code as parameter
+            $code = $code . '( "' . implode('","', $param) . '" )';
+        else // need to print result , its form template as text 
+            $code = '<?php echo ' . $code . '( "' . implode('","', $param) . '" ); ?>';
         $t = substr_replace($t, $code, $offset, strlen($word));
         return $this->syntax_lezfunc($t, $c);
     }
-    
-  // find parameters array syntax like lezaz$id(parm)
+
+    // find parameters array syntax like lezaz$id(parm)
     private function syntax_hash($t, $c = 0) {
         if (!preg_match("/lezaz\#([\[|\]]?[^\W][\[|\]]?)*/im", $t, $out, PREG_OFFSET_CAPTURE))
             return $t;
         $word = $out[0][0];
         $offset = $out[0][1];
-        $code = '$'.str_replace('#', '_', $word);
-           if ($c) // come form html lezaz code as parameter
-                $code = $code;
-            else // need to print result , its form template as text 
-                $code = '<?php echo ' . $code . '; ?>';
+        $code = '$' . str_replace('#', '_', $word);
+        if ($c) // come form html lezaz code as parameter
+            $code = $code;
+        else // need to print result , its form template as text 
+            $code = '<?php echo ' . $code . '; ?>';
         $t = substr_replace($t, $code, $offset, strlen($word));
         return $this->syntax_hash($t, $c);
-    }    
-    
+    }
+
     // find function syntax like lezaz~get(key) 
     private function syntax_func($t, $c = 0) {
         if (!preg_match("/lezaz~([^\)]*\))/im", $t, $out, PREG_OFFSET_CAPTURE))
@@ -325,11 +328,11 @@ class __LEZAZ {
         fclose($fp);
     }
 
-    public function get($v) {
+    public function _get($v) {
         return $_GET[$v];
     }
 
-    public function post($v) {
+    public function _post($v) {
         return $_POST[$v];
     }
 
@@ -339,6 +342,14 @@ class __LEZAZ {
 
     public function func($v) {
         
+    }
+
+    public function set($k, $v) {
+        $this->valriables[$k] = $v;
+    }
+
+    public function get($k) {
+        return $this->valriables[$k];
     }
 
 }

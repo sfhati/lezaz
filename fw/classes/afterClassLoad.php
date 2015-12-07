@@ -1,5 +1,6 @@
 <?php
 
+
 /* * ********************************filter request vars****************************************** */
 foreach ($_REQUEST as $KEy => $VAl) {
     if (is_array($_REQUEST[$KEy])) {
@@ -80,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     define('IS_POST', 0);
 }
-
 
 // for cache files
 

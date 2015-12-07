@@ -3,10 +3,12 @@
 // collect messageing here
 //type 0=success,1=error,2=info,3=warning
 function set_msg($msg, $type = 0) {
-    $t[0] = 'success';
-    $t[1] = 'error';
+    
+    $t[1] = 'success';
+    $t[0] = 'error';
     $t[2] = 'info';
     $t[3] = 'warning';
+    if(is_numeric($type))        
     $type = $t[$type];
     $_SESSION['message'][$type].= $msg . '<br>';
     return '1';

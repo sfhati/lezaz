@@ -45,14 +45,18 @@ function lezaz_if($v, $html) {
 
 
 <?php
+
 class B {
     public function method_from_b($s) {
         echo $s;
     }
 }
 
-class C {
+class C {  
+
     public function method_from_c($l, $l1, $l2) {
+       global $a;
+        echo $a->b->method_from_b("abcdef<br>");
         echo $l.$l1.$l2;
     }
 }
@@ -61,9 +65,13 @@ class A {
 
     public function __construct() {
         $this->c = new C;
-        $this->b = new B;
+       
     }
 
+    public function __add($class,$name){
+        $this->$name = new $class;
+    }
+    
     public function __call($method, $args) {
         if (method_exists($this, $method)) {
             $reflection = new ReflectionMethod($this, $method);
@@ -80,6 +88,8 @@ class A {
 
 
 $a = new A;
-$a->b->method_from_b("abc");
+$a->__add('B', 'b');
 $a->c->method_from_c("d", "e", "f");
+
+$a->b->method_from_b("abc");
 ?>
