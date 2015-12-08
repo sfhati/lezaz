@@ -4,8 +4,6 @@
 
 function createlangfile() {
     $dhash = '';
-    if (!is_root())
-        return '';
 
     foreach (get_plugin() as $plug) {
         $plug=trim($plug);

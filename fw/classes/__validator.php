@@ -146,7 +146,7 @@ class Validator {
         return false;
     }
 
-    private static function numberBetween($integer, $max = null, $min = 0) {
+    public static function numberBetween($integer, $max = null, $min = 0) {
         if (is_numeric($min) && $integer <= $min)
             return false;
         if (is_numeric($max) && $integer >= $max)

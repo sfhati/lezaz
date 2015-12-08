@@ -1,5 +1,5 @@
 <?php
-
+print_r($_SERVER); exit();
 
 /* * ********************************filter request vars****************************************** */
 foreach ($_REQUEST as $KEy => $VAl) {
@@ -73,14 +73,12 @@ if (!$_GET[id]) {
 }
 
 
-$ox = '';
-foreach ($_GET as $gk => $gv)
-    $ox.="$gk=$gv;";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     define('IS_POST', 1);
 } else {
     define('IS_POST', 0);
 }
+
 
 // for cache files
 

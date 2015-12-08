@@ -253,7 +253,7 @@ class __LEZAZ {
             return $t;
         $word = $out[0][0];
         $offset = $out[0][1];
-        $code = '$' . str_replace(':', '->', $word);
+        $code = '$lezaz->' . str_replace(':', '->', $word);
         preg_match('/\((.*)\)/', $word, $matches); // get parameter
         $code = str_replace($matches[0], '', $code);
         $param = explode(',', $matches[1]);

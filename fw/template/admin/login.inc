@@ -14,6 +14,7 @@ lezaz:get(parm) // echo result from lezaz class its mean $lezaz->func(parm)<br>
 <lezaz:if id='ififx' condition="lezaz#id[parm]" result="yes,no"  PRINT='dddc'/><br>    
 #ififx: lezaz#ififx <br>
 <lezaz:for id="idfor" from='3' condition='$i<lezaz:get(bass)' to='27' step='1' print='false'> lezaz#idfor <br> </lezaz:for><br> 
- 
-
+ [_abc]
+ [:book]
+[:book] fds
 lezaz:get(bass)bbbbb  cc

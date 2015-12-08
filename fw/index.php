@@ -14,10 +14,10 @@ define('YOUCANINCLUDE', 'Yes');
 include "conf.php";
 
 $lezaz=new __CORE;
-
+exit('ggg');
 /* * *************include init.php plugin**************** */
 
-$plugin_rowx = get_plugin();
+
 
 //print_r($plugin_rowx);
 
@@ -59,7 +59,7 @@ if (is_array($file_plugin))
 
 /* * *****************process html code ******************** */
 
-$my_simple_tmplt = $core->lezaz->include_tbl($my_simple_tmplt);
+$my_simple_tmplt = $lezaz->lezaz->include_tbl($my_simple_tmplt);
 $my_simple_tmplt = str_replace($_SESSION['SYNTAX_VAR']['OLD'], $_SESSION['SYNTAX_VAR']['NEW'], $my_simple_tmplt);
 $my_simple_tmplt = CHNG_LANGUAGE($my_simple_tmplt);
 /* * *************include term.php plugin**************** */

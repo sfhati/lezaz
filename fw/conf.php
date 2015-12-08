@@ -61,27 +61,20 @@ define('THEME_LINK', TEMPLATE_LINK . THEME_FOLDER . '/');
 define('SITE_EMAIL', 'info@' . SITE_DOMAIN);
 define('Main_Domain', 'http://server.sfhati.com/');
 define('Version', '4.07');
-define('_CONVERT_PATH', '/usr/local/bin/');
 
 define('SQL_CACHE', '20'); // no sql cache is defult
 define('CRYPT_CACHE', false); // no sql cache is defult
 define('SALT','FR4d32cdvTYdw2s#gt54');
 
-if($_SESSION[IS_ADMiN])
-define('IS_ADMIN',true);
-else
-define('IS_ADMIN',FALSE);
-
-//define('_CONVERT_PATH', '');
 // include Classes 
 if ($dh = opendir(CLASSES_PATH)) {
     while (($file = readdir($dh)) !== false) {
-        //echo "$dir . $file :";
+        echo "$dir . $file :";
         if ($file != '.' && $file != '..' && filetype(CLASSES_PATH . $file) != 'dir' && $file != 'afterClassLoad.php') {
             include(CLASSES_PATH . $file);
-            //echo "$dir . $file<br/>";
+            echo "$dir . $file<br/>";
         }
-        //echo "<br/>";
+        echo "<br/>";
     }
     closedir($dh);
 }
