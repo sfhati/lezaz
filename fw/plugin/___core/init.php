@@ -1,2 +1,2 @@
 <?php
-$lezaz->lezaz->set('bass','100');
+$lezaz->set('bass','100');

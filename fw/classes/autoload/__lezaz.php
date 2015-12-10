@@ -41,7 +41,6 @@ class __LEZAZ {
     public $filename = '';
     public $plugin_dir = '';
     public $element = '';
-    private $valriables = array();
 
     public function __construct($cache_path = '', $plugin_dir = '') {
         if ($cache_path)
@@ -66,8 +65,8 @@ class __LEZAZ {
         }
     }
 
-    public function include_tbl($template_name) {
-
+    public function include_tpl($template_name) {
+        global $lezaz;
         if (strpos($template_name, '}') || strpos($template_name, '/')) {
             $template_name = str_replace('{plugin}', PLUGIN_PATH, $template_name);
             $template_name = str_replace('{template}', TEMPLATE_PATH, $template_name);
@@ -85,7 +84,7 @@ class __LEZAZ {
 
         if (!file_exists($template_name)) {
             $_SESSION[error_template] = $template_name;
-            $tempf = after_last(DIRECTORY_SEPARATOR, $template_name);
+            $tempf = $lezaz->string->after_last(DIRECTORY_SEPARATOR, $template_name);
             if ($tempf)
                 $template_name = str_replace($tempf, '404.inc', $template_name);
             else
@@ -253,7 +252,7 @@ class __LEZAZ {
             return $t;
         $word = $out[0][0];
         $offset = $out[0][1];
-        $code = '$lezaz->' . str_replace(':', '->', $word);
+        $code = '$' . str_replace(':', '->', $word);
         preg_match('/\((.*)\)/', $word, $matches); // get parameter
         $code = str_replace($matches[0], '', $code);
         $param = explode(',', $matches[1]);
@@ -326,30 +325,6 @@ class __LEZAZ {
             flock($fp, LOCK_UN);
         }
         fclose($fp);
-    }
-
-    public function _get($v) {
-        return $_GET[$v];
-    }
-
-    public function _post($v) {
-        return $_POST[$v];
-    }
-
-    public function any($v) {
-        return global_var($v);
-    }
-
-    public function func($v) {
-        
-    }
-
-    public function set($k, $v) {
-        $this->valriables[$k] = $v;
-    }
-
-    public function get($k) {
-        return $this->valriables[$k];
     }
 
 }

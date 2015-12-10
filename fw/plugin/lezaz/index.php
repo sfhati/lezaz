@@ -1,7 +1,7 @@
 <?php
 
 
-echo '>>>'.$lezaz->lezaz->get('bass');
+echo '>>>'.$lezaz->get('bass');
 /* * *********************************************************** /\
   /\* sfhati frame work                                         /\/\
   \/* Author : bassam essawi [bastr3]                          /\/\/\

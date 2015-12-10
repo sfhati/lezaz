@@ -1,6 +1,7 @@
 
 
 
+<title>LOGIN.INC</title>
 lezaz~time() <br>
 ------------lezaz----------------------<hr><br>
 lezaz~date(d/m/Y,555666999) // for function call and echo result  its mean  func(parm1,parm2) <br>

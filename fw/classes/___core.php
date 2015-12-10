@@ -23,6 +23,8 @@ Class __CORE {
     public $plugin;
     public $events = array();
     protected $output = null;
+    public $main_template = 'index';
+    private $valriables = array();
 
     public function __construct() {
         // get all plugin active inside $plugin
@@ -40,6 +42,10 @@ Class __CORE {
 
     public function __add($class, $name) {
         $this->$name = new $class;
+    }
+
+    public function set_tpl($tpl) {
+        $this->main_template = $tpl;
     }
 
     public function __call($method, $args) {
@@ -72,6 +78,7 @@ Class __CORE {
         if (is_array($this->plugin)) {
             foreach ($this->plugin as $plg) {
                 if (file_exists(PLUGIN_PATH . $plg . "/{$file}.php")) {
+                    $this->trigger('before.load.'.$file.'.'.$plg, 'arg_1');
                     include(PLUGIN_PATH . $plg . "/{$file}.php");
                     //echo PLUGIN_PATH . $plg . "/{$file}.php";
                 }
@@ -155,35 +162,61 @@ Class __CORE {
 
         return $statics;
     }
-    
-    public function router($path,  $callback) {
-        $filtered=null;
-	$vars = array (
-            '@num'      =>  '([0-9\.,]+)',
-            '@alpha'    =>  '([a-zA-Z]+)',
-            '@alnum'    =>  '([a-zA-Z0-9\.\w]+)',
-            '@str'      =>  '([a-zA-Z0-9-_\.\w]+)',
-            '@any'      =>  '([^\/]+)',
-            '@*'        =>  '?(.*)',
-            '@date'     =>  '(([0-9]+)\/([0-9]{2,2}+)\/([0-9]{2,2}+))',
-            '@null'     =>  '^');
-         
+
+    public function router($path, $callback) {
+        if (is_array($path)) {
+            foreach ($path as $pathx) {
+                if ($this->router($pathx, $callback) != 'x') {
+                    return '';
+                }
+            }
+            return '';
+        }
+        $filtered = null;
+        $vars = array(
+            '@num' => '([0-9\.,]+)',
+            '@alpha' => '([a-zA-Z]+)',
+            '@alnum' => '([a-zA-Z0-9\.\w]+)',
+            '@str' => '([a-zA-Z0-9-_\.\w]+)',
+            '@*' => '(.*)',
+            '@date' => '([0-9]{1,2})\/([0-9]{1,2})\/(([0-9]{2})(.{0}|.{2}))',
+            '@null' => '^');
+
         $trimed_path = strtolower(rtrim(ltrim($path, '/'), '/'));
         $trimed_xpath = strtolower(rtrim(ltrim($_GET['directory_lezaz'], '/'), '/'));
-        $pattern = str_replace('\\\\', '\\', addcslashes(str_ireplace(array_keys($vars), array_values($vars), $trimed_path), './'));
-         $pattern = "/^{$pattern}/";
-        echo $pattern;
-  
-        // use wi
-        echo "<br>$trimed_path == $trimed_xpath<br>";
-        if( preg_match($pattern, $trimed_xpath,$args)){
-            if (is_callable($callback))
-            $filtered = call_user_func($callback,$args );
-            
-            //
-            return $filtered;
+        $pattern = str_replace('\\\\', '\\', addcslashes(str_ireplace(array_keys($vars), array_values($vars), $trimed_path), '/'));
+        $pattern = "/^{$pattern}$/";
+
+        if (preg_match($pattern, $trimed_xpath, $args)) {
+            if (is_callable($callback)) {
+                array_shift($args);
+                $filtered = call_user_func_array($callback, $args);
+                return $filtered;
+            } else {
+                $this->main_template = $callback;
+            }
         }
+        return 'x';
     }
 
-    
+    public function set($k, $v) {
+        $this->valriables[$k] = $v;
+    }
+
+    public function get($k) {
+        return $this->valriables[$k];
+    }
+
+    public function run() {
+        $this->include_plugin('init');
+        $this->include_plugin('index');
+        $this->include_plugin('footer');
+        $this->include_plugin('term');
+
+         $print = $this->lezaz->include_tpl($this->main_template);
+
+
+         return $print;
+    }
+
 }

@@ -13,7 +13,7 @@
  */
 
 function lezaz_include($vars,$html) {
-        return "<?php echo  \$lezaz->include_tbl(\"$vars[file]\"); ?>";
+        return "<?php echo  \$lezaz->include_tpl(\"$vars[file]\"); ?>";
    // }
    // return "<br> Worning File path : $path Not Found!<br>";
    // $vars = md5_file($vars) . '.php';
