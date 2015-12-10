@@ -977,32 +977,3 @@ function &Horus($k = null)
 
     return $k;
 }
-
-//echo "hi man";
-
-    $app = new Horus;
-
-   
-    
-        // handle group of routes based on a path ?
-        $app->router->with('/x', function() use($app) {
-            
-            // '/x/page1'
-            $app->router->any('/page1', function(){
-                echo 'page1';
-            });
-
-            // '/x/page2'
-            $app->router->any('/page2', function(){
-                echo 'page2';
-            });
-
-            // '/x/page3'
-            $app->router->any('/page2', function(){
-                echo 'page3';
-            });
-
-        });
-
-    // run it
-    $app->run();

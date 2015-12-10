@@ -65,22 +65,43 @@ define('Version', '4.07');
 define('SQL_CACHE', '20'); // no sql cache is defult
 define('CRYPT_CACHE', false); // no sql cache is defult
 define('SALT','FR4d32cdvTYdw2s#gt54');
+define('LEZAZ_START_TIME', microtime(1), true);
+define('LEZAZ_START_PEAK_MEM', memory_get_peak_usage(true));
 
 // include Classes 
-if ($dh = opendir(CLASSES_PATH)) {
+include(CLASSES_PATH . '___core.php');
+$lezaz=new __CORE;
+//auto load classes
+$dir=CLASSES_PATH.'autoload/';
+if ($dh = opendir($dir)) {
     while (($file = readdir($dh)) !== false) {
-        echo "$dir . $file :";
-        if ($file != '.' && $file != '..' && filetype(CLASSES_PATH . $file) != 'dir' && $file != 'afterClassLoad.php') {
-            include(CLASSES_PATH . $file);
-            echo "$dir . $file<br/>";
+        //echo "$dir$file :";
+        if (strtolower(end(explode('.',  $file))) == 'php') {            
+            include($dir . $file);
+            $class=  str_replace(array('__','.php'), '', $file);
+            $lezaz->__add('__'.$class,$class);  
+            //echo " $dir$file";
         }
-        echo "<br/>";
+        //echo "<br/>";
+    }
+    closedir($dh);
+}
+//auto include classes
+$dir=CLASSES_PATH.'autoinclude/';
+if ($dh = opendir($dir)) {
+    while (($file = readdir($dh)) !== false) {
+        //echo "$dir$file :";
+        if (strtolower(end(explode('.',  $file))) == 'php') {            
+            include($dir . $file);
+             //echo " $dir$file";
+        }
+        //echo "<br/>";
     }
     closedir($dh);
 }
 
 // Load after Classes Load
-include(CLASSES_PATH . 'afterClassLoad.php');
+//include(CLASSES_PATH . 'afterClassLoad.php');
 
 
 

@@ -1,30 +1,43 @@
+ServerSignature Off
 IndexIgnore *
 RewriteEngine on
 RewriteBase / 
+<IfModule mod_rewrite.c>
+ RewriteEngine On
+#convert url without www
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
 
-#RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-#RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
-
-RewriteRule ^page/([0-9]+)/(.*)$ /?id=$1&parameter=$2
-#RewriteCond %{QUERY_STRING} ^p=(.*)
-#RewriteRule ^/?product\.php$ http://website.com.au/product_%1.php? [L,R=301]
-RewriteRule ^admin$ /?chng_tpl=login
-RewriteRule ^admin/$ /?chng_tpl=login
-RewriteRule ^admin/(.*)$ /?chng_tpl=login&template_folder=$1
-RewriteRule ^t/(.*)$ /?chng_tplt=$1%{QUERY_STRING} [NC,L]
-
-
-
-ErrorDocument 404 /?id=error404
-
+#lezaz used 
 RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?directory_lezaz=$1 [QSA,L]
 RewriteCond %{REQUEST_URI} \.(gif|jpg|jpeg|png)$ 
 RewriteRule .* template/panel/images/image_not_found.jpg [L]
+ 
+#Block Bad Bots
+RewriteCond %{HTTP_USER_AGENT} ^WebBandit [OR]
+RewriteCond %{HTTP_USER_AGENT} ^2icommerce [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Accoona [OR]
+RewriteCond %{HTTP_USER_AGENT} ^ActiveTouristBot [OR]
+RewriteCond %{HTTP_USER_AGENT} ^addressendeutshland
+RewriteRule ^.* - [F,L]
+</IfModule>
+
+
+setEnv LEZAZ  off
+
+
+
+
+ErrorDocument 404 /?404
+
 
 <Files ~ "(php\.ini|\.inc|\.htaccess|conf\.php)$">
 order deny,allow
 deny from all
 </Files>
+
 <IfModule mod_gzip.c>
     mod_gzip_on       Yes
     mod_gzip_dechunk  Yes
@@ -44,10 +57,3 @@ ExpiresDefault A29030400
 </FilesMatch>
 </IfModule>
 
-#Block Bad Bots
-RewriteCond %{HTTP_USER_AGENT} ^WebBandit [OR]
-RewriteCond %{HTTP_USER_AGENT} ^2icommerce [OR]
-RewriteCond %{HTTP_USER_AGENT} ^Accoona [OR]
-RewriteCond %{HTTP_USER_AGENT} ^ActiveTouristBot [OR]
-RewriteCond %{HTTP_USER_AGENT} ^addressendeutshland
-RewriteRule ^.* - [F,L]

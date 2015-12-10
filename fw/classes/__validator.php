@@ -129,7 +129,7 @@ function validation_check($var, $str , $options='') {
  * Validator class 
  * Let simplify the validation :) 
  */
-class Validator {
+class __Validator {
 
     private static function helper($string, $exclude = "") {
         if (empty($exclude))

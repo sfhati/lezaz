@@ -1,6 +1,7 @@
 <?php
-$lezaz->lezaz->set('bass','100');
 
+
+echo '>>>'.$lezaz->lezaz->get('bass');
 /* * *********************************************************** /\
   /\* sfhati frame work                                         /\/\
   \/* Author : bassam essawi [bastr3]                          /\/\/\
