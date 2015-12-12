@@ -12,9 +12,18 @@ echo '>>>'.$lezaz->get('bass');
   \****************************************************** */
 if (!defined('YOUCANINCLUDE'))
     exit('No direct script access allowed');
-
-
-
+global $_DB;
+$rs = $lezaz->db->query("$sql");
+$rows =$_DB->rowcount() ;
+      $sql="SELECT * FROM `pages`";
+        $_pagination = page_counter($_REQUEST[$page], $rows, $count_nu, getAddress(), 'sqlid', var_export($style, true)  );
+        
+        $limit = " LIMIT $page_number , $count_nu ";    
+          $sql_id = getResults("$sql $limit");
+   if (is_array($sql_id))
+        foreach ($sql_id as $row) {
+            $counter++;
+        }
 /*
 [element:"type","name","lable","rules","msg rules","filter","style","more option"end element]
 

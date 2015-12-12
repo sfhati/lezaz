@@ -1,39 +1,52 @@
 <?php
 
-// [sql:"id","sql","show rows number","content like : 
-//      %id:% >> print style 1 or 2 
-//      %id:#% >> print counter row starting from 1
-//      %id:field% >> print echo $row[field];
-//      %id:field-var% >> print $row[field]; used for if statment or foreach or other syntax
-// ","style1:style2"end sql]
-// Use [var:"id_pagination"end var] for pagination
-// Use [var:"id_num_rows"end var] for print number of rows
-//
-/**
- [IF:"!%id:#-var%","
-There is [var:"id_pagination"end var] rows !
-"end IF] 
- * 
- * 
- *
- */
-function sql_SYNTAX($vars) {
-    global $syntaxcode;
-    foreach ($vars as $v => $var) {
-        $SQL_x[$v] = $syntaxcode->Syntax($var);
-    }
-    $sql_id = $SQL_x[0];
-    $sql = $SQL_x[1];
-    $count_nu = $SQL_x[2];
-    $style = explode(':', $SQL_x[4]);
+/*
+<lezaz:sql/>
+Attribute	Description        Default
+--------------------------------------------
+id           referance for this syntax use like lezaz#id             Null
+sql          SQL syntax                                              null
+limit        number of rows to show                                  null
+style1 
+multipage    for using pagination value = true                       false      
+print        print result attr if value = any pass like 1,true,yes   0
 
-    $pattern = '/\%' . $sql_id . '\:[^\%]*\%/';
-    preg_match_all($pattern, $SQL_x[3], $matches);
-    $matches[0] = str_replace('-var', '', $matches[0]);
-    $matche = array_unique($matches[0]);
-    $matche = str_replace('%' . $sql_id . ':#%', '', $matche);
-    $matche = str_replace('%' . $sql_id . ':', '', $matche);
-    $matche = array_filter(str_replace('%', '', $matche));
+inside code you can use lezaz#id[field] >> print field value
+                        lezaz#id[count] >> print number of rows 
+                        lezaz#id[counter] >> print counter for this row or last counter if use after colse sql
+                        
+
+Example
+--------
+<lezaz:sql id='myid' sql="select * from table where id=lezaz$parm" limit="1" print="true"/>
+
+<lezaz:sql id='myid' sql="select * from table where id=lezaz$parm" limit="1">
+the value of field name = lezaz#myid[name] <br>
+</lezaz:sql>
+
+
+
+ */
+
+function lezaz_sql($vars, $html) {
+// defult values     
+    if (!isset($vars['print']))
+        $vars['print'] = '0';
+    if (!isset($vars['sql']))
+        return '';
+   
+
+    if (strtolower($vars['print']) == 'no' || strtolower($vars['print']) == 'false')
+        $vars['print'] = 0;
+    $vars['print'] = (bool) $vars['print'];
+
+
+
+}
+
+
+function sql_SYNTAX($vars) {
+
 
 
     $sql = str_ireplace('select * from', 'SELECT ' . implode(',', $matche) . ' FROM', $sql);
@@ -62,29 +75,6 @@ function sql_SYNTAX($vars) {
         $limit = "\$limit = \" LIMIT \$page_number , $count_nu \";\n";
     }
 
-    unset($old);
-    unset($new);
-    $old[] = "%" . $sql_id . ":%";
-    $new[] = '<?php echo $row'.$sql_id.'_x; ?>';
-    $old[] = "%" . $sql_id . ":-var%";
-    $new[] = '$row'.$sql_id.'_x';
-    $old[] = "%" . $sql_id . ":#%";
-    $new[] = '<?php echo $row'.$sql_id.'_counter + $page_number; ?>';
-    $old[] = "%" . $sql_id . ":#-var%";
-    $new[] = '($row'.$sql_id.'_counter + $page_number)';
-    
-   
-    foreach ($matche as $k => $v) {
-        $old[] = "%" . $sql_id . ":" . $v . "%";
-        $new[] = "<?php echo \$row".$sql_id."[$v]; ?>";
-        $old[] = "%" . $sql_id . ":" . $v . "-var%";
-        $new[] = "\$row".$sql_id."[$v]";
-        //        $old[] = "" . $sql_id . "_selected_" . $v . "=\"" . $v . "\"";
-        //        $new[] = ' selected="selected" ';
-        //        $old[] = "" . $sql_id . "_checked_" . $k . "=\"" . $v . "\"";
-        //        $new[] = ' checked="checked" ';                
-    }
-    $sql_template = str_replace($old, $new, $sql_template);
 
     return "<?php 
 \$row".$sql_id."_counter='';
@@ -112,53 +102,6 @@ $sql_template
 
 
 
-
-function paginate($item_per_page, $current_page, $total_records, $total_pages, $page_url)
-{
-    $pagination = '';
-    if($total_pages > 0 && $total_pages != 1 && $current_page <= $total_pages){ //verify total pages and current page number
-        $pagination .= '<ul class="pagination">';
-        
-        $right_links    = $current_page + 3; 
-        $previous       = $current_page - 3; //previous link 
-        $next           = $current_page + 1; //next link
-        $first_link     = true; //boolean var to decide our first link
-        
-        if($current_page > 1){
-            $previous_link = ($previous==0)?1:$previous;
-            $pagination .= '<li class="first"><a href="'.$page_url.'?page=1" title="First">&laquo;</a></li>'; //first link
-            $pagination .= '<li><a href="'.$page_url.'?page='.$previous_link.'" title="Previous">&lt;</a></li>'; //previous link
-                for($i = ($current_page-2); $i < $current_page; $i++){ //Create left-hand side links
-                    if($i > 0){
-                        $pagination .= '<li><a href="'.$page_url.'?page='.$i.'">'.$i.'</a></li>';
-                    }
-                }   
-            $first_link = false; //set first link to false
-        }
-        
-        if($first_link){ //if current active page is first link
-            $pagination .= '<li class="first active">'.$current_page.'</li>';
-        }elseif($current_page == $total_pages){ //if it's the last active link
-            $pagination .= '<li class="last active">'.$current_page.'</li>';
-        }else{ //regular current link
-            $pagination .= '<li class="active">'.$current_page.'</li>';
-        }
-                
-        for($i = $current_page+1; $i < $right_links ; $i++){ //create right-hand side links
-            if($i<=$total_pages){
-                $pagination .= '<li><a href="'.$page_url.'?page='.$i.'">'.$i.'</a></li>';
-            }
-        }
-        if($current_page < $total_pages){ 
-                $next_link = ($i > $total_pages)? $total_pages : $i;
-                $pagination .= '<li><a href="'.$page_url.'?page='.$next_link.'" >&gt;</a></li>'; //next link
-                $pagination .= '<li class="last"><a href="'.$page_url.'?page='.$total_pages.'" title="Last">&raquo;</a></li>'; //last link
-        }
-        
-        $pagination .= '</ul>'; 
-    }
-    return $pagination; //return pagination links
-}
 
 
 

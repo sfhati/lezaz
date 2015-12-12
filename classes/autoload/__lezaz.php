@@ -41,7 +41,8 @@ class __LEZAZ {
     public $filename = '';
     public $plugin_dir = '';
     public $element = '';
-
+    public $topcode='';
+    
     public function __construct($cache_path = '', $plugin_dir = '') {
         if ($cache_path)
             $this->cache_path = $cache_path;
@@ -129,6 +130,7 @@ class __LEZAZ {
         // if there is php code will show as content in output
         $this->ALL_SYNTAX = str_replace(array('<?', '?>'), array('&lt;?', '?&gt;'), $this->ALL_SYNTAX);
         //start translate template code
+        $this->topcode='';
         $t = $this->Syntax($this->ALL_SYNTAX);
         //check for all none html lezaz syntax with echo parameter
 
@@ -138,7 +140,7 @@ class __LEZAZ {
         //delete old php files from cache folder
         $this->clearcache(md5($templatefile));
         //
-        $t = '<?php global $lezaz; ?>' . $this->GetSyantax($t);
+        $t = '<?php global $lezaz;' . $this->topcode . '?>' . $this->GetSyantax($t);
         //write php file       
         $this->filewrite($export_php_file, $t);
         return $export_php_file;
@@ -238,6 +240,7 @@ class __LEZAZ {
         $word = $out[0][0];
         $offset = $out[0][1];
         $code = str_replace('lezaz$', '$', $word);
+        $this->topcode.="\n global $code; \n";
         if ($c) // come form html lezaz code as parameter
             $code = $code;
         else // need to print result , its form template as text 
@@ -252,7 +255,7 @@ class __LEZAZ {
             return $t;
         $word = $out[0][0];
         $offset = $out[0][1];
-        $code = '$' . str_replace(':', '->', $word);
+        $code = str_replace('lezaz:', '$lezaz->', $word);
         preg_match('/\((.*)\)/', $word, $matches); // get parameter
         $code = str_replace($matches[0], '', $code);
         $param = explode(',', $matches[1]);
@@ -270,7 +273,7 @@ class __LEZAZ {
             return $t;
         $word = $out[0][0];
         $offset = $out[0][1];
-        $code = '$' . str_replace('#', '_', $word);
+        $code = str_replace('lezaz#', '$lezaz_', $word);
         if ($c) // come form html lezaz code as parameter
             $code = $code;
         else // need to print result , its form template as text 

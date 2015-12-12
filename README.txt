@@ -184,5 +184,27 @@ the result for if syntax is lezaz#myid
   lezaz#idfor <br>
   </lezaz:for>
   the result syntax is lezaz#idfor as last value for this variable
+
 ----------------------------------------------------------------------------------
-ءءءءdddf
+  <lezaz:block/>
+  Attribute	Description        Default
+  --------------------------------------------
+  id         referance for this syntax use like lezaz#id             Null
+  file       template file to include                                Null
+  param1     you can use parameter to set before including file      Null
+
+  Example
+  --------
+  <lezaz:block file="header_en" param1="bassam" param2="ahmad"/>
+
+----------------------------------------------------------------------------------
+
+
+
+
+
+
+
+$lezaz->setting('bassamxz') // get setting
+$lezaz->setsetting('bassamxz','xxcc'); // add setting
+$lezaz->setsetting('bassamxz'); // remove setting

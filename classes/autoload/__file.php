@@ -54,8 +54,9 @@ class __file {
     function _write($file, $content) {
         @unlink($file);
         $fp = fopen($file, 'w');
-        if (flock($fp, LOCK_EX | LOCK_NB)) {
+        if (flock($fp, LOCK_EX | LOCK_NB)) {           
             fwrite($fp, $content);
+            echo "<br>********** $content **************<br>";
             fflush($fp);
             flock($fp, LOCK_UN);
         }

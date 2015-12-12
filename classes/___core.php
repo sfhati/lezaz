@@ -78,7 +78,7 @@ Class __CORE {
         if (is_array($this->plugin)) {
             foreach ($this->plugin as $plg) {
                 if (file_exists(PLUGIN_PATH . $plg . "/{$file}.php")) {
-                    $this->trigger('before.load.'.$file.'.'.$plg, 'arg_1');
+                    $this->trigger('before.load.' . $file . '.' . $plg, 'arg_1');
                     include(PLUGIN_PATH . $plg . "/{$file}.php");
                     //echo PLUGIN_PATH . $plg . "/{$file}.php";
                 }
@@ -207,16 +207,55 @@ Class __CORE {
         return $this->valriables[$k];
     }
 
+    public function setsetting($parametr, $value = '') {
+        $content = null;
+        $settin_file = THEME_PATH . 'setting.ini';
+        if (file_exists($settin_file)) {
+            $settings = file($settin_file);
+            foreach ($settings as $sett) {
+                $settkv = explode('^^^', $sett);
+                if (trim($settkv[0]) && trim($settkv[1])) {
+                    $content[$settkv[0]] = $settkv[1];
+                }
+            }
+        }
+
+        $settkey = $this->encrypt($parametr);
+        $settval = $this->encrypt($value);
+        $content[$settkey] = $settval . "\n";
+        if (!$value)
+            unset($content[$settkey]);
+        foreach ($content as $k => $v) {
+            $contentx.="$k^^^$v";
+        }
+        $this->file->_write($settin_file, $contentx);
+        return '';
+    }
+
+    public function setting($key, $defult = '') {
+        $settin_file = THEME_PATH . 'setting.ini';
+        if (file_exists($settin_file)) {
+            $settings = file($settin_file);
+            foreach ($settings as $sett) {
+                $settkv = explode('^^^', $sett);               
+                if (trim($this->decrypt($settkv[0])) == trim($key)) {
+                    return $this->decrypt(rtrim($settkv[1], "\n"));
+                }
+            }
+        }
+        return $defult;
+    }
+
     public function run() {
         $this->include_plugin('init');
         $this->include_plugin('index');
         $this->include_plugin('footer');
         $this->include_plugin('term');
 
-         $print = $this->lezaz->include_tpl($this->main_template);
+        $print = $this->lezaz->include_tpl($this->main_template);
 
 
-         return $print;
+        return $print;
     }
 
 }
