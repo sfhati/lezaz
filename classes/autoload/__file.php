@@ -13,7 +13,7 @@
  */
 class __file {
 
-    function _save($file, $saveto = '', $validation = '') {
+    function save($file, $saveto = '', $validation = '') {
         if ($validation[type] == 'img') {
             if ($file[type] != "image/gif" && $file[type] != "image/png" && $file[type] != "image/jpg" && $file[type] != "image/jpeg") {
                 set_msg('[ERR_TYPE]', 1);
@@ -42,28 +42,27 @@ class __file {
         return $fn;
     }
 
-    function _mkdir($path) {
+    function mkdir($path) {
         $path = str_replace('\\', '/', $path);
         if (is_dir($path))
             return true;
         $prev_path = substr($path, 0, strrpos($path, '/', -2) + 1);
         $return = $this->make_path($prev_path);
-        return ($return && is_writable($prev_path)) ? mkdir($path) : false;
+        return ($return && is_writable($prev_path)) ? $this->mkdir($path) : false;
     }
 
-    function _write($file, $content) {
+    function write($file, $content) {
         @unlink($file);
         $fp = fopen($file, 'w');
         if (flock($fp, LOCK_EX | LOCK_NB)) {           
             fwrite($fp, $content);
-            echo "<br>********** $content **************<br>";
             fflush($fp);
             flock($fp, LOCK_UN);
         }
         fclose($fp);
     }
 
-    function _list($dir) {
+    function flist($dir) {
         $listDir = array();
         if ($handler = opendir($dir)) {
             while (($sub = readdir($handler)) !== FALSE) {
@@ -71,7 +70,7 @@ class __file {
                     if (is_file($dir . $sub)) {
                         $listDir[$sub] = $dir . $sub;
                     } else if (is_dir($dir . $sub . '/')) {
-                        $listDir = array_merge_recursive($listDir, $this->file_list($dir . $sub . '/'));
+                        $listDir = array_merge_recursive($listDir, $this->flist($dir . $sub . '/'));
                     }
                 }
             }
@@ -80,7 +79,7 @@ class __file {
         return $listDir;
     }
 
-    function _print($cachefile) {
+    function view($cachefile) {
         if (file_exists($cachefile)) {
             header('Content-Type: text/html; charset=UTF-8');
             echo implode(file($cachefile), '');

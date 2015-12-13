@@ -15,7 +15,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 ini_set('display_errors', '1');
 ini_set("session.gc_maxlifetime", '2592000'); // 30 days
 set_time_limit('100030');
-ini_set('memory_limit', '80M');
+ini_set('memory_limit', '10M');
 date_default_timezone_set('Asia/Amman');
 
 define('SITE_DOMAIN',$_SERVER[HTTP_HOST]);

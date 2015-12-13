@@ -65,8 +65,8 @@ class __db {
 
             $this->con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            $this->err_msg = "Error: " . $e->getMessage();
-            return false;
+            // $this->err_msg = "Error: " . $e->getMessage();
+            die("Error: " . $e->getMessage());
         }
         return false;
     }
@@ -94,7 +94,6 @@ class __db {
         return (trim($condition) != "") ? $this->con->exec("UPDATE " . $table . " SET " . $data . " WHERE " . $condition . ";") : $this->con->exec("UPDATE " . $table . " SET " . $data . ";");
     }
 
- 
     private function _delete($table, $condition = "") {
         return (trim($condition) != "") ? $this->con->exec("DELETE FROM " . $table . " WHERE " . $condition . ";") : $this->con->exec("DELETE FROM " . $table . ";");
     }
@@ -136,7 +135,9 @@ class __db {
     }
 
     function query($query, $cacheTime = 0) {
-        if(!$query) return '';
+        global $lezaz;
+        if (!$query)
+            return '';
         if (!$cacheTime)
             $cacheTime = SQL_CACHE;
         if (SQL_CACHE != 0) {
@@ -150,20 +151,15 @@ class __db {
             }
         }
 // execute query select sql
-echo $query.'888888888888888888';
+        $D = 0;
         $dd = $this->con->query($query);
         while ($row = $dd->fetch(PDO::FETCH_ASSOC)) {
-            $rs[] = $row;
+            $D++;
+            foreach ($row as $k => $v) {
+                $returntext[$D][$k] = $v;
+            }
         }
 
-        $D = 0;
-        if (is_array($rs))
-            foreach ($rs as $row) {
-                $D++;
-                foreach ($row as $k => $v) {
-                    $returntext[$D][$k] = $v;
-                }
-            }
         // if not cache use 
         if (SQL_CACHE == 0) {
             return $returntext;
@@ -177,6 +173,15 @@ echo $query.'888888888888888888';
         $rs = null;
         $lezaz->file->write($cachefile, $returntextx1);
         return $returntext;
+    }
+
+    function num_row($query) {
+        if (!$query)
+            return 0;
+        $result = $this->con->query($query);
+        if ($result->rowCount() > 0 && !empty($result))
+            return $result->rowCount();
+        return 0;
     }
 
     function clear_cache() {

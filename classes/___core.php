@@ -200,11 +200,39 @@ Class __CORE {
     }
 
     public function set($k, $v) {
-        $this->valriables[$k] = $v;
+        $this->valriables[$k] = &$v;
     }
 
-    public function get($k) {
+    public function get($k, $i = '') {
+        if (isset($_GET[$k]) && $i)
+            return $_GET[$k][$i];
+        if (isset($_GET[$k]))
+            return $_GET[$k];
         return $this->valriables[$k];
+    }
+
+    public function post($k, $i = '') {
+        if (isset($_POST[$k]) && $i)
+            return $_POST[$k][$i];
+        if (isset($_POST[$k]))
+            return $_POST[$k];
+        return '';
+    }
+
+    public function sess($k, $i = '') {
+        if (isset($_SESSION[$k]) && $i)
+            return $_SESSION[$k][$i];
+        if (isset($_SESSION[$k]))
+            return $_SESSION[$k];
+        return '';
+    }
+
+    public function cons($k, $i = '') {
+        if (defined($k) && $i)
+            return eval("echo {$k}[$i];");
+        if (defined($k))
+            return eval("echo {$k};");
+        return '';
     }
 
     public function setsetting($parametr, $value = '') {
@@ -237,13 +265,25 @@ Class __CORE {
         if (file_exists($settin_file)) {
             $settings = file($settin_file);
             foreach ($settings as $sett) {
-                $settkv = explode('^^^', $sett);               
+                $settkv = explode('^^^', $sett);
                 if (trim($this->decrypt($settkv[0])) == trim($key)) {
                     return $this->decrypt(rtrim($settkv[1], "\n"));
                 }
             }
         }
         return $defult;
+    }
+
+    function address() {
+        /*         * * check for https ** */
+        $protocol = $_SERVER['HTTPS'] == 'on' ? 'https' : 'http';
+        /*         * * return the full address ** */
+        $return = $protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        if (strpos($return, "?"))
+            $return.="&";
+        else
+            $return.="?";
+        return $return;
     }
 
     public function run() {

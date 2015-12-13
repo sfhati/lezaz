@@ -4,17 +4,18 @@
 <lezaz:sql/>
 Attribute	Description        Default
 --------------------------------------------
-id           referance for this syntax use like lezaz#id             Null
-sql          SQL syntax                                              null
-limit        number of rows to show                                  null
+id           referance for this syntax use like lezaz#id                   Null
+sql          SQL syntax                                                    null
+limit        number of rows to show                                        null
 style1 
-multipage    for using pagination value = true                       false      
-print        print result attr if value = any pass like 1,true,yes   0
+multipage    for using pagination value = true                             false      
+print        print result attr if value = any pass like 1,true,yes         0
+counter      initial value for counter parameter                           1
 
 inside code you can use lezaz#id[field] >> print field value
-                        lezaz#id[count] >> print number of rows 
-                        lezaz#id[counter] >> print counter for this row or last counter if use after colse sql
-                        
+                        lezaz#id_num >> print number of rows 
+                        lezaz#id_counter >> print counter for this row or last counter if use after colse sql
+                        lezaz#id_multipage >> show paginition
 
 Example
 --------
@@ -29,80 +30,63 @@ the value of field name = lezaz#myid[name] <br>
  */
 
 function lezaz_sql($vars, $html) {
-// defult values     
+// defult values    
+    $style[]='';
     if (!isset($vars['print']))
         $vars['print'] = '0';
     if (!isset($vars['sql']))
         return '';
-   
+    if (!is_numeric($vars['counter']))
+       $counter=0;
+    else
+      $counter=$vars['counter']; 
+
 
     if (strtolower($vars['print']) == 'no' || strtolower($vars['print']) == 'false')
         $vars['print'] = 0;
     $vars['print'] = (bool) $vars['print'];
-
-
-
-}
-
-
-function sql_SYNTAX($vars) {
-
-
-
-    $sql = str_ireplace('select * from', 'SELECT ' . implode(',', $matche) . ' FROM', $sql);
-    $sql = str_replace('"', "'", $sql);
-    if (!$style[0])
-        $style[0] = 0;
-    if (!$style[1])
-        $style[1] = 1;
-    $sql_template = trim($SQL_x[3]);
-    $pagination = '';
-    $limit = '';
-    $pagination_code='';
-    if ($count_nu) { //for multy page number
-        $show_pages = "page_" . $sql_id;
-        $pagination_code= "if (!\$_REQUEST[$show_pages])
+    
+    if($vars[limit]) $limit = "\$limit = \" LIMIT $vars[limit] \";\n";
+    if ($vars['multipage'] && $vars[limit]) { //for multy page number
+        $show_pages = "page_" . $vars['id'];
+       $pagination_code= "if (!\$_REQUEST[$show_pages])
             \$page_number = '0';
         else
-            \$page_number = (\$_REQUEST[$show_pages] - 1) * $count_nu;
-                ";
-        
-           
-        
-         $pagination_code.= "global \$_DB;\n\$rs = \$_DB->query(\"$sql\");\n\${$sql_id}_num_rows =\$_DB->rowcount() ;\n";
-       
-        $pagination= "\${$sql_id}_pagination = page_counter(\$_REQUEST[$show_pages], \${$sql_id}_num_rows, $count_nu, getAddress(), '$sql_id', " . var_export($style, true) . " );\n";
-        $limit = "\$limit = \" LIMIT \$page_number , $count_nu \";\n";
+            \$page_number = (\$_REQUEST[$show_pages] - 1) * $vars[limit];
+                ";       
+        $limit = "\$limit = \" LIMIT \$page_number , $vars[limit] \";\n";
+        $pagination= "\$lezaz_{$vars['id']}_multipage = page_counter(\$_REQUEST[$show_pages], \$lezaz_$vars[id]_num, $vars[limit], \$lezaz->address(), '$vars[id]', " . var_export($style, true) . " );\n";
     }
-
+    
+    
+$sql= str_replace('"',"'",$vars[sql]);
 
     return "<?php 
-\$row".$sql_id."_counter='';
-\$row".$sql_id."_x='';
 
+\$lezaz_".$vars[id]."_x='';
 $pagination_code        
 \$limit = ''; 
-
 $limit 
-$pagination
-   \$$sql_id = getResults(\"$sql \$limit\");
-    if (is_array(\$$sql_id))
-        foreach (\$$sql_id as \$row".$sql_id.") {
-            \$row".$sql_id."_x = (\$row".$sql_id."_x == '$style[1]') ? '$style[0]' : '$style[1]';
-            \$row".$sql_id."_counter++;
+
+   \$$vars[id] = \$lezaz->db->query(\"$sql \$limit\");
+  \$lezaz_$vars[id]_num =  \$lezaz->db->num_row(\"$sql\");
+ $pagination
+\$lezaz_".$vars[id]."_counter=$counter + \$page_number;
+        if (is_array(\$$vars[id]))
+        foreach (\$$vars[id] as \$lezaz_".$vars[id].") {
+            if (is_array(\$lezaz_".$vars[id].")){
+            \$lezaz_".$vars[id]."_x = (\$lezaz_".$vars[id]."_x == '$style[1]') ? '$style[0]' : '$style[1]';
+            
 ?>
-$sql_template
+$html
 <?php
-        }
+\$lezaz_".$vars[id]."_counter++;
+        }}
 ?>        
     
 ";
+
 }
-
-
-
-
-
 
 
 //page counter for mem_sql function *you can use it in other way

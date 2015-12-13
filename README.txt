@@ -85,7 +85,7 @@ Array
 make_path($path) // create full path folder 
 cut_str($inputstr, $delimeterLeft, $delimeterRight) // cut string from x to x 
 objectToArray($object) // convert object to array	
-rmdir_empty($dir) //remove dir if empty form files
+rmdir_empty($dir) //remove dir if empty from files
 convert_mb($size) //Convert bite to any unit
 
 __MSG($msg,$type=0); return true 
@@ -131,37 +131,51 @@ install.zip
 ------------lezaz----------------------
 lezaz~func(parm1,parm2) // for function call and echo result  its mean  func(parm1,parm2) 
 lezaz#id // echo value for lezaz syntax use id  its mean $lezaz_id
-lezaz#id(parm) // echo value for lezaz syntax use id parameter  its mean  $lezaz_id_parm
+lezaz#id[parm] // echo value for lezaz syntax use id parameter  its mean  $lezaz_id[parm]
 lezaz$parm // echo $parm from php files  its mean $parm 
 lezaz$parm[item] // echo array item from $parm using in php files  its mean $parm[item] 
 lezaz:func(parm) // echo result from lezaz class its mean $lezaz->func(parm)
+    lezaz:get(param) = $_GET[param]
+    lezaz:post(param) = $_POST[param]
+    lezaz:cons(param) = param
+    lezaz:sess(param) = $_SESSION[param]
+    lezaz:sess(param,key) = $_SESSION[param][key]
+
+*********************************************************
+
+>>>setting file in theme folder with name setting.ini
+$lezaz->setting('bassamxz') // get setting
+$lezaz->setting('bassamxz','defult value') // get setting , if not exeist then print defult value.
+$lezaz->setsetting('bassamxz','xxcc'); // add setting
+$lezaz->setsetting('bassamxz'); // remove setting
+    
+*********************************************************
+
+
+
 
  
-<lezaz:if id='' condition="" result="yes,no" print="false"/>
-<lezaz:for id="id" from="1" to="10" step="-2"> lezaz#id </lezaz:for>
-
-
-<lezaz:if/>
+<<lezaz:if/>
 Attribute	Description        Default
 --------------------------------------------
 id           referance for this syntax use like lezaz#id             Null
 condition    condition if syntax                                     1==1
-result       result if use like yes,no paas,fail 1,0                 1,0
+pass         return this value if pass                               1
+fail         return this value if fail                               0
 print        print result attr if value = any pass like 1,true,yes   0
 
 inside code you can use <lezaz:else/> 
 
 Example
 --------
-<lezaz:if id='myid' condition="lezaz$parm==1" result="yes,no" print="false"/>
+<lezaz:if id='myid' condition="lezaz$parm==1" pass="yes" fail="no" print="false"/>
 
-<lezaz:if id='myid' condition="lezaz$parm==1" result="yes,no" print="false">
+<lezaz:if id='myid' condition="lezaz$parm==1" pass="yes" fail="no" print="false">
 the value for $parm = lezaz$parm and its 1 <br>
 <lezaz:else/> 
 the value for $parm = lezaz$parm and its not 1
 </lezaz:if>
 the result for if syntax is lezaz#myid
-
 
 ----------------------------------------------------------------------------------
   <lezaz:for/>
@@ -169,7 +183,7 @@ the result for if syntax is lezaz#myid
   --------------------------------------------
   id         referance for this syntax use like lezaz#id             Null
   condition  condition for syntax you can use $i as primary          $i<=to
-  form       start count for from                                    1
+  from       start count for from                                    1
   to         end count for                                           10
   step       number of step jump                                     0
   print        print result attr if value = any pass like 1,true,yes 0
@@ -178,7 +192,7 @@ the result for if syntax is lezaz#myid
 
   Example
   --------
-  <lezaz:for id='idfor' form="5" to="100" step="5"/>
+  <lezaz:for id='idfor' from="5" to="100" step="5"/>
 
   <lezaz:for id="idfor" from='3' condition='$i<lezaz:get(bass)' to='27' step='1' print='false'>
   lezaz#idfor <br>
@@ -195,17 +209,58 @@ the result for if syntax is lezaz#myid
 
   Example
   --------
-  <lezaz:block file="header_en" param1="bassam" param2="ahmad"/>
+    <lezaz:block file="header_en" param1="bassam" param2="ahmad"/>
+    <lezaz:block id='myid' file="{template}folder/template.inc"/>
+
 
 ----------------------------------------------------------------------------------
 
+<lezaz:sql/>
+Attribute	Description        Default
+--------------------------------------------
+id           referance for this syntax use like lezaz#id                   Null
+sql          SQL syntax                                                    null
+limit        number of rows to show                                        null
+style1 
+multipage    for using pagination value = true                             false      
+print        print result attr if value = any pass like 1,true,yes         0
+counter      initial value for counter parameter                           1
 
+inside code you can use lezaz#id[field] >> print field value
+                        lezaz#id_num >> print number of rows 
+                        lezaz#id_counter >> print counter for this row or last counter if use after colse sql
+                        lezaz#id_multipage >> show paginition
 
+Example
+--------
+<lezaz:sql id='myid' sql="select * from table where id=lezaz$parm" limit="1" print="true"/>
 
+<lezaz:sql id='myid' sql="select * from table where id=lezaz$parm" limit="1">
+the value of field name = lezaz#myid[name] <br>
+</lezaz:sql>
 
+----------------------------------------------------------------------------------
 
+ <lezaz:each/>
+  Attribute	Description        Default
+  --------------------------------------------
+  id         referance for this syntax use like lezaz#id             Null
+  array      array parameter without $ or $_SESSION                  Null
+  type       type of array use session for $_SESSION['array']        variable  you can use session,server,get,post,cookie,request,variable
+  counter    initial value for counter parameter                     1
 
-$lezaz->setting('bassamxz') // get setting
-$lezaz->setsetting('bassamxz','xxcc'); // add setting
-$lezaz->setsetting('bassamxz'); // remove setting
-000000
+  inside code you can use
+  lezaz#id_key to print key item
+  lezaz#id_value to print value item
+  lezaz#id_counter to print counter item
+
+  Example
+  --------
+  <lezaz:each id='ideach' array="variable1" type="session" counter="5" />
+
+  <lezaz:each id='ideach' array="variable1" type="session" counter="5">
+  lezaz#ideach_counter: lezaz#ideach_key =>  lezaz#ideach_value <br>
+  </lezaz:each>
+  the result syntax for lezaz#ideach is true if there is at least 1 item in array
+
+----------------------------------------------------------------------------------

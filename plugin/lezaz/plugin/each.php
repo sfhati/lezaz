@@ -1,56 +1,59 @@
 <?php
 
 /*
-  user like [each:"array_expression-option","statement"end each]
- * option can use : -sess for session array like $_SESSION['array'];
-  statement use :
-  %array_expression:key% // print key
-  %array_expression:val% // print value
-  %array_expression:val-var% //not print value just for use as a variable
-  %array_expression:% //print 0/1
-  %array_expression:#% //print counter row
-  %array_expression:val[word]% // if value is array you can print item form it
-  %array_expression:val[word-var]% // if value is array you can use item value as variable
-  %array_expression:val['word word']% // you can use ' for word contain space chr
+  <lezaz:each/>
+  Attribute	Description        Default
+  --------------------------------------------
+  id         referance for this syntax use like lezaz#id             Null
+  array      array parameter without $ or $_SESSION                  Null
+  type       type of array use session for $_SESSION['array']        variable  you can use session,server,get,post,cookie,request,variable
+  counter    initial value for counter parameter                     1
+
+  inside code you can use
+  lezaz#id_key to print key item
+  lezaz#id_value to print value item
+  lezaz#id_counter to print counter item
+
+  Example
+  --------
+  <lezaz:each id='ideach' array="variable1" type="session" counter="5" />
+
+  <lezaz:each id='ideach' array="variable1" type="session" counter="5">
+  lezaz#ideach_counter: lezaz#ideach_key =>  lezaz#ideach_value <br>
+  </lezaz:each>
+  the result syntax for lezaz#ideach is true if there is at least 1 item in array
+
+
  */
 
-function each_SYNTAX($vars,$html,$type) {
- 
-    if (strpos($vars[data]== 'session')) {
-        $vars[0] = str_replace('-sess', '', $vars[0]);
-        $vars_0 = '$_SESSION["' . $vars[0] . '"]';
+function lezaz_each($vars, $html) {
+    $types = array('session', 'server', 'get', 'post', 'cookie', 'request');
+    if (in_array(strtolower($vars[type]), $types)) {
+        $code = '$_' . strtoupper($vars[type]) . '[' . $vars['array'] . ']';
+        $global = '';
     } else {
-        $vars_0 = '$' . $vars[0];
+        $code = '$' . $vars['array'] . ';';
+        $global = 'global $' . $vars['array'] . ';';
     }
-    $vars__0 = 'rnd' . rand(100, 1202) . preg_replace("/[^A-Za-z0-9 ]/", '', $vars[0]);
-    preg_match_all("/%" . $vars[0] . ":val\[([\w\s-']+)[^%]*\]%/", $vars[1], $r);
-    if (is_array($r[1]))
-        foreach ($r[1] as $r_key => $r_val) {
-            if (strpos($r_val, '-var')) {
-                $r_val1 = str_replace('-var', '', $r_val);
-                $vars[1] = str_replace('%' . $vars[0] . ':val[' . $r_val . ']%', "\$v{$vars__0}[{$r_val1}]", $vars[1]);
-            } else {
-                $vars[1] = str_replace('%' . $vars[0] . ':val[' . $r_val . ']%', "<?php echo \$v{$vars__0}[{$r_val}]; ?>", $vars[1]);
-            }
-        }
 
-    $vars[1] = str_replace('%' . $vars[0] . ':val%', "<?php echo \$v$vars__0; ?>", $vars[1]);
-    $vars[1] = str_replace('%' . $vars[0] . ':key%', "<?php echo \$k$vars__0; ?>", $vars[1]);
-    $vars[1] = str_replace('%' . $vars[0] . ':val-var%', "\$v$vars__0", $vars[1]);
-    $vars[1] = str_replace('%' . $vars[0] . ':key-var%', "\$k$vars__0", $vars[1]);
-    $vars[1] = str_replace('%' . $vars[0] . ':%', "<?php echo \$stl$vars__0; ?>", $vars[1]);
-    $vars[1] = str_replace('%' . $vars[0] . ':#%', "<?php echo \$count$vars__0; ?>", $vars[1]);
+    if (!is_numeric($vars['counter']))
+        $counter = 0;
+    else
+        $counter = $vars['counter'];
 
 
     return "
-<?php \$count$vars__0=0; 
-            if ( is_array($vars_0) ) 
-            foreach ( $vars_0 as \$k$vars__0 => \$v$vars__0 ) {
-\$count$vars__0++; 
-\$stl$vars__0 = (\$stl$vars__0 == 1) ? 0 : 1;
+<?php 
+\$lezaz_" . $vars[id] . " = false;
+\$lezaz_" . $vars[id] . "_counter=$counter;
+                      if ( is_array($code) ) 
+            foreach ( $code as \$lezaz_$vars[id]_key => \$lezaz_$vars[id]_value ) {
+                \$lezaz_" . $vars[id] . " = true;
 ?>
-$vars[1] 
-<?php } ?>
+$html
+<?php 
+\$lezaz_" . $vars[id] . "_counter++;
+} 
+?>
 ";
 }
-

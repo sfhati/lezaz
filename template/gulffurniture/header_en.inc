@@ -72,21 +72,33 @@ border: 4px rgba(177, 177, 177, 0.28) solid;
                             <input class="searchbox-text" type="text" placeholder="Search" name="s" id="s">
                         </form>
                         <div class="clear"></div>
-                    </div>
-                    <div class="topmenu">
-                        <ul id="menu-top-menu" class="menu">
-                            <lezaz:sql id="topmenu_sql" sql="Select * From pages where page_active=1 and (page_place=2 or page_place=3) and linklabel='en' ORDER BY page_sort ASC" show="1000">                              
-                            <li id="menu-item-lezaz#topmenu_sql[id]" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-lezaz#topmenu_sql[id]"><a href="[if:"%topmenu_sql:url-var%","%topmenu_sql:url%[else]/page/%topmenu_sql:id%/%topmenu_sql:page_name%"end if]">%topmenu_sql:page_name%</a></li>                                                                  
+                    </div> 
+                    <div class="topmenu"> 
+                        <ul id="menu-top-menu" class="menu">                             
+                            <lezaz:sql id="topmenu_sql" sql="Select * From pages where page_active='1'  ORDER BY page_sort ASC" limit="4"   counter='4' >                              
+                                <lezaz:if condition="lezaz#topmenu_sql[url]" id="ifurl" result="lezaz#topmenu_sql[url],/page/lezaz#topmenu_sql[id]/lezaz#topmenu_sql[page_name]"/>
+                            <li id="menu-item-lezaz#topmenu_sql[id]" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-lezaz#topmenu_sql[id]"><a href="lezaz#ifurl">lezaz#topmenu_sql_counter: lezaz#topmenu_sql[page_name]</a></li>                                                                  
                             </lezaz:sql>         
-                        </ul>            </div>
+                        </ul>          
+            lezaz#topmenu_sql_multipage
+         
+            lezaz:get(param) = $_GET[param]<br>
+    lezaz:post(param) = $_POST[param]<br>
+    lezaz:cons(SITE_PATH) = SITE_PATH<br>
+    lezaz:sess(bassam,3) = $_SESSION[param]<br>
+    lezaz:sess(param,key) = $_SESSION[param][key]<br>
+         
+            
+<lezaz:each id='ideach' array="bassam" type="session" counter="5">
+  lezaz#ideach_counter: lezaz#ideach_key =>  lezaz#ideach_value <br>
+  </lezaz:each>            
+                    </div>
                     <div class="clear"></div>
                     <div class="mainmenu">
                         <ul id="menu-main-menu" class="menu">
-                            [sql:"mainmenu_sql","Select * From pages where page_active=1 and (page_place=1 or page_place=3) and linklabel='en' ORDER BY page_sort ASC","1000","                                
-                            <li id="menu-item-%mainmenu_sql:id%" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-%mainmenu_sql:id%"><a href="[if:"%mainmenu_sql:url-var%","%mainmenu_sql:url%[else]/page/%mainmenu_sql:id%/%mainmenu_sql:page_name%"end if]">%mainmenu_sql:page_name%</a></li>                                                                  
-                            "end sql] 
+                          
                             
-                            *************** param1= lezaz$param1<br> param2= lezaz$param2 ********************************
+                            
                         </ul>          
                     </div> 
                 </div><!--heder-content end here-->

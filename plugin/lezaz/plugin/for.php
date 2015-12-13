@@ -6,7 +6,7 @@
   --------------------------------------------
   id         referance for this syntax use like lezaz#id             Null
   condition  condition for syntax you can use $i as primary          $i<=to
-  form       start count for from                                    1
+  from       start count for from                                    1
   to         end count for                                           10
   step       number of step jump                                     0
   print        print result attr if value = any pass like 1,true,yes 0
@@ -15,7 +15,7 @@
 
   Example
   --------
-  <lezaz:for id='idfor' form="5" to="100" step="5"/>
+  <lezaz:for id='idfor' from="5" to="100" step="5"/>
 
   <lezaz:for id="idfor" from='3' condition='$i<lezaz:get(bass)' to='27' step='1' print='false'>
   lezaz#idfor <br>
