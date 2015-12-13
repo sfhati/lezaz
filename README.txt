@@ -208,3 +208,4 @@ the result for if syntax is lezaz#myid
 $lezaz->setting('bassamxz') // get setting
 $lezaz->setsetting('bassamxz','xxcc'); // add setting
 $lezaz->setsetting('bassamxz'); // remove setting
+000000
