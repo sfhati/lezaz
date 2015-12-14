@@ -62,15 +62,22 @@ class __file {
         fclose($fp);
     }
 
-    function flist($dir) {
+    function listfile($dir,$ext='',$sub=0) {
         $listDir = array();
+        if(!is_dir($dir)) return $listDir;
         if ($handler = opendir($dir)) {
-            while (($sub = readdir($handler)) !== FALSE) {
-                if ($sub != "." && $sub != ".." && $sub != '.svn') {
-                    if (is_file($dir . $sub)) {
-                        $listDir[$sub] = $dir . $sub;
-                    } else if (is_dir($dir . $sub . '/')) {
-                        $listDir = array_merge_recursive($listDir, $this->flist($dir . $sub . '/'));
+            while (($file = readdir($handler)) !== FALSE) {
+                if ($file != "." && $file != "..") {
+                    if (is_file($dir . $file)) {
+                        if($ext){
+                            if(end(explode('.', $file))==$ext)                                    
+                        $listDir[$dir][] = $file;
+                        }else{
+                           $listDir[$dir][] = $file; 
+                        }
+                    } else if (is_dir($dir . $file . '/')) {
+                        if(!$sub)
+                        $listDir = array_merge_recursive($listDir, $this->listfile($dir . $file . '/',$ext));
                     }
                 }
             }

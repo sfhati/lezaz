@@ -286,6 +286,33 @@ Class __CORE {
         return $return;
     }
 
+    function lezaz_path($template_name,$link=0){
+        if (strpos($template_name, '}') && $link) {            
+            $template_name = str_replace('{plugin}', PLUGIN_LINK, $template_name);
+            $template_name = str_replace('{template}', TEMPLATE_LINK, $template_name);
+            $template_name = str_replace('{tmp}', TMP_LINK, $template_name);
+            $template_name = str_replace('{cache}', CACHE_LINK, $template_name);
+            $template_name = str_replace('{uploaded}', UPLOADED_LINK, $template_name);
+            $template_name = str_replace('{theme}', THEME_LINK, $template_name);
+            $template_name = str_replace('//', '/', $template_name);
+        } else {
+            $template_name = THEME_PATH . $template_name;
+        }
+        return $template_name;
+        
+       if (strpos($template_name, '}') ) {            
+            $template_name = str_replace('{plugin}', PLUGIN_PATH, $template_name);
+            $template_name = str_replace('{template}', TEMPLATE_PATH, $template_name);
+            $template_name = str_replace('{tmp}', TMP_PATH, $template_name);
+            $template_name = str_replace('{cache}', CACHE_PATH, $template_name);
+            $template_name = str_replace('{uploaded}', UPLOADED_PATH, $template_name);
+            $template_name = str_replace('{theme}', THEME_PATH, $template_name);
+            $template_name = str_replace('//', '/', $template_name);
+        } else {
+            $template_name = THEME_PATH . $template_name;
+        }
+            return $template_name;
+    }
     public function run() {
         $this->include_plugin('init');
         $this->include_plugin('index');

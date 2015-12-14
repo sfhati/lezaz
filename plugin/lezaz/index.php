@@ -1,7 +1,6 @@
 <?php
 
 
-echo '>>>'.$lezaz->get('bass');
 /* * *********************************************************** /\
   /\* sfhati frame work                                         /\/\
   \/* Author : bassam essawi [bastr3]                          /\/\/\
@@ -13,4 +12,6 @@ echo '>>>'.$lezaz->get('bass');
 if (!defined('YOUCANINCLUDE'))
     exit('No direct script access allowed');
 
-$_SESSION['bassam']=array('aa','bb','cc','dd',"ee");
+
+
+
