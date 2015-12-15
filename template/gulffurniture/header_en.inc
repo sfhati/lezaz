@@ -24,6 +24,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
        <link rel="stylesheet" href="http://shame.cms/Ace/assets/css/ace.css">
+       
+          <lezaz:import dir='{template}admin/css' type='css' >   </lezaz:import>       
+       <lezaz:import dir='{template}admin/js' type='js' sort='asc' compress='true'>          </lezaz:import>  
+   
+       
    </head>
 
     <body class="home blog">
@@ -47,11 +52,11 @@
   lezaz#ideach_counter: lezaz#ideach_key =>  lezaz#ideach_value <br>
   </lezaz:each>            
 
-               <lezaz:input type="submit" label='rasha' icon-right='usb' color=" success" icon='bluetooth-b  '  size="">
+          
+ <lezaz:input type="submit" label='cdde' icon-righ0t='usb' color=" success" icon='bluetooth-b  '  size="">
                    bassam alessawi
                </lezaz:input>
-    
+
     <lezaz:input/>  
     
-       <lezaz:import dir='{template}Ace1.3.3/assets/css' type='css' >     </lezaz:import>
  

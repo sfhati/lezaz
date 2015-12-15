@@ -83,8 +83,7 @@ class __LEZAZ {
         if (end(explode('.', $template_name)) != 'inc')
             $template_name = $template_name . '.inc';
 
-        if (!file_exists($template_name)) {
-            $_SESSION[error_template] = $template_name;
+        if (!file_exists($template_name)) {           
             $tempf = $lezaz->string->after_last(DIRECTORY_SEPARATOR, $template_name);
             if ($tempf)
                 $template_name = str_replace($tempf, '404.inc', $template_name);
@@ -111,8 +110,7 @@ class __LEZAZ {
      * @param string $templatefile full path for template file
      * @return string php code  
      */
-    public function openfile($templatefile) {
-        $_SESSION[topsyntax] = '';
+    public function openfile($templatefile) {      
         //check if exist file template
         if (!file_exists($templatefile))
             return 'File not found!';
@@ -319,9 +317,6 @@ class __LEZAZ {
         $content = str_replace('{{template}}', TEMPLATE_LINK, $content);
         $content = str_replace('{{tmp}}', TMP_LINK, $content);
         $content = str_replace('{{theme}}', THEME_LINK, $content);
-        if ($_SESSION[topsyntax])
-            $content = '<?php ' . $_SESSION[topsyntax] . '?>' . $content;
-        $_SESSION[topsyntax] = '';
         if (flock($fp, LOCK_EX | LOCK_NB)) {
             fwrite($fp, $content);
             fflush($fp);

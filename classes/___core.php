@@ -286,42 +286,68 @@ Class __CORE {
         return $return;
     }
 
-    function lezaz_path($template_name,$link=0){
-        if (strpos($template_name, '}') && $link) {            
-            $template_name = str_replace('{plugin}', PLUGIN_LINK, $template_name);
-            $template_name = str_replace('{template}', TEMPLATE_LINK, $template_name);
-            $template_name = str_replace('{tmp}', TMP_LINK, $template_name);
-            $template_name = str_replace('{cache}', CACHE_LINK, $template_name);
-            $template_name = str_replace('{uploaded}', UPLOADED_LINK, $template_name);
-            $template_name = str_replace('{theme}', THEME_LINK, $template_name);
-            $template_name = str_replace('//', '/', $template_name);
+    function lezaz_path($template_name, $link = 0) {
+        $arr_path = array(PLUGIN_PATH, TEMPLATE_PATH, TMP_PATH, CACHE_PATH, UPLOADED_PATH, THEME_PATH);
+        $arr_link = array(PLUGIN_LINK, TEMPLATE_LINK, TMP_LINK, CACHE_LINK, UPLOADED_LINK, THEME_LINK);
+        $arr_tbl = array('{plugin}', '{template}', '{tmp}', '{cache}', '{uploaded}', '{theme}');
+
+        if (strpos($template_name, '}')) {
+            if ($link) {
+                $template_name = str_replace($arr_tbl, $arr_link, $template_name);
+            } else {
+                $template_name = str_replace($arr_tbl, $arr_path, $template_name);
+            }
         } else {
-            $template_name = THEME_PATH . $template_name;
+            if ($link) {
+                $template_name = THEME_LINK . $template_name;
+            } else {
+                $template_name = THEME_PATH . $template_name;
+            }
+        }
+
+
+        return $template_name;
+    }
+
+    function convert_path($template_name, $link = 0) {
+        $arr_path = array(PLUGIN_PATH, TEMPLATE_PATH, TMP_PATH, CACHE_PATH, UPLOADED_PATH, THEME_PATH);
+        $arr_link = array(PLUGIN_LINK, TEMPLATE_LINK, TMP_LINK, CACHE_LINK, UPLOADED_LINK, THEME_LINK);
+        if ($link) {
+            $template_name = str_replace($arr_link, $arr_path, $template_name);
+        } else {
+            $template_name = str_replace($arr_path, $arr_link, $template_name);
         }
         return $template_name;
-        
-       if (strpos($template_name, '}') ) {            
-            $template_name = str_replace('{plugin}', PLUGIN_PATH, $template_name);
-            $template_name = str_replace('{template}', TEMPLATE_PATH, $template_name);
-            $template_name = str_replace('{tmp}', TMP_PATH, $template_name);
-            $template_name = str_replace('{cache}', CACHE_PATH, $template_name);
-            $template_name = str_replace('{uploaded}', UPLOADED_PATH, $template_name);
-            $template_name = str_replace('{theme}', THEME_PATH, $template_name);
-            $template_name = str_replace('//', '/', $template_name);
-        } else {
-            $template_name = THEME_PATH . $template_name;
-        }
-            return $template_name;
     }
+
     public function run() {
         $this->include_plugin('init');
+ 
+         if ($_SESSION['LEZAZ_start'] == 'gr9fk4fdd'){
+             $_SESSION['LEZAZ_start'] = 'gr9fk4fdd1';
+             $this->trigger('new.guset');
+             
+           
+        }
+ 
+       if ($_SESSION['LEZAZ_start'] != 'gr9fk4fdd' && $_SESSION['LEZAZ_start'] != 'gr9fk4fdd1') {
+            $_SESSION['LEZAZ_start'] = 'gr9fk4fdd';
+            $this->trigger('session.start');
+            
+        }
+
+      if ($_SESSION['LEZAZ_start'] == 'gr9fk4fdd1')
+            $this->trigger('requset.start');
+
+
+
         $this->include_plugin('index');
         $this->include_plugin('footer');
         $this->include_plugin('term');
 
         $print = $this->lezaz->include_tpl($this->main_template);
-
-
+        $print = $this->trigger('output.filter', $print, $print);
+        $this->trigger('requset.end', '');
         return $print;
     }
 

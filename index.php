@@ -17,4 +17,4 @@ include "conf.php";
 
 echo $lezaz->run();
 
-
+?> 
