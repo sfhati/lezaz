@@ -24,11 +24,12 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
        <link rel="stylesheet" href="http://shame.cms/Ace/assets/css/ace.css">
-       
-          <lezaz:import dir='{template}admin/css' type='css' >   </lezaz:import>       
-       <lezaz:import dir='{template}admin/js' type='js' sort='asc' compress='true'>          </lezaz:import>  
+          <!-- CSS   ================================================== -->  
+          <lezaz:import dir='{template}admin/css' type='css' compress='1'>   </lezaz:import>     
+           <!-- JS      ================================================== -->
+       <lezaz:import dir='{template}admin/js' type='js' sort='asc' compress='1' >    fdfdsf.js;fdsfds.js;fdsfdsfdsfdfd.js ;{template}Ace1.3.3/assets/js/ace.js      </lezaz:import>  
    
-       
+           
    </head>
 
     <body class="home blog">

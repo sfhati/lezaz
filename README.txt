@@ -264,3 +264,28 @@ the value of field name = lezaz#myid[name] <br>
   the result syntax for lezaz#ideach is true if there is at least 1 item in array
 
 ----------------------------------------------------------------------------------
+
+  <lezaz:import/>
+  Attribute	Description        Default
+  ----------------------------------------------------------------------
+  dir    import all files from this dir                           Null
+  type         css/js                                             Null
+  compress     to compress all files in one                       Null
+ * 1   >> without compress 
+ * 2   >> with compress                  
+  sort        fort import files ASC DESC                          ASC
+
+  inside code you can use list of file to import link like
+ * {theme}js/jquery.js ; //inside theme folder use js folder then file 
+ * js/jquery.js; //same apove coz defult directory is theme 
+ * {template}admin/js/file.js; // inside template folder use admin folder then js file
+  TODO: * url:http://sdn.com/file.js -> {theme}js/file.js ;//check if url valid and return 200 then import else import from your server
+
+  Example
+  --------
+  <lezaz:import dir='js' type="css"/>
+  <lezaz:import dir='js' type="css">
+  {template}admin/css/file.css
+  url:http://sdn.com/file.css -> css/file2.css
+  </lezaz:import>
+----------------------------------------------------------------------------------

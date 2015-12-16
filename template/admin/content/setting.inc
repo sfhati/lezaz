@@ -48,15 +48,21 @@
             
  
 <div class="space-4"></div>
-            [input:"text","site_title","","[site_title]","12","","Enter title"end input] 
+            [input:"text","site_title","","[site_title]-[english]","12","","Enter title"end input] 
+            [input:"text","site_titlear","","[site_title]-[arabic]","12","","Enter title"end input] 
             [input:"text","site_phone","","[site_phone]","12","","+966 (55555555)"end input] 
             [input:"text","site_email","","[site_email]","12","","email@site.com"end input] 
             [input:"text","facebook","","[facebook]","12","","http://site.com"end input] 
             [input:"text","twiter","","[twiter]","12","","http://site.com"end input] 
             [input:"text","instagram","","[instagram]","12","","http://site.com"end input] 
             [input:"text","youtube","","[youtube]","12","","http://site.com"end input] 
-            [input:"text","map_location","","[map_location]","12","","155552,114555"end input] 
-            [input:"text","address","","[address]","12","","saudi , makka 12 building"end input] 
+            [input:"text","rinning","","[rinning]","12","","http://site.com"end input] 
+            [input:"text","lat","","google map lat","12","","-332"end input] 
+            [input:"text","lng","","google map lng","12","","556"end input] 
+            
+            [input:"text","address","","[address]-[english]","12","","saudi , makka 12 building"end input] 
+            [input:"text","addressar","","[address]-[arabic]","12","","saudi , makka 12 building"end input] 
+
 
 
             <div class="form-group">
@@ -81,6 +87,14 @@
                 <label class='col-sm-2 control-label' for="form-field-2">[site_icon]</label>
                 <div  class='col-sm-9' >
                     <input name="icon" type="file" id="id-input-file-2" />
+                </div>   
+            </div> 
+           <div class="space-4"></div>
+            
+           <div class="form-group">
+                <label class='col-sm-2 control-label' for="form-field-2">[iconmap]</label>
+                <div  class='col-sm-9' >
+                    <input name="iconmap" type="file" id="id-input-file-2" />
                 </div>   
             </div> 
             

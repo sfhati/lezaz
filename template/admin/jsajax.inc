@@ -1,8 +1,8 @@
 <link href="/template/Ace1.3.3/assets/froala/css/froala_editor.min.css" rel="stylesheet" type="text/css">
 <link href="/template/Ace1.3.3/assets/froala/css/froala_style.min.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/template/Ace1.3.3/assets/css/chosen.css" />
-<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/datepicker.css" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
 [if:"[var:"useajax-var"end var]"," [else]
 <!-- page specific plugin scripts -->
 
@@ -45,10 +45,10 @@
 <script src="/template/Ace1.3.3/assets/js/x-editable/ace-editable.js"></script>     
 
 
-<!script src="/template/Ace1.3.3/assets/froala/js/froala_editor.min.js"></script>
+<script src="/template/Ace1.3.3/assets/froala/js/froala_editor.min.js"></script>
 <!--[if lt IE 9]>
   <script src="/template/Ace1.3.3/assets/froala/js/froala_editor_ie8.min.js"></script>
-<![endif]->
+<![endif]-->
 <script src="/template/Ace1.3.3/assets/froala/js/plugins/tables.min.js"></script>
 <script src="/template/Ace1.3.3/assets/froala/js/plugins/lists.min.js"></script>
 <script src="/template/Ace1.3.3/assets/froala/js/plugins/colors.min.js"></script>
@@ -56,7 +56,7 @@
 <script src="/template/Ace1.3.3/assets/froala/js/plugins/font_family.min.js"></script>
 <script src="/template/Ace1.3.3/assets/froala/js/plugins/font_size.min.js"></script>
 <script src="/template/Ace1.3.3/assets/froala/js/plugins/block_styles.min.js"></script>
-<script src="/template/Ace1.3.3/assets/froala/js/plugins/video.min.js"></script-->
+<script src="/template/Ace1.3.3/assets/froala/js/plugins/video.min.js"></script>
 
 "end if]
 
@@ -103,7 +103,7 @@
                             "/template/Ace1.3.3/assets/js/x-editable/bootstrap-editable.js",
                             "/template/Ace1.3.3/assets/js/x-editable/ace-editable.js",
             
- /*                           "/template/Ace1.3.3/assets/froala/js/froala_editor.min.js",
+                            "/template/Ace1.3.3/assets/froala/js/froala_editor.min.js",
                             "/template/Ace1.3.3/assets/froala/js/plugins/tables.min.js",
                             "/template/Ace1.3.3/assets/froala/js/plugins/lists.min.js",
                             "/template/Ace1.3.3/assets/froala/js/plugins/colors.min.js",
@@ -112,7 +112,7 @@
                             "/template/Ace1.3.3/assets/froala/js/plugins/font_size.min.js",
                             "/template/Ace1.3.3/assets/froala/js/plugins/block_styles.min.js",
                             "/template/Ace1.3.3/assets/froala/js/plugins/video.min.js",
-  */        
+          
                             null]
                         
                     $('.page-content-area').ace_ajax('loadScripts', scripts, function() {
@@ -233,15 +233,14 @@
                         droppable:true,
                         thumbnail:'large'
                     })
-$('.editable').editable();
 
-/*
+
                     $('#edittextarea , .edittextarea').editable({
                         inlineMode: false,
                         height:200,
                         imageUploadURL: '/?upoladimages=1'                      
                     });
- */                   
+                    
                     $('#formpage').submit(function() {
                         $('#newtextarea').val($('.froala-view').html());
                     });

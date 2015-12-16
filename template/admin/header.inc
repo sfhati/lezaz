@@ -6,9 +6,7 @@
 		
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-
-[if:"[var:"useajax-var"end var]","
-
+        <lezaz:if condition='lezaz:get(useajax)'>
 
 		<!--[if !IE]> -->
 		<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/pace.css" />
@@ -16,29 +14,13 @@
 		<script data-pace-options='{ "ajax": true, "document": true, "eventLag": false, "elements": false }' src="/template/Ace1.3.3/assets/js/pace.js"></script>
 
 		<!-- <![endif]-->
-"end if]
-		<!-- bootstrap & fontawesome -->
-		<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/bootstrap.css" />
-		<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/font-awesome.css" />
-
-		<!-- text fonts -->
-		<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/ace-fonts.css" />
-<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/colorbox.css" />
-<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/jquery-ui.custom.css" />
-<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/chosen.css" />
-<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/datepicker.css" />
-<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/bootstrap-timepicker.css" />
-<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/daterangepicker.css" />
-<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/bootstrap-datetimepicker.css" />
-<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/colorpicker.css" />
-<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/fullcalendar.css" />
-<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/jquery.gritter.css" />
-<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/ace-skins.css" />
+        </lezaz:if>
+		
 
 
-[if:"[var:"lng_CH-sess-var"end var]=='ar'","
+<lezaz:if condition="lezaz:get(lng)=='ar'">
 <link rel="stylesheet" href="/template/Ace1.3.3/assets/css/ace-rtl.css" />
-"end if]
+</lezaz:if>
 <style>
     .iconleftx {
     width: 35px;
@@ -51,15 +33,6 @@
 .iconleftx {
     display: block;
 }
-}
-.modal-body {
-    max-height: 400px;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-.form-horizontal .form-group {
-    margin-left: 0px;
-    margin-right: 0px;
 }
 </style>
 <script src="/template/Ace1.3.3/assets/js/jquery.js"></script>
@@ -89,6 +62,6 @@
 		<![endif]-->
 	</head>
 
-	<body class="[var:"skin"end var] [style-rtl]">
+	<body class="lezaz:get(skin) [style-rtl]">
             
             

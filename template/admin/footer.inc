@@ -5,7 +5,7 @@
 					<div class="footer-content">
 						<span class="bigger-120">
 							<span class="blue bolder">sfhati</span>
-							Application &copy; [php:"echo date('Y')"end php]
+							Application &copy; lezaz~date(Y)
 						</span>
 
 						&nbsp; &nbsp;
@@ -49,11 +49,7 @@
                     $('#switchdiscount1,#switchprice1').hide();
             }
 
-var building;
- var building_name;
- var floor;
- var office;
- var office_no;
+
 </script>
 
 <iframe name="ajaxform" id="ajaxform" style="display: none"/>

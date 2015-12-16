@@ -31,7 +31,8 @@
 
                                             
                                             
-                           [include:"{template}admin/option"end include]	                 
+                                            <lezaz:block file="{template}admin/option" />
+                           
                                                 
                                                 
                                                 
@@ -72,11 +73,11 @@
 		<script src="/template/Ace1.3.3/assets/js/ace/elements.treeview.js"></script>
 		<script src="/template/Ace1.3.3/assets/js/ace/elements.wizard.js"></script>
 		<script src="/template/Ace1.3.3/assets/js/ace/elements.aside.js"></script>
-                [if:"[var:"useajax-var"end var]","
+                <lezaz:if condition="lezaz:get(useajax)">
 		<script src="/template/Ace1.3.3/assets/js/ace/ace-ajax.js"></script>
-                 [else]
+                <lezaz:else/>
 		<script src="/template/Ace1.3.3/assets/js/ace/ace.js"></script>
-                "end if]
+                </lezaz:if>
 		<script src="/template/Ace1.3.3/assets/js/ace/ace.ajax-content.js"></script>
 		<script src="/template/Ace1.3.3/assets/js/ace/ace.touch-drag.js"></script>
 		<script src="/template/Ace1.3.3/assets/js/ace/ace.sidebar.js"></script>
@@ -105,23 +106,24 @@
                                                 
                                                 
 						<!-- /section:settings.box -->
-                                                [if:"[var:"useajax-var"end var]","
+
+                                                <lezaz:if condition="lezaz:get(useajax)">
 						<div class="page-content-area" data-ajax-content="true">
 							<!-- ajax content goes here -->
 						</div><!-- /.page-content-area -->                                                                                         
-                                               [else]
+                                              <lezaz:else/>
 
                                                  
  <div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
-[include:"{template}admin/content/[var:"noajaxpage-var-sess"end var]"end include]
+<lezaz:block file="{template}admin/content/lezaz:get(noajaxpage)"/>
 								<!-- PAGE CONTENT ENDS -->
 							</div><!-- /.col -->
 						</div><!-- /.row -->
                                                                                                         
 						
-                                                 "end if]
+                                                 </lezaz:if>
 					</div><!-- /.page-content -->
 				</div>
 			</div><!-- /.main-content -->

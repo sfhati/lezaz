@@ -37,7 +37,8 @@
 					</div>
 				</div><!-- /.sidebar-shortcuts -->
 
-	[include:"{template}admin/menu"end include]			
+
+        <lezaz:block file='{template}admin/menu' />
 
 				<!-- #section:basics/sidebar.layout.minimize -->
 				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

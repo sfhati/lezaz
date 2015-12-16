@@ -1,3 +1,6 @@
+ 
+            
+            
 
 <title>Form Elements - Ace Admin</title>
 
@@ -11,18 +14,17 @@
 		</small>
 	</h1>
 </div><!-- /.page-header -->
-<div class="row">
+<div class="row"> 
 	<div class="col-xs-12">
 		<!-- PAGE CONTENT BEGINS -->
-                <form id="formregister" class="form-horizontal" role="form" method="post" target="ajaxform"> 
-			<!-- #section:elements.form -->
-                         
-          
-[input:"text","client_name","","[client_name]","5","r","[client_name]"end input] 
-[input:"text","client_phone","","[phone]","5","r","[phone]"end input] 
-[input:"text","client_mobile","","[mobile]","5","","[mobile]"end input] 
-[input:"text","client_address","","[address]","5","","[address]"end input] 
-[input:"text","client_comment","","[comment]","12","","[comment]"end input] 
+                <form id="formregister" class="form-horizontal" role="form" method="post" target="ajaxform"  enctype="multipart/form-data" > 
+			<!-- #section:elements.form -->   
+                          
+[input:"image","image","","[image]","","","[image]"end input]          
+[input:"text","client_title_ar","","[title] - [arabic]","","r","[title] - [arabic]"end input] 
+[input:"text","client_title_en","","[title] - [english]","","r","[title] - [english]"end input] 
+[input:"text","client_url","","[url]","","","[url]"end input] 
+[input:"text","client_sort","","[sort]","","","[sort]"end input] 
 
 
 
@@ -30,6 +32,7 @@
 
 [if:"[var:"editTable1-var"end var]","
 [input:"hidden","client_id"end input] 
+
 
 
 			<div class="clearfix form-actions">
@@ -49,11 +52,12 @@
 
 &nbsp; &nbsp;  
 [input:"reset","button1","[reset]","","fa-undo"end input]                                     
-[input:"hidden","redirect_page","managment_client"end input] 
-[input:"hidden","tablename","client"end input]                                   
+[input:"hidden","redirect_page","managment_clients"end input] 
+[input:"hidden","tablename","client"end input]       
+ 
 				</div>
 			</div>
-                </form>
+                </form> 
 			
 		<!-- PAGE CONTENT ENDS -->
 	</div><!-- /.col -->
@@ -66,3 +70,4 @@
 <![endif]-->
 
 [include:"{template}admin/jsajax"end include]	
+            

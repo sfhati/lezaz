@@ -62,13 +62,16 @@ define('THEME_LINK', TEMPLATE_LINK . THEME_FOLDER . '/');
 
 define('SITE_EMAIL', 'info@' . SITE_DOMAIN);
 define('Main_Domain', 'http://server.sfhati.com/');
-define('Version', '4.07');
+define('Version', '1.00');
+define('DEVELOP_MODE', true); // no sql cache is defult
 
 define('SQL_CACHE', '20'); // no sql cache is defult
 define('CRYPT_CACHE', true); // no sql cache is defult
 define('SALT','FR4d32cdvTYdw2s#gt54');
 define('LEZAZ_START_TIME', microtime(1), true);
 define('LEZAZ_START_PEAK_MEM', memory_get_peak_usage(true));
+
+
 
 // include Classes 
 include(CLASSES_PATH . '___core.php');

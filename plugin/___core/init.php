@@ -1,6 +1,6 @@
 <?php
 
-echo $_SESSION['LEZAZ_start'];
+
 $lezaz->listen('requset.start', function() use($lezaz) {
     //  echo "requset.start";
     //    $lezaz->go($lezaz->address(),'html:15');

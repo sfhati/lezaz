@@ -317,21 +317,21 @@
 										[Profile]
 									</a>
 								</li>
-                                                                [if:"[var:"lng_CH-sess-var"end var]=='en'","
+                                                                <lezaz:if condition="lezaz:get(lng)=='ar'">
 								<li>
 									<a href="/?set_language=ar&link=admin">
 										<i class="ace-icon fa fa-globe"></i>
 										عربي
 									</a>
 								</li>
-                                                                [else]
+                                                                <lezaz:else/>
 								<li>
 									<a href="/?set_language=en&link=admin">
 										<i class="ace-icon fa fa-globe"></i>
 										English
 									</a>
 								</li>
-                                                                "end if]
+                                                                </lezaz:if>
 								<li class="divider"></li>
 
 								<li>
