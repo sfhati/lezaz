@@ -46,21 +46,7 @@
                                                 
                                                 
 
-		<!-- basic scripts -->
-   
-		<!--[if !IE]> -->
 
-
-		<!-- <![endif]-->
-
-		<!--[if IE]>
-<script type="text/javascript">
- window.jQuery || document.write("<script src='/template/Ace1.3.3/assets/js/jquery1x.js'>"+"<"+"/script>");
-</script>
-<![endif]-->
-		<script type="text/javascript">
-			if('ontouchstart' in document.documentElement) document.write("<script src='/template/Ace1.3.3/assets/js/jquery.mobile.custom.js'>"+"<"+"/script>");
-		</script>
 		<script src="/template/Ace1.3.3/assets/js/bootstrap.js"></script>
 
 		<!-- ace scripts -->
@@ -117,7 +103,7 @@
  <div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
-<lezaz:block file="{template}admin/content/lezaz:get(noajaxpage)"/>
+<lezaz:block file="{template}admin/content/'.lezaz:get(noajaxpage).'"/>
 								<!-- PAGE CONTENT ENDS -->
 							</div><!-- /.col -->
 						</div><!-- /.row -->

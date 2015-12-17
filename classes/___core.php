@@ -25,7 +25,8 @@ Class __CORE {
     protected $output = null;
     public $main_template = 'index';
     private $valriables = array();
-
+    private $language='en';
+    
     public function __construct() {
         // get all plugin active inside $plugin
         $dir = PLUGIN_PATH;
@@ -40,6 +41,11 @@ Class __CORE {
         }
     }
 
+    public function language($set=''){
+        if($set) $this->language=$set;
+        return  $this->language;
+    }
+    
     public function __add($class, $name) {
         $this->$name = new $class;
     }

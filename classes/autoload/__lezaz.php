@@ -217,10 +217,6 @@ class __LEZAZ {
      */
     private function GetSyantax($t, $c = 0) {
 
-//lezaz#id(parm) /lezaz#([^\W]*[\(][^\)]*\))/igm
-//lezaz#id      lezaz#([^\W]*)
-//lezaz$parm lezaz$parm[item]              lezaz\$([\[|\]]?[^\W][\[|\]]?)*  
-//lezaz:func(parm)            lezaz:([^\W]*[\(][^\)]*\))
         $t = $this->syntax_dolar($t, $c);
         $t = $this->syntax_hash($t, $c);
         $t = $this->syntax_func($t, $c);

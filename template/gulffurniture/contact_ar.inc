@@ -80,9 +80,9 @@
 		    		<h3>معلومات الإتصال</h3>
 		    		<p> [var:"pagedata[page_cont]"end var]	</p>
 		    		<br>
-		    		<p><i class="fa fa-home"></i> [cache:"addressar"end cache] </p>
-					<p><i class="fa fa-phone"></i>[cache:"site_phone"end cache]</p>
-					<p><i class="fa fa-envelope-o"></i>[cache:"site_email"end cache]</p>
+		    		<p><i class="fa fa-home"></i> lezaz:setting(addressar) </p>
+					<p><i class="fa fa-phone"></i>lezaz:setting(site_phone)</p>
+					<p><i class="fa fa-envelope-o"></i>lezaz:setting(site_email)</p>
 					<p><i class="fa fa-globe"></i>  www.shahamh.com</p>
 		    		</div>
 				</div><!-- sidebar end -->
@@ -104,7 +104,7 @@
 	<script type="text/javascript">
       $(function() {
           
-var myLatLng = {lat: [cache:"lat"end cache], lng: [cache:"lng"end cache]};
+var myLatLng = {lat: lezaz:setting(lat), lng: lezaz:setting(lng)};
   // Create a map object and specify the DOM element for display.
   var map = new google.maps.Map(document.getElementById('map'), {
     center: myLatLng,
@@ -116,7 +116,7 @@ var myLatLng = {lat: [cache:"lat"end cache], lng: [cache:"lng"end cache]};
   var marker = new google.maps.Marker({
     map: map,
     position: myLatLng,
-    icon: "{{upload}}site/[cache:"iconmap"end cache]"
+    icon: "{{upload}}site/lezaz:setting(iconmap)"
   });          
     
   

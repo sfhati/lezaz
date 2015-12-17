@@ -42,7 +42,7 @@
 								<span class="badge badge-grey">4</span>
 							</a>
 
-							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+							<ul class="dropdown-menu-[right_left] dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
 								<li class="dropdown-header">
 									<i class="ace-icon fa fa-check"></i>
 									4 Tasks to complete
@@ -107,7 +107,7 @@
 								<li class="dropdown-footer">
 									<a href="#">
 										See tasks with details
-										<i class="ace-icon fa fa-arrow-right"></i>
+										<i class="ace-icon fa fa-arrow-[right_left]"></i>
 									</a>
 								</li>
 							</ul>
@@ -119,7 +119,7 @@
 								<span class="badge badge-important">8</span>
 							</a>
 
-							<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+							<ul class="dropdown-menu-[right_left] dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
 								<li class="dropdown-header">
 									<i class="ace-icon fa fa-exclamation-triangle"></i>
 									8 Notifications
@@ -175,7 +175,7 @@
 								<li class="dropdown-footer">
 									<a href="#">
 										See all notifications
-										<i class="ace-icon fa fa-arrow-right"></i>
+										<i class="ace-icon fa fa-arrow-[right_left]"></i>
 									</a>
 								</li>
 							</ul>
@@ -187,7 +187,7 @@
 								<span class="badge badge-success">5</span>
 							</a>
 
-							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+							<ul class="dropdown-menu-[right_left] dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
 								<li class="dropdown-header">
 									<i class="ace-icon fa fa-envelope-o"></i>
 									5 Messages
@@ -283,9 +283,9 @@
 								</li>
 
 								<li class="dropdown-footer">
-									<a href="/admin/{{ajxurl}}page/inbox">
+									<a href="/admin/{{ajxurl}}inbox">
 										See all messages
-										<i class="ace-icon fa fa-arrow-right"></i>
+										<i class="ace-icon fa fa-arrow-[right_left]"></i>
 									</a>
 								</li>
 							</ul>
@@ -294,7 +294,7 @@
 						<!-- #section:basics/navbar.user_menu -->
 						<li class="light-blue">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-								<img class="nav-user-photo" src="{{upload}}/site/[cache:"logo1"end cache]" alt="admin" />
+								<img class="nav-user-photo" src="{{upload}}site/lezaz:setting(logo1)" alt="admin" />
 								<span class="user-info">
 									<small>Welcome</small>
 									
@@ -303,7 +303,7 @@
 								<i class="ace-icon fa fa-caret-down"></i>
 							</a>
 
-							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+							<ul class="user-menu dropdown-menu-[right_left] dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 								<li>
 									<a href="/admin/{{ajxurl}}page/setting">
 										<i class="ace-icon fa fa-cog"></i>
