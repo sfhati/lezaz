@@ -289,3 +289,50 @@ the value of field name = lezaz#myid[name] <br>
   url:http://sdn.com/file.css -> css/file2.css
   </lezaz:import>
 ----------------------------------------------------------------------------------
+
+ <lezaz:input/>
+  Attribute	Description        Default
+  --------------------------------------------
+  type        text,password,select,check,radio,button,submit,reset,textarea,date,                             text
+  id          referance for this input use like lezaz#id, if there is no attr name we wll use id as name      null
+  value       its a value!
+  label       label text if no attr label we wll not add label element!
+  size        number from 1:12 defult is 9 , this is size of this element
+  sizegroup   number from 1:12 defult is 12 , this is size of groub form for this element
+  validation >>
+  optional or o: Only validate when the field is not empty
+  required or r: Field is required
+  length[100] or l : Between x and y characters allowed
+  Max:7 or M: Set the maximum chr
+  min:7 : Set the minimum chr
+  confirm[fieldID] c: Match the other field (ie:confirm[password] or c[password])
+  telephone or t: Match telephone regEx rule.
+  email or e: Match email regEx rule.
+  number or n: Numbers only
+  nospecialcaracters or s: No special characters allowed
+  letter : Letters only
+  exemptString : Will not validate if the string match
+  date or d:  date format Ex. d[yy,dd,mm:datehere]
+  regx : regular expression use like rege:^[a-z\ \']+
+  placeholder   normal
+  icon          icon for element from awsomefont
+  help          show button for help , when press this attr value wll show          Null
+  msgvalidation if fail validation this msg wll show                                Null
+
+
+  Example
+  --------
+  <lezaz:input id='myid' type="text" label="text" value="x" size="9" validation="r"/>
+
+
+
+  button
+  ======
+  color : info2,purple,pink,light,yellow,grey,white | grey
+  size  : xlg,mini,minier,sm | sm width-auto
+  border: true,false or 1,0 | 1
+  hover : true,false or 1,0 | 1
+  option : bold,round,app | Null
+  icon : {fontawsome fa-check} like check,trash-o,bigger-160 | Null , left if not null
+  icon-right : {fontawsome fa-check} like check,trash-o,bigger-160 | Null , left if not null
+ <lezaz:input type="button" color="info2" size="xlg"/>

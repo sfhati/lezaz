@@ -16,7 +16,7 @@
         <!-- <![endif]-->
     </lezaz:if>
 
-  
+
 
     <lezaz:if condition="lezaz:language()=='ar'">
         <link rel="stylesheet" href="{template}admin/css/extra/ace-rtl.css" />
@@ -46,6 +46,6 @@
 </head>
 
 <body class="lezaz:get(skin) [style-rtl]">
-  <lezaz:import dir='{template}admin/css' type='css' compress='0'/>
-    <lezaz:import dir='{template}admin/js' type='js' compress='0'/>
+<lezaz:import dir='{template}admin/css' type='css' compress='0'/>
+<lezaz:import dir='{template}admin/js' type='js' compress='0'/>
 

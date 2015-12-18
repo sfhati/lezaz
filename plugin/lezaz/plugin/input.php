@@ -47,71 +47,140 @@
   border: true,false or 1,0 | 1
   hover : true,false or 1,0 | 1
   option : bold,round,app | Null
-  icon : {fontawsome fa-check} like check,trash-o,bigger-160 | Null , left if not null
+  icon : {fontawsome fa-check} like check,trash-o,bigger-160 | Null
   icon-right : {fontawsome fa-check} like check,trash-o,bigger-160 | Null , left if not null
- <lezaz:input type="button" color="info2" size="xlg"/>
+  <lezaz:input type="button" color="info2" size="xlg"/>
  */
 
 function lezaz_input($vars, $html) {
     // General code
-    if(!isset($vars['type'])) $vars['type']='text';
-    if(!isset($vars['id'])) $vars['id']=$vars['type'].'_'.rand(44,44444);
-    if(!isset($vars['name'])) $vars['name']=$vars['id'];
-    if (!isset($vars['value'])) $vars['value']=$html;
-    if (isset($vars['label'])) $vars['label']=' 
-       <label class="col-sm-'.$vars['sizelabel'].' control-label no-padding-right" for="' . $vars['id'] . '"> ' . $vars['label'] . ' </label> 
-    ' ;
+    if (!isset($vars['type']))
+        $vars['type'] = 'text';
+    if (!isset($vars['id']))
+        $vars['id'] = $vars['type'] . '_' . rand(44, 44444);
+    if (!isset($vars['name']))
+        $vars['name'] = $vars['id'];
+    if (!isset($vars['value']))
+        $vars['value'] = $html;
+    if (!isset($vars['sizelabel']))
+        $vars['sizelabel'] = '3';
+    if (isset($vars['label']))
+        $label_text = ' 
+       <label class="col-sm-' . $vars['sizelabel'] . ' control-label no-padding-right" for="' . $vars['id'] . '"> ' . $vars['label'] . ' </label> 
+    ';
+    if (isset($vars['icon'])) {
+        //$vars['icon'] = add_str_prefix($vars['icon'], 'fa-');
+        //$vars['icon'] = str_replace('fa-bigger', 'bigger', $vars['icon']);
+        $icon_html = '<i class="ace-icon fa ' . $vars['icon'] . '"></i>';
+    }
+    if (isset($vars['icon-right'])) {
+        //$vars['icon-right'] = add_str_prefix($vars['icon-right'], 'fa-');
+        //$vars['icon-right'] = str_replace('fa-bigger', 'bigger', $vars['icon-right']);
+        $icon_right_html = '<i class="ace-icon fa ' . $vars['icon-right'] . '"></i>';
+    }
 
-    
-    
+
+
     if ($vars['type'] == 'button' || $vars['type'] == 'submit' || $vars['type'] == 'reset') {
+        if ($icon_right_html)
+            $icon_right_html = str_replace('"></i>', '', $icon_right_html) . ' icon-on-right"></i>';
         $vars['color'] = add_str_prefix($vars['color'], 'btn-', 'grey');
         $vars['size'] = add_str_prefix($vars['size'], 'btn-', 'sm');
-        if(isset($vars['icon'])){
-        $vars['icon'] = add_str_prefix($vars['icon'], 'fa-');
-        $vars['icon'] = str_replace('fa-bigger', 'bigger', $vars['icon']);
-        $icon_html='<i class="ace-icon fa ' . $vars['icon'] . '"></i>';
-        }
-        if(isset($vars['icon-right'])){
-        $vars['icon-right'] = add_str_prefix($vars['icon-right'], 'fa-');
-        $vars['icon-right'] = str_replace('fa-bigger', 'bigger', $vars['icon-right']);
-        $icon_right_html='<i class="ace-icon fa ' . $vars['icon-right'] . ' icon-on-right"></i>';
-        }
         $vars['option'] = add_str_prefix($vars['option'], 'btn-');
         if (!$vars['border'] && isset($vars['border']))
             $vars['border'] = 'no-border';
         if (!$vars['hover'] && isset($vars['hover']))
             $vars['hover'] = 'no-hover';
-      
-            if (!isset($vars['label'])) $vars['label']=$html;
-           if (!trim($vars['label']))    $vars['icon'].=' icon-only ';
+
+        if (!isset($vars['label']))
+            $vars['label'] = $html;
+        if (!trim($vars['label']))
+            $vars['icon'].=' icon-only ';
         $button_html = ' 
-<button type="' . $vars['type'] . '" class="btn  ' . $vars['color'] . ' ' . $vars['size'] . ' ' . $vars['option'] . ' ' . $vars['border'] . ' ' . $vars['hover'] . '">'.
-" 
+<button type="' . $vars['type'] . '" class="btn  ' . $vars['color'] . ' ' . $vars['size'] . ' ' . $vars['option'] . ' ' . $vars['border'] . ' ' . $vars['hover'] . '">' .
+                " 
     $icon_html  $vars[label] $icon_right_html
- "  .             '</button>        
+ " . '</button>        
             ';
         return $button_html;
     }
-    
-    
-    
-    if($vars['type']=='text' || $vars['type']=='password'){
-                   $input_html = '
-			<div id="input-' . $vars['type'] . '" class="form-group<?php if($lezaz->get("_MSG_' . $vars['name'] . '")){echo " has-".$lezaz->get("_MSG_' . $vars['name'] . '");} ?>">
-				'.$vars['label'].'
-				<div class="col-sm-'.$vars['size'].'">
-                                   ' . $icon . '
-					<input type="' . $vars['type'] . '" name="' . $vars['name'] . '" id="' . $vars['id'] . '" value="<?php if($lezaz->get("_VAL_' . $vars[1] . '")){echo $lezaz->get("_VAL_' . $vars[1] . '");}else{ echo "' . $vars['value'] . '"; } ?>" placeholder="' . $vars['placeholder'] . '" class="col-xs-' . $size_input . '" />
-                                      &nbsp; &nbsp;  ' . $help . '
+
+
+
+    if ($vars['type'] == 'text' || $vars['type'] == 'password') {
+        if ($icon_html)
+            $icon_span = ' <span class="input-icon">';
+        if ($icon_right_html)
+            $icon_span = ' <span class="input-icon input-icon-right">';
+        if ($icon_span)
+            $close_span = '</span>';
+        if ($vars['placeholder'])
+            $placeholder = 'placeholder="' . $vars['placeholder'] . '"';
+        if (!$vars['size'])
+            $vars['size'] = '9';
+        if ($vars['valudation']) {
+            $validation = '<?php $_SESSION[\'lezaz-validation\'][\'' . $vars['id'] . '\']=' . $vars['valudation'] . '; ?>';
+        }
+        $input_html = '
+                       
+			<div id="input-' . $vars['id'] . '" class="form-group<?php if($lezaz->get("_MSG_' . $vars['id'] . '")){echo " has-".$lezaz->get("_MSG_' . $vars['id'] . '");} ?>">
+				' . $label_text . '
+				<div class="col-sm-' . $vars['size'] . '">
+                                   ' . $icon_span . '
+<input type="' . $vars['type'] . '" name="' . $vars['name'] . '" id="' . $vars['id'] . '" value="<?php if($lezaz->get("_VAL_' . $vars['id'] . '")){echo $lezaz->get("_VAL_' . $vars['id'] . '");}else{ echo "' . $vars['value'] . '"; } ?>" ' . $placeholder . ' class="col-sm-12" />
+' . $icon_right_html . $icon_html . $close_span . '
 					
 				</div>
 			</div>
                         <div class="space-4"></div>
             
              ';
-return $input_html;                   
+        return $input_html;
     }
+
+    
+    
+    
+    
+    
+    
+    
+     if ($vars['type'] == 'checkbox') {
+
+        if (!$vars['size'])
+            $vars['size'] = '9';
+if($vars['skin']=='1') $class='ace';
+elseif($vars['skin']=='2') $class='ace ace-checkbox-2';
+elseif($vars['skin']=='3') $class='ace ace-switch';
+elseif($vars['skin']=='4') $class='ace ace-switch ace-switch-2';
+elseif($vars['skin']=='5') $class='ace ace-switch ace-switch-3';
+elseif($vars['skin']=='6') $class='ace ace-switch ace-switch-4';
+elseif($vars['skin']=='7') $class='ace ace-switch ace-switch-5';
+elseif($vars['skin']=='8') $class='ace ace-switch ace-switch-6';
+elseif($vars['skin']=='9') $class='ace ace-switch ace-switch-7';
+elseif($vars['skin']=='9') $class='ace ace-switch ace-switch-8';
+else $class='';
+
+        $input_html = '
+<?php if($lezaz->get("_VAL_' . $vars['name'] . '")){ $_VAL_'.$vars['name'].'_chk = "checked";} ?>            
+<div class="checkbox col-sm-' . $vars['size'] . '">
+    <label>
+            <input id="' . $vars['id'] . '"  name="' . $vars['name'] . '"  value="' . $vars['value'] . '" class="'.$class.'" type="' . $vars['type'] . '" {{lezaz_php}} echo $_VAL_'.$vars['name'].'_chk; {{/lezaz_php}} >
+            <span class="lbl"> ' . $vars['label'] . '</span>
+    </label>
+</div>          
+<div class="space-4"></div>            
+             ';
+        return $input_html;
+    } 
+  
+    
+    
+    
+    
+    
+    
+    
     return '';
 }
 

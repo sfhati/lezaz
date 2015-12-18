@@ -14,19 +14,29 @@
         <form  id="formproduct" class="form-horizontal" method="post" enctype="multipart/form-data"> 
             <!-- #section:elements.form -->
 
-            
+               
              <div class="form-group">
                 <label class='col-sm-2 control-label' for="form-field-2">[use ajax]</label>
                 <div  class='col-sm-9' >
-<label>
+<label>  
     <input type="checkbox" name="use_ajax" value="1" [var:"_VAL_use_ajax"end var]  class="ace ace-switch" />
   <span class="lbl"></span>
  </label>
                 </div>   
-            </div> 
-
-            
-            
+            </div>   
+  
+    <lezaz:input id='text' placeholder="bassam" label="text"  value="x" validation="r"/>        
+    <lezaz:input id='use_ajax' type="checkbox"  label="[use ajax]"  value="1" />        
+    <lezaz:input id='use_ajax1' type="checkbox"  label="[use ajax]"  value="1" skin="1" />        
+    <lezaz:input id='use_ajax2' type="checkbox"  label="[use ajax]"  value="1" skin="2" />        
+    <lezaz:input id='use_ajax3' type="checkbox"  label="[use ajax]"  value="1" skin="3" size="4" />        
+    <lezaz:input id='use_ajax4' type="checkbox"  label="[use ajax]"  value="1" skin="4" size="4"/>        
+    <lezaz:input id='use_ajax5' type="checkbox"  label="[use ajax]"  value="1" skin="5" size="4" />        
+    <lezaz:input id='use_ajax5' type="checkbox"  label="[use ajax]"  value="1" skin="6" size="4" />        
+    <lezaz:input id='use_ajax5' type="checkbox"  label="[use ajax]"  value="1" skin="7" size="4" />        
+    <lezaz:input id='use_ajax5' type="checkbox"  label="[use ajax]"  value="1" skin="8" size="4" />        
+    <lezaz:input id='use_ajax5' type="checkbox"  label="[use ajax]"  value="1" skin="9" size="4" />        
+               
             
             
             <div class="form-group">
@@ -133,7 +143,7 @@
               <script src="/template/Ace1.3.3/assets/js/excanvas.js"></script>
             <![endif]-->
 
-            [include:"{template}admin/jsajax"end include]	
+      
 
 
 

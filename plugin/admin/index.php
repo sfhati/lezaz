@@ -1,14 +1,19 @@
 <?php
- 
 $lezaz->set('ajxURL','');
 $lezaz->set('useajax','0');
 $lezaz->set('skin','no-skin');
-$lezaz->language('ar');
+$lezaz->set('user','admin');
+if(!$_SESSION['language']) $_SESSION['language']='en';
+$lezaz->language($_SESSION['language']);
 
 $lezaz->router(array('/admin/@*','admin'), function() use ($lezaz){
             $lezaz->main_template = '{template}admin/index';
             $lezaz->set('noajaxpage','index');
             $lezaz->set('index','open');
+if($lezaz->get('set_language')){
+    $_SESSION['language']= $lezaz->get('set_language');
+    $lezaz->go(SITE_LINK . 'admin/');
+ }
             
         });
 
@@ -29,3 +34,9 @@ $lezaz->router(array('/admin/@*','admin'), function() use ($lezaz){
 });
        
        
+
+// test input 
+$lezaz->set("_MSG_text","error");
+$lezaz->set("_VAL_text","maria al7elwa:)");
+$lezaz->set("_VAL_use_ajax","maria al7elwa:)");
+

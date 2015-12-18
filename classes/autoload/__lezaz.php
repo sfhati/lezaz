@@ -133,12 +133,13 @@ class __LEZAZ {
         //check for all none html lezaz syntax with echo parameter
 
         $t = $this->GetSyantax($t);
+        $t = $this->replace_Syantax($t);
 
 
         //delete old php files from cache folder
         $this->clearcache(md5($templatefile));
         //
-        $t = '<?php global $lezaz;' . $this->topcode . '?>' . $this->GetSyantax($t);
+        $t = '<?php global $lezaz;' . $this->topcode . '?>' . $t;
         //write php file       
         $this->filewrite($export_php_file, $t);
         return $export_php_file;
@@ -296,6 +297,12 @@ class __LEZAZ {
         return $this->syntax_func($t, $c);
     }
 
+    
+    function replace_Syantax($t){
+        $search=array('{{lezaz_php}}','{{/lezaz_php}}');
+        $replace=array('<?php','?>');
+        return str_replace($search, $replace, $t);
+    }
     /**
      * write output file php 
      * 
