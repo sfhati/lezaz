@@ -140,7 +140,8 @@ class __LEZAZ {
         $this->clearcache(md5($templatefile));
         //
         $t = '<?php global $lezaz;' . $this->topcode . '?>' . $t;
-        //write php file       
+        //write php file 
+        @mkdir(CACHE_PATH);
         $this->filewrite($export_php_file, $t);
         return $export_php_file;
     }

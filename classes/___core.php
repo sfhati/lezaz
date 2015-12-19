@@ -26,6 +26,7 @@ Class __CORE {
     public $main_template = 'index';
     private $valriables = array();
     private $language='en';
+    private $msseges='';
     
     public function __construct() {
         // get all plugin active inside $plugin
@@ -225,6 +226,9 @@ Class __CORE {
         return '';
     }
 
+    public function validate($var,$consept){
+        //trdh gfdh 
+    }
     public function sess($k, $i = '') {
         if (isset($_SESSION[$k]) && $i)
             return $_SESSION[$k][$i];
@@ -324,6 +328,34 @@ Class __CORE {
             $template_name = str_replace($arr_path, $arr_link, $template_name);
         }
         return $template_name;
+    }
+
+    public function set_msg($msg,$type){
+        $this->msseges[$type].=$msg;
+    }
+    public function msg(){
+        $alert['danger']='times';
+        $alert['success']='check';
+        $alert['warning']='ban';
+        $alert['info']='exclamation';
+        if(is_array($this->msseges)){
+            foreach($this->msseges as $type=>$msg){                
+                $m.='<div class="alert alert-'.$type.'">
+                        <button type="button" class="close" data-dismiss="alert">
+                                <i class="ace-icon fa fa-times"></i>
+                        </button>
+
+                        <strong>
+                                <i class="ace-icon fa fa-'.$alert[$type].'"></i>
+                                ['.$type.']
+                        </strong>
+
+                        '.$msg.'
+                        <br>
+                </div>';
+            }
+        }
+        return $m;
     }
 
     public function run() {

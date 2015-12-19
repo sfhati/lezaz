@@ -3,39 +3,19 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>Login Page - Ace Admin</title>
+		<title>Login Page - OHSAS Admin</title>
 
 		<meta name="description" content="User login page" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-		<!-- bootstrap & fontawesome -->
-		<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/bootstrap.css" />
-		<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/font-awesome.css" />
-
-		<!-- text fonts -->
-		<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/ace-fonts.css" />
-
-		<!-- ace styles -->
-		<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/ace.css" />
-
-		<!--[if lte IE 9]>
-			<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/ace-part2.css" />
-		<![endif]-->
-		<link rel="stylesheet" href="/template/Ace1.3.3/assets/css/ace-rtl.css" />
-
-		<!--[if lte IE 9]>
-		  <link rel="stylesheet" href="/template/Ace1.3.3/assets/css/ace-ie.css" />
-		<![endif]-->
-
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-
-		<!--[if lt IE 9]>
-		<script src="/template/Ace1.3.3/assets/js/html5shiv.js"></script>
-		<script src="/template/Ace1.3.3/assets/js/respond.js"></script>
-		<![endif]-->
+<lezaz:import dir='{template}admin/css' type='css' compress='0'/>
+<lezaz:import dir='{template}admin/js' type='js' compress='0'/>
 	</head>
 
 	<body class="login-layout">
+
+
+            
 		<div class="main-container">
 			<div class="main-content">
 				<div class="row">
@@ -48,10 +28,10 @@
     width: 30px;
     height: 30px;
 "></i>
-									<span class="light-blue">Sfhati</span>
+									<span class="light-blue">lezaz:setting(site_name)</span>
 									<span class="white" id="id-text2">Application</span>
 								</h1>
-								<h4 class="red">&copy; shahama.com</h4>
+								<h4 class="red">&copy; lezaz:setting(domain)</h4>
 							</div>
 
 							<div class="space-6"></div>
@@ -64,21 +44,21 @@
 												<i class="ace-icon fa fa-coffee green"></i>
 												[Please Enter Your Information]
 											</h4>
-
+lezaz:msg()
 											<div class="space-6"></div>
 
-                                                                                        <form method="post">
+                                                                                        <form method="post" >
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="[user name]" name="user" />
+															<input type="text" class="form-control" placeholder="[user name]" name="userxx" >
 															<i class="ace-icon fa fa-user"></i>
 														</span>
 													</label>
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="[password]" name="pass" />
+															<input type="password" class="form-control" placeholder="[password]" name="passxx" >
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
 													</label>
