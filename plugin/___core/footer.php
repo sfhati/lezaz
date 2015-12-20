@@ -103,3 +103,36 @@ $f[1][]=$y;
 rsort($f[1]);
 echo implode("\n", $f[0]).'Bassam'.implode("\n", $f[1]);
 $x='';*/
+
+
+$html=  file_get_contents(TEMPLATE_PATH.'admin/content/setting.inc');
+$html=get_tags($html,0);
+
+
+function get_tags($html,$x){
+    global $lezaz;
+$element1= $lezaz->string->between('<lezaz:','/>',$html);
+$element2= $lezaz->string->between('<lezaz:','</lezaz:',$html);
+$posel1=(strpos($html,$element1)+strlen($element1));
+$posel2=(strpos($html,$element2)+strlen($element2));
+echo "$posel1 && !$posel2\n";
+if($x=200) return "\n\n====================$html================\n\n";
+if((strpos($html,$element1)+strlen($element1)) < (strpos($html,$element2)+strlen($element2))){
+    $tag=  explode(' ', $element1);
+    $tag= $tag[0];
+    $element = '<lezaz:'.$element1.'/>';
+}else{
+    $tag=  explode(' ', $element2);
+    $tag= $tag[0];
+    $element = '<lezaz:'.$element2.'</lezaz:'.$tag.'>';
+}
+$html= str_replace ($element, $tag, $html);
+$x++;
+
+return get_tags($html,$x);
+
+}
+
+
+echo "\n\n-----------------$html---------------------\n\n";
+exit();

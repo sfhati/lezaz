@@ -15,63 +15,41 @@
             <!-- #section:elements.form -->
 
                
-             <div class="form-group">
-                <label class='col-sm-2 control-label' for="form-field-2">[use ajax]</label>
-                <div  class='col-sm-9' >
-<label>  
-    <input type="checkbox" name="use_ajax" value="1" [var:"_VAL_use_ajax"end var]  class="ace ace-switch" />
-  <span class="lbl"></span>
- </label>
-                </div>   
-            </div>   
-  
-    <lezaz:input id='text' placeholder="bassam" label="text"  value="x" validation="r"/>        
-    <lezaz:input id='use_ajax' type="checkbox"  label="[use ajax]"  value="1" />        
-    <lezaz:input id='use_ajax1' type="checkbox"  label="[use ajax]"  value="1" skin="1" />        
-    <lezaz:input id='use_ajax2' type="checkbox"  label="[use ajax]"  value="1" skin="2" />        
-    <lezaz:input id='use_ajax3' type="checkbox"  label="[use ajax]"  value="1" skin="3" size="4" />        
-    <lezaz:input id='use_ajax4' type="checkbox"  label="[use ajax]"  value="1" skin="4" size="4"/>        
-    <lezaz:input id='use_ajax5' type="checkbox"  label="[use ajax]"  value="1" skin="5" size="4" />        
-    <lezaz:input id='use_ajax5' type="checkbox"  label="[use ajax]"  value="1" skin="6" size="4" />        
-    <lezaz:input id='use_ajax5' type="checkbox"  label="[use ajax]"  value="1" skin="7" size="4" />        
-    <lezaz:input id='use_ajax5' type="checkbox"  label="[use ajax]"  value="1" skin="8" size="4" />        
-    <lezaz:input id='use_ajax5' type="checkbox"  label="[use ajax]"  value="1" skin="9" size="4" />        
+<lezaz:input id='use_ajax' type="checkbox"  label="[use ajax]"  value="1" skin="7" size="12" space='12' />
+ 
+<lezaz:input id='text' placeholder="bassam" label="text"  value="x" validation="r" size-label='2' size='10'  space='12'/>  
+<lezaz:input id='skinchoose' type='select' label="[Choose skin]"  value="skin-1" size-label='2' size='10'  space='12'>  
+                <option value="no-skin">[Defult skin]</option>
+                <option value="skin-1">[skin-1]</option>
+                <option value="skin-2">[skin-2]</option>
+                <option value="no-skin skin-3">[skin-3]</option>
+</lezaz:input>
+
+    
+       
+            
+          
                
-            
-            
-            <div class="form-group">
-                <label class='col-sm-2 control-label' for="form-field-2">[Choose skin]</label>
-                <div  class='col-sm-9' >
-            <select class="form-control" name="skinchoose">
-                <option value="no-skin" [if:"[var:"skin-var"end var]=='no-skin' "," selected='selected'"end if]>[Defult skin]</option>
-                <option value="skin-1" [if:"[var:"skin-var"end var]=='skin-1' "," selected='selected'"end if]>[skin-1]</option>
-                <option value="skin-2" [if:"[var:"skin-var"end var]=='skin-2' "," selected='selected'"end if]>[skin-2]</option>
-                <option value="no-skin skin-3" [if:"[var:"skin-var"end var]=='no-skin skin-3' "," selected='selected'"end if]>[skin-3]</option>
-            </select>            
-
-                </div>   
-            </div> 
-            
+           
  
             
 
             
- 
-<div class="space-4"></div>
-            [input:"text","site_title","","[site_title]-[english]","12","","Enter title"end input] 
-            [input:"text","site_titlear","","[site_title]-[arabic]","12","","Enter title"end input] 
-            [input:"text","site_phone","","[site_phone]","12","","+966 (55555555)"end input] 
-            [input:"text","site_email","","[site_email]","12","","email@site.com"end input] 
-            [input:"text","facebook","","[facebook]","12","","http://site.com"end input] 
-            [input:"text","twiter","","[twiter]","12","","http://site.com"end input] 
-            [input:"text","instagram","","[instagram]","12","","http://site.com"end input] 
-            [input:"text","youtube","","[youtube]","12","","http://site.com"end input] 
-            [input:"text","rinning","","[rinning]","12","","http://site.com"end input] 
-            [input:"text","lat","","google map lat","12","","-332"end input] 
-            [input:"text","lng","","google map lng","12","","556"end input] 
+
+            <lezaz:input type='text' id="site_title" label="[site_title]-[english]" placeholder="Enter title" size-label='2' size='10'  space='12'/> 
+            <lezaz:input type='text' id="site_titlear" label="[site_title]-[arabic]" placeholder="Enter title" size-label='2' size='10'  space='12'/> 
+            <lezaz:input type='text' id="site_phone" label="[site_phone]" placeholder="+966 (55555555)" size-label='2' size='10'  space='12'/> 
+            <lezaz:input type='text' id="site_email" label="[site_email]" placeholder="email@site.com" size-label='2' size='10'  space='12'/> 
+            <lezaz:input type='text' id="facebook" label="[facebook]" placeholder="http://site.com" size-label='2' size='10'  space='12'/> 
+            <lezaz:input type='text' id="twiter" label="[twiter]" placeholder="http://site.com" size-label='2' size='10'  space='12'/> 
+            <lezaz:input type='text' id="instagram" label="[instagram]" placeholder="http://site.com" size-label='2' size='10'  space='12'/> 
+            <lezaz:input type='text' id="youtube" label="[youtube]" placeholder="http://site.com" size-label='2' size='10'  space='12'/> 
+            <lezaz:input type='text' id="rinning" label="[rinning]" placeholder="http://site.com" size-label='2' size='10'  space='12'/> 
+            <lezaz:input type='text' id="lat" label="google map lat" placeholder="-332" size-label='2' size='10'  space='12'/> 
+            <lezaz:input type='text' id="lng" label="google map lng" placeholder="556" size-label='2' size='10'  space='12'/> 
             
-            [input:"text","address","","[address]-[english]","12","","saudi , makka 12 building"end input] 
-            [input:"text","addressar","","[address]-[arabic]","12","","saudi , makka 12 building"end input] 
+            <lezaz:input type='text' id="address" label="[address]-[english]" placeholder="saudi , makka 12 building" size-label='2' size='10'  space='12'/> 
+            <lezaz:input type='text' id="addressar" label="[address]-[arabic]" placeholder="saudi , makka 12 building" size-label='2' size='10'  space='12'/> 
 
 
 

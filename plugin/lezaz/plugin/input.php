@@ -10,6 +10,8 @@
   label       label text if no attr label we wll not add label element!
   size        number from 1:12 defult is 9 , this is size of this element
   sizegroup   number from 1:12 defult is 12 , this is size of groub form for this element
+  space       number from 1-12    
+  size-label   number from 1-12  defult is 3                                                                         null
   validation >>
   optional or o: Only validate when the field is not empty
   required or r: Field is required
@@ -62,11 +64,11 @@ function lezaz_input($vars, $html) {
         $vars['name'] = $vars['id'];
     if (!isset($vars['value']))
         $vars['value'] = $html;
-    if (!isset($vars['sizelabel']))
-        $vars['sizelabel'] = '3';
+    if (!isset($vars['size-label']))
+        $vars['size-label'] = '3';
     if (isset($vars['label']))
         $label_text = ' 
-       <label class="col-sm-' . $vars['sizelabel'] . ' control-label no-padding-right" for="' . $vars['id'] . '"> ' . $vars['label'] . ' </label> 
+       <label class="col-sm-' . $vars['size-label'] . ' control-label no-padding-right" for="' . $vars['id'] . '"> ' . $vars['label'] . ' </label> 
     ';
     if (isset($vars['icon'])) {
         //$vars['icon'] = add_str_prefix($vars['icon'], 'fa-');
@@ -79,7 +81,7 @@ function lezaz_input($vars, $html) {
         $icon_right_html = '<i class="ace-icon fa ' . $vars['icon-right'] . '"></i>';
     }
 
-
+if (isset($vars['space'])) $vars['space']='<div class="space-'.$vars['space'].'"></div>';
 
     if ($vars['type'] == 'button' || $vars['type'] == 'submit' || $vars['type'] == 'reset') {
         if ($icon_right_html)
@@ -100,7 +102,7 @@ function lezaz_input($vars, $html) {
 <button type="' . $vars['type'] . '" class="btn  ' . $vars['color'] . ' ' . $vars['size'] . ' ' . $vars['option'] . ' ' . $vars['border'] . ' ' . $vars['hover'] . '">' .
                 " 
     $icon_html  $vars[label] $icon_right_html
- " . '</button>        
+ " . '</button> '.$vars['space'].'       
             ';
         return $button_html;
     }
@@ -132,7 +134,7 @@ function lezaz_input($vars, $html) {
 					
 				</div>
 			</div>
-                        <div class="space-4"></div>
+                        '.$vars['space'].' 
             
              ';
         return $input_html;
@@ -169,14 +171,19 @@ else $class='';
             <span class="lbl"> ' . $vars['label'] . '</span>
     </label>
 </div>          
-<div class="space-4"></div>            
+'.$vars['space'].'             
              ';
         return $input_html;
     } 
-  
+ 
     
-    
-    
+       if ($vars['type'] == 'select') {
+           
+$input_html = '       
+<?php $_VAL_'.$vars['name'].'_'.$vars['value'].' = "selected"; if($lezaz->get("_VAL_' . $vars['name'] . '")){ $_VAL_'.$vars['name'].'_chk = "selected";} ?>            
+//<option    
+    ';
+       }
     
     
     
