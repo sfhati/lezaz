@@ -1,10 +1,27 @@
 <?php
 $html = file_get_contents(TEMPLATE_PATH . 'admin/test.inc');
 
-$xx = (get_tag($html));
+//$xx = (get_tag($html));
 //print_r($xx);
-$yy = get_tag($xx['html']);
+$yy = get_tags($html);
 print_r($yy);
+
+function get_tags($html){
+    $i=0;
+    while ($x <= 10) {
+        
+        if($i){ 
+            $html=$xx[$i-1]['html'];
+            $xx[$i-1]['html']='';
+            unset($xx[$i-1]['html']);
+        }
+        //echo "$html####";
+        $xx[$i] = (get_tag($html));
+        //print_r($xx[$i]);
+        if(!is_array($xx[$i])) return $xx;
+        $i++;        
+    }
+}
 
 function get_tag($html) {
     $find = "/<lezaz:/";
@@ -33,7 +50,14 @@ function get_tag($html) {
 
 
 
-        if ($startattrchr && $startattrchrpos) {
+        if ($startattrchr && $startattrchrpos) {            
+            if($chr=='<' && substr($html, $i + 1, 1) == "?") // check if there is code inside value
+                $ignoropen++;
+                
+            if($chr=='>' && substr($html, $i - 1, 1) == "?") // check if there is code inside value                 
+                $ignoropen--;
+               
+            if($ignoropen<1){
             $setval = 0;
             if ($startattrchr == ' ') {
                 if (in_array($chr, $spacechr)) {
@@ -46,7 +70,7 @@ function get_tag($html) {
             }
             if ($setval == 1) {
                 $attr_value = substr($html, $startattrchrpos + 1, ($i - $startattrchrpos - 1));
-                $attr_array['value'][] = $attr_value;
+                 $attr_array['attributes'][trim($attr_name)] = $attr_value;
                 $attrposstart = $i + 1;
                 $attr_name = '';
                 $startattrvalue = 0;
@@ -54,6 +78,7 @@ function get_tag($html) {
                 $startattrchrpos = 0;
                 $chrhere = 0;
                 $agnore = 0;
+            }
             }
         } else if ($attr_name && !$startattrchr) {
             if (in_array($chr, $spacechr)) {
@@ -65,11 +90,13 @@ function get_tag($html) {
                 $startattrchrpos = $i;
                 $startattrchr = ' ';
             }
+            $ignoropen=0;
         } else if ($attrposstart && !$attr_name) {
             if ($chr == ">") { // close tag!
                 if (substr($html, $i - 1, 1) == "/") { // end tag code                    
                     $htmlreplace = substr($html, ($startfrom - 7), (($i - ($startfrom - 7))) + 1);
                     $attr_array['htmltag'] = $htmlreplace;
+                    $attr_array['inner'] = '';
                     $attr_array['html'] = $html;
                     return $attr_array;
                 } else { // innerHTML tag 
@@ -104,15 +131,14 @@ function get_tag($html) {
             } elseif ($chr == '=') {
                 $attr_name = substr($html, $attrposstart, ($i - $attrposstart));
                 if (trim($attr_name)) {
-                    $attr_array['name'][] = $attr_name;
+                     $attr_array['attributes'][trim($attr_name)] ='' ;
                 }
             } else {
                 $chrhere = 1;
                 if ($agnore) {
                     $attr_name = substr($html, $attrposstart, ($i - $attrposstart - $agnore));
                     if (trim($attr_name)) {
-                        $attr_array['name'][] = $attr_name;
-                        $attr_array['value'][] = '';
+                        $attr_array['attributes'][trim($attr_name)] ='' ;
                         $attrposstart = $i;
                         $attr_name = 0;
                         $chrhere = 0;
@@ -142,5 +168,4 @@ function str_lreplace($search, $replace, $subject)
     return $subject;
 }
 
-echo "\n\n------------------Orginal HTML Code--------------------\n\n$html";
 exit();
