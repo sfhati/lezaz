@@ -77,12 +77,17 @@ function get_tag($html) {
                     $findinside = 0;
                     foreach ($closetagpos[0] as $closet) {
                         $htmlreplace = substr($html, ($startfrom - 7), (($closet[1] - ($startfrom - 7))) + (strlen($closet[0])));
+                         $ptrn = '/' . preg_quote(substr($html, ($startfrom - 7), $i-($startfrom - 8)),'/') . '/';
+                        $htmlinner = preg_replace($ptrn,'',$htmlreplace);
+                        $htmlinner = str_lreplace($closet[0],'',$htmlinner);
+
                         preg_match_all("/<lezaz:" . trim($tag) . "/", $htmlreplace, $opentagposx, PREG_OFFSET_CAPTURE);
                         preg_match_all("/<\/lezaz:" . trim($tag) . ">/", $htmlreplace, $closetagposx, PREG_OFFSET_CAPTURE);
                         $xopen = (1 + count($opentagposx[0])) . '|';
                         $xclose = count($closetagposx[0]);
                         if ($xopen == $xclose) {
                             $attr_array['htmltag'] = $htmlreplace;
+                            $attr_array['inner'] = $htmlinner;
                             $attr_array['html'] = $html;
                             return $attr_array;
                         }
@@ -125,7 +130,17 @@ function get_tag($html) {
     }
 }
 
+function str_lreplace($search, $replace, $subject)
+{
+    $pos = strrpos($subject, $search);
 
+    if($pos !== false)
+    {
+        $subject = substr_replace($subject, $replace, $pos, strlen($search));
+    }
+
+    return $subject;
+}
 
 echo "\n\n------------------Orginal HTML Code--------------------\n\n$html";
 exit();
