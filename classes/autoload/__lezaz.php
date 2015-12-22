@@ -41,8 +41,8 @@ class __LEZAZ {
     public $filename = '';
     public $plugin_dir = '';
     public $element = '';
-    public $topcode='';
-    
+    public $topcode = '';
+
     public function __construct($cache_path = '', $plugin_dir = '') {
         if ($cache_path)
             $this->cache_path = $cache_path;
@@ -83,7 +83,7 @@ class __LEZAZ {
         if (end(explode('.', $template_name)) != 'inc')
             $template_name = $template_name . '.inc';
 
-        if (!file_exists($template_name)) {           
+        if (!file_exists($template_name)) {
             $tempf = $lezaz->string->after_last(DIRECTORY_SEPARATOR, $template_name);
             if ($tempf)
                 $template_name = str_replace($tempf, '404.inc', $template_name);
@@ -110,7 +110,7 @@ class __LEZAZ {
      * @param string $templatefile full path for template file
      * @return string php code  
      */
-    public function openfile($templatefile) {      
+    public function openfile($templatefile) {
         //check if exist file template
         if (!file_exists($templatefile))
             return 'File not found!';
@@ -121,14 +121,13 @@ class __LEZAZ {
             return $export_php_file;
 
         $this->filename = $templatefile;
-
         //open file & get content to ALL_SYNTAX        
         $this->ALL_SYNTAX = implode(file($templatefile), '');
 
         // if there is php code will show as content in output
         $this->ALL_SYNTAX = str_replace(array('<?', '?>'), array('&lt;?', '?&gt;'), $this->ALL_SYNTAX);
         //start translate template code
-        $this->topcode='';
+        $this->topcode = '';
         $t = $this->Syntax($this->ALL_SYNTAX);
         //check for all none html lezaz syntax with echo parameter
 
@@ -174,33 +173,33 @@ class __LEZAZ {
      * @return string php code  
      */
     private function Syntax($str) {
-        if (!$str)
-            return '';
-        if (!is_array($this->element))
-            return $str;
-        $html = str_get_html($str);
-        $elemant = '';
-        foreach ($this->element as $elemnt) {
-            if ($elemant)
-                $elemant.=',lezaz:' . $elemnt;
-            else
-                $elemant = 'lezaz:' . $elemnt;
-        }
-        $e = $html->find($elemant, 0);
-        if (!$e) {
-            return $str;
-        }
-        $func = str_replace(':', "_", $e->tag);
-        if (is_callable($func)) {
-            foreach ($e->attr as $k => $v) {
-                $attr[$k] = $this->GetSyantax($v, 1);
-            }
-            $e->outertext = $func($attr, $this->Syntax($e->innertext));
-        } else
-            $e->outertext = $e->innertext;
 
-        $html->save();
-        return $this->Syntax($html->outertext);
+        $i = 0;
+        while ($x <= 10) {
+            if ($element_html) {
+                $str = $element_html;
+
+            }
+
+            //echo "$html####";
+            $new_inner = '';
+            $element = ($this->get_tag($str));
+            //print_r($element);
+            if (!is_array($element))
+                return $str;
+
+            $func = 'lezaz_' . $element['tag'];
+            if (is_callable($func)) {
+                foreach ($element['attributes'] as $k => $v) {
+                    $attr[$k] = $this->GetSyantax($v, 1);
+                }
+                $new_inner = $func($attr, $element['inner']);
+            }
+            $element_html = str_replace($element['htmltag'], $new_inner, $element['html']);
+
+
+            $i++;
+        }
     }
 
     /**
@@ -298,12 +297,12 @@ class __LEZAZ {
         return $this->syntax_func($t, $c);
     }
 
-    
-    function replace_Syantax($t){
-        $search=array('{{lezaz_php}}','{{/lezaz_php}}');
-        $replace=array('<?php','?>');
+    function replace_Syantax($t) {
+        $search = array('{{lezaz_php}}', '{{/lezaz_php}}');
+        $replace = array('<?php', '?>');
         return str_replace($search, $replace, $t);
     }
+
     /**
      * write output file php 
      * 
@@ -328,149 +327,148 @@ class __LEZAZ {
         }
         fclose($fp);
     }
-private function get_tag($html) {
-    $find = "/<lezaz:/";
-    preg_match($find, $html, $tagpos, PREG_OFFSET_CAPTURE);
-    $tagpos = $tagpos[0][1];
-    if (!$tagpos)
-        return '';
-    $html = preg_replace($find, '<xxxxx:', $html, 1);
-    $startfrom = ($tagpos + 7);
-    $i = $startfrom;
-    $spacechr = array(' ', "\n", "\r", "\t");
-    while ($x <= 10) {
 
-        $chr = substr($html, $i, 1);
-        //echo " ($chr) ";
-        if (!$tag) {
-            if (in_array($chr, $spacechr)) { //get tag name
-                $tag = substr($html, $startfrom, ($i - $startfrom));
-                $attr_array['tag'] = $tag;
-                $attrposstart = $i;
-                $attr_name = 0;
-                $agnore = 0;
-                //return get_tag($html, $i);
-            }
-        }
+    private function get_tag($html) {
+        $find = "/<lezaz:/";
+        preg_match($find, $html, $tagpos, PREG_OFFSET_CAPTURE);
+        $tagpos = $tagpos[0][1];
+        if (!is_numeric($tagpos))
+            return '';
+        $html = preg_replace($find, '<xxxxx:', $html, 1);
+        $startfrom = ($tagpos + 7);
+        $i = $startfrom;
+        $spacechr = array(' ', "\n", "\r", "\t");
+        while ($x <= 10) {
 
-
-
-        if ($startattrchr && $startattrchrpos) {            
-            if($chr=='<' && substr($html, $i + 1, 1) == "?") // check if there is code inside value
-                $ignoropen++;
-                
-            if($chr=='>' && substr($html, $i - 1, 1) == "?") // check if there is code inside value                 
-                $ignoropen--;
-               
-            if($ignoropen<1){
-            $setval = 0;
-            if ($startattrchr == ' ') {
-                if (in_array($chr, $spacechr)) {
-                    $setval = 1;
-                }
-            } else if ($chr == $startattrchr) {
-                if (substr($html, $i - 1, 1) != "\\") {
-                    $setval = 1;
+            $chr = substr($html, $i, 1);
+            //echo " ($chr) ";
+            if (!$tag) {
+                if (in_array($chr, $spacechr)) { //get tag name
+                    $tag = substr($html, $startfrom, ($i - $startfrom));
+                    $attr_array['tag'] = $tag;
+                    $attrposstart = $i;
+                    $attr_name = 0;
+                    $agnore = 0;
+                    //return get_tag($html, $i);
                 }
             }
-            if ($setval == 1) {
-                $attr_value = substr($html, $startattrchrpos + 1, ($i - $startattrchrpos - 1));
-                 $attr_array['attributes'][trim($attr_name)] = $attr_value;
-                $attrposstart = $i + 1;
-                $attr_name = '';
-                $startattrvalue = 0;
-                $startattrchr = 0;
-                $startattrchrpos = 0;
-                $chrhere = 0;
-                $agnore = 0;
-            }
-            }
-        } else if ($attr_name && !$startattrchr) {
-            if (in_array($chr, $spacechr)) {
-                
-            } elseif ($chr == '"' || $chr == "'") {
-                $startattrchrpos = $i;
-                $startattrchr = $chr;
-            } else {
-                $startattrchrpos = $i;
-                $startattrchr = ' ';
-            }
-            $ignoropen=0;
-        } else if ($attrposstart && !$attr_name) {
-            if ($chr == ">") { // close tag!
-                if (substr($html, $i - 1, 1) == "/") { // end tag code                    
-                    $htmlreplace = substr($html, ($startfrom - 7), (($i - ($startfrom - 7))) + 1);
-                    $attr_array['htmltag'] = $htmlreplace;
-                    $attr_array['inner'] = '';
-                    $attr_array['html'] = $html;
-                    return $attr_array;
-                } else { // innerHTML tag 
-                    preg_match_all("/<\/lezaz:" . trim($tag) . ">/", $html, $closetagpos, PREG_OFFSET_CAPTURE);
-                    $findinside = 0;
-                    foreach ($closetagpos[0] as $closet) {
-                        $htmlreplace = substr($html, ($startfrom - 7), (($closet[1] - ($startfrom - 7))) + (strlen($closet[0])));
-                         $ptrn = '/' . preg_quote(substr($html, ($startfrom - 7), $i-($startfrom - 8)),'/') . '/';
-                        $htmlinner = preg_replace($ptrn,'',$htmlreplace);
-                        $htmlinner = str_lreplace($closet[0],'',$htmlinner);
 
-                        preg_match_all("/<lezaz:" . trim($tag) . "/", $htmlreplace, $opentagposx, PREG_OFFSET_CAPTURE);
-                        preg_match_all("/<\/lezaz:" . trim($tag) . ">/", $htmlreplace, $closetagposx, PREG_OFFSET_CAPTURE);
-                        $xopen = (1 + count($opentagposx[0])) . '|';
-                        $xclose = count($closetagposx[0]);
-                        if ($xopen == $xclose) {
-                            $attr_array['htmltag'] = $htmlreplace;
-                            $attr_array['inner'] = $htmlinner;
-                            $attr_array['html'] = $html;
-                            return $attr_array;
+
+
+            if ($startattrchr && $startattrchrpos) {
+                if ($chr == '<' && substr($html, $i + 1, 1) == "?") // check if there is code inside value
+                    $ignoropen++;
+
+                if ($chr == '>' && substr($html, $i - 1, 1) == "?") // check if there is code inside value                 
+                    $ignoropen--;
+
+                if ($ignoropen < 1) {
+                    $setval = 0;
+                    if ($startattrchr == ' ') {
+                        if (in_array($chr, $spacechr)) {
+                            $setval = 1;
+                        }
+                    } else if ($chr == $startattrchr) {
+                        if (substr($html, $i - 1, 1) != "\\") {
+                            $setval = 1;
                         }
                     }
-                    return $attr_array;
-                }
-            }
-            if (in_array($chr, $spacechr)) {
-                if ($chrhere) {
-                    $agnore++;
-                } else {
-                    $attrposstart = $i + 1;
-                }
-            } elseif ($chr == '=') {
-                $attr_name = substr($html, $attrposstart, ($i - $attrposstart));
-                if (trim($attr_name)) {
-                     $attr_array['attributes'][trim($attr_name)] ='' ;
-                }
-            } else {
-                $chrhere = 1;
-                if ($agnore) {
-                    $attr_name = substr($html, $attrposstart, ($i - $attrposstart - $agnore));
-                    if (trim($attr_name)) {
-                        $attr_array['attributes'][trim($attr_name)] ='' ;
-                        $attrposstart = $i;
-                        $attr_name = 0;
+                    if ($setval == 1) {
+                        $attr_value = substr($html, $startattrchrpos + 1, ($i - $startattrchrpos - 1));
+                        $attr_array['attributes'][trim($attr_name)] = $attr_value;
+                        $attrposstart = $i + 1;
+                        $attr_name = '';
+                        $startattrvalue = 0;
+                        $startattrchr = 0;
+                        $startattrchrpos = 0;
                         $chrhere = 0;
                         $agnore = 0;
                     }
                 }
+            } else if ($attr_name && !$startattrchr) {
+                if (in_array($chr, $spacechr)) {
+                    
+                } elseif ($chr == '"' || $chr == "'") {
+                    $startattrchrpos = $i;
+                    $startattrchr = $chr;
+                } else {
+                    $startattrchrpos = $i;
+                    $startattrchr = ' ';
+                }
+                $ignoropen = 0;
+            } else if ($attrposstart && !$attr_name) {
+                if ($chr == ">") { // close tag!
+                    if (substr($html, $i - 1, 1) == "/") { // end tag code                    
+                        $htmlreplace = substr($html, ($startfrom - 7), (($i - ($startfrom - 7))) + 1);
+                        $attr_array['htmltag'] = $htmlreplace;
+                        $attr_array['inner'] = '';
+                        $attr_array['html'] = $html;
+                        return $attr_array;
+                    } else { // innerHTML tag 
+                        preg_match_all("/<\/lezaz:" . trim($tag) . ">/", $html, $closetagpos, PREG_OFFSET_CAPTURE);
+                        $findinside = 0;
+                        foreach ($closetagpos[0] as $closet) {
+                            $htmlreplace = substr($html, ($startfrom - 7), (($closet[1] - ($startfrom - 7))) + (strlen($closet[0])));
+                            $ptrn = '/' . preg_quote(substr($html, ($startfrom - 7), $i - ($startfrom - 8)), '/') . '/';
+                            $htmlinner = preg_replace($ptrn, '', $htmlreplace);
+                            $htmlinner = $this->str_lreplace($closet[0], '', $htmlinner);
+
+                            preg_match_all("/<lezaz:" . trim($tag) . "/", $htmlreplace, $opentagposx, PREG_OFFSET_CAPTURE);
+                            preg_match_all("/<\/lezaz:" . trim($tag) . ">/", $htmlreplace, $closetagposx, PREG_OFFSET_CAPTURE);
+                            $xopen = (1 + count($opentagposx[0])) . '|';
+                            $xclose = count($closetagposx[0]);
+                            if ($xopen == $xclose) {
+                                $attr_array['htmltag'] = $htmlreplace;
+                                $attr_array['inner'] = $htmlinner;
+                                $attr_array['html'] = $html;
+                                return $attr_array;
+                            }
+                        }
+                        return $attr_array;
+                    }
+                }
+                if (in_array($chr, $spacechr)) {
+                    if ($chrhere) {
+                        $agnore++;
+                    } else {
+                        $attrposstart = $i + 1;
+                    }
+                } elseif ($chr == '=') {
+                    $attr_name = substr($html, $attrposstart, ($i - $attrposstart));
+                    if (trim($attr_name)) {
+                        $attr_array['attributes'][trim($attr_name)] = '';
+                    }
+                } else {
+                    $chrhere = 1;
+                    if ($agnore) {
+                        $attr_name = substr($html, $attrposstart, ($i - $attrposstart - $agnore));
+                        if (trim($attr_name)) {
+                            $attr_array['attributes'][trim($attr_name)] = '';
+                            $attrposstart = $i;
+                            $attr_name = 0;
+                            $chrhere = 0;
+                            $agnore = 0;
+                        }
+                    }
+                }
             }
+
+
+
+            if ($chr == Null)
+                return $attr_array;
+            $i++;
+        }
+    }
+
+    private function str_lreplace($search, $replace, $subject) {
+        $pos = strrpos($subject, $search);
+
+        if ($pos !== false) {
+            $subject = substr_replace($subject, $replace, $pos, strlen($search));
         }
 
-
-
-        if ($chr == Null)
-            return $attr_array;
-        $i++;
+        return $subject;
     }
-}
-
-private function str_lreplace($search, $replace, $subject)
-{
-    $pos = strrpos($subject, $search);
-
-    if($pos !== false)
-    {
-        $subject = substr_replace($subject, $replace, $pos, strlen($search));
-    }
-
-    return $subject;
-}
 
 }

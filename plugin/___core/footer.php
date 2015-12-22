@@ -1,11 +1,11 @@
 <?php
-$html = file_get_contents(TEMPLATE_PATH . 'admin/test.inc');
+//$html = file_get_contents(TEMPLATE_PATH . 'admin/test.inc');
 
 //$xx = (get_tag($html));
 //print_r($xx);
-$yy = get_tags($html);
-print_r($yy);
-
+//$yy = get_tags($html);
+//print_r($yy);
+//exit();
 function get_tags($html){
     $i=0;
     while ($x <= 10) {
@@ -13,11 +13,11 @@ function get_tags($html){
         if($i){ 
             $html=$xx[$i-1]['html'];
             $xx[$i-1]['html']='';
-            unset($xx[$i-1]['html']);
+           unset($xx[$i-1]['html']);
         }
         //echo "$html####";
         $xx[$i] = (get_tag($html));
-        //print_r($xx[$i]);
+        print_r($xx[$i]);
         if(!is_array($xx[$i])) return $xx;
         $i++;        
     }
@@ -27,7 +27,7 @@ function get_tag($html) {
     $find = "/<lezaz:/";
     preg_match($find, $html, $tagpos, PREG_OFFSET_CAPTURE);
     $tagpos = $tagpos[0][1];
-    if (!$tagpos)
+    if ($tagpos === false)
         return '';
     $html = preg_replace($find, '<xxxxx:', $html, 1);
     $startfrom = ($tagpos + 7);
@@ -168,4 +168,4 @@ function str_lreplace($search, $replace, $subject)
     return $subject;
 }
 
-exit();
+

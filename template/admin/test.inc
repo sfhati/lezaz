@@ -1,49 +1,27 @@
-   <lezaz:input 
-       
-          bassam
-       
-          
-          
-              
-       
-          type   =   "te\"\"\"'gf?>dgfd"       xt   id="site_title" label="[site_titl\"e]-[english]" placeholder="Enter title" size-label='2' size='10'  space='12'/> 
+ <lezaz:block file="{template}admin/header">  </lezaz:block>
 
-<hs d="dfsf" rssf='fdds ' />fd sfds fds 1111
-<jxj dsf='fsdfds' fdfds='fsdf' cdsds="fdsf>f sdfs<fsdf/>" >    
-   fdsfdsf dsafdsaf 2222
-   fd saf dsfsda2222
-       <lezaz:input type='text' ff_-.id="site_ti<?php echo '"hi man" ';
-       
-       """"""gfd gfds fd gdfs"g< > > > fdsfd gfd g\gf dsgfdsg \"gfdsg fd<?php fdsfdsf " ' ' " $%^%&^%*&^(&&$52 "?>"
-       
-       
-       ?>tle" label="[site_title]-[english]" placeholder="Enter title" size-label='2' size='10'  space='12'   > 
-       <lezaz:input type='text' ff_-.id="site_title" label="[site_title]-[english]" placeholder="Enter title" size-label='2' size='10'  space='12'   > 
-       <lezaz:input type='text' ff_-.id="site_title" label="[site_title]-[english]" placeholder="Enter title" size-label='2' size='10'  space='12'   > 
-           xxxxfddsgds33333
-           <lezaz:input type='text' ff_-.id="site_title">
-               inside to input 1 
-           </lezaz:input>
-           
-                <lezaz:input type='text' ff_-.id="site_title">
-               inside to      <lezaz:input type      =  'text' ff_-.id="site_title">
-               inside to      <lezaz:input type='text' ff_-.id="site_title">
-               inside to      <lezaz:input type='text' ff_-.id="site_title">
-               inside to input 1 
-           </lezaz:input> 1 
-           </lezaz:input> 1 
-           </lezaz:input> 1 
-           </lezaz:input>
-           
-                <lezaz:input type='text' ff_-.id="site_title">
-               inside to input 1 
-           </lezaz:input>
-           
-           <hs d="dfsf" rssf='fdds ' />fd sfds fds 4444443
-       mxxxxx</lezaz:input></lezaz:input></lezaz:input>
+<lezaz:block file="{template}admin/navbar">  </lezaz:block>	
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
 
-</jxj>
-<div></div >
-    <lezaz:input type='text' id="site_title" label="[site_title]-[english]" placeholder="Enter title" size-label='2' size='10'  space='12'/> 
-<hsd d="dfsf" rssf='fdds ' />fd sfds fds 555555
+    <!-- PAGE CONTENT ENDS -->
+    <lezaz:block file="{template}admin/sidebar">  </lezaz:block>	
 
+
+    <lezaz:block file="{template}admin/pages">  </lezaz:block>
+
+    <!-- PAGE CONTENT ENDS -->
+    <lezaz:block file="{template}admin/footer">  </lezaz:block>	                        
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+</body>
+</html>
