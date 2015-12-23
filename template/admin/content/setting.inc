@@ -17,7 +17,6 @@
                
 <lezaz:input id='use_ajax' type="checkbox"  label="[use ajax]"  value="1" skin="7" size="12" space='12' />
  
-<lezaz:input id='text' placeholder="bassam" label="text"  value="x" validation="r" size-label='2' size='10'  space='12'/>  
 <lezaz:input id='skinchoose' type='select' label="[Choose skin]"  value="skin-1" size-label='2' size='10'  space='12'>  
                 <option value="no-skin">[Defult skin]</option>
                 <option value="skin-1">[skin-1]</option>
@@ -49,9 +48,9 @@
             <lezaz:input type='text' id="lng" label="google map lng" placeholder="556" size-label='2' size='10'  space='12'/> 
             
             <lezaz:input type='text' id="address" label="[address]-[english]" placeholder="saudi , makka 12 building" size-label='2' size='10'  space='12'/> 
-            <lezaz:input type='text' id="addressar" label="[address]-[arabic]" placeholder="saudi , makka 12 building" size-label='2' size='10'  space='12'/> 
+            <lezaz:input type='text' id="addressar" label="[address]-[arabic]" placeholder="saudi , makka 12 building" size-label='2' size='10'  space='10'/> 
 
-
+ 
 
             <div class="form-group">
                 <label class='col-sm-2 control-label' for="form-field-2">[site_logo_up]</label>
@@ -99,14 +98,13 @@
 
 
 
+ 
 
-
-
+ 
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
-                            [input:"submit","submit_setting","[save]","btn-info","fa-check"end input]     
-                            &nbsp; &nbsp;  
-                            [input:"reset","button1","[reset]","","fa-undo"end input]                                     
+                    <lezaz:input type='submit' label='[save]' icon='fa-check' color='info2'/>
+                    <lezaz:input type='reset' label='[reset]' icon='fa-check' color='info2'/>                                                             
                         </div>
                     </div>
                     </form>

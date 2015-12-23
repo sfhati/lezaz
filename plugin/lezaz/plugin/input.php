@@ -10,7 +10,7 @@
   label       label text if no attr label we wll not add label element!
   size        number from 1:12 defult is 9 , this is size of this element
   sizegroup   number from 1:12 defult is 12 , this is size of groub form for this element
-  space       number from 1-12    
+  space       number from 1-12
   size-label   number from 1-12  defult is 3                                                                         null
   validation >>
   optional or o: Only validate when the field is not empty
@@ -81,7 +81,8 @@ function lezaz_input($vars, $html) {
         $icon_right_html = '<i class="ace-icon fa ' . $vars['icon-right'] . '"></i>';
     }
 
-if (isset($vars['space'])) $vars['space']='<div class="space-'.$vars['space'].'"></div>';
+    if (is_numeric($vars['space']))
+        $vars['space'] = '<div class="space-' . $vars['space'] . '"></div>';
 
     if ($vars['type'] == 'button' || $vars['type'] == 'submit' || $vars['type'] == 'reset') {
         if ($icon_right_html)
@@ -102,7 +103,7 @@ if (isset($vars['space'])) $vars['space']='<div class="space-'.$vars['space'].'"
 <button type="' . $vars['type'] . '" class="btn  ' . $vars['color'] . ' ' . $vars['size'] . ' ' . $vars['option'] . ' ' . $vars['border'] . ' ' . $vars['hover'] . '">' .
                 " 
     $icon_html  $vars[label] $icon_right_html
- " . '</button> '.$vars['space'].'       
+ " . '</button> ' . $vars['space'] . '       
             ';
         return $button_html;
     }
@@ -134,60 +135,71 @@ if (isset($vars['space'])) $vars['space']='<div class="space-'.$vars['space'].'"
 					
 				</div>
 			</div>
-                        '.$vars['space'].' 
+                        ' . $vars['space'] . ' 
             
              ';
         return $input_html;
     }
 
-    
-    
-    
-    
-    
-    
-    
-     if ($vars['type'] == 'checkbox') {
+
+
+
+
+
+
+
+    if ($vars['type'] == 'checkbox') {
 
         if (!$vars['size'])
             $vars['size'] = '9';
-if($vars['skin']=='1') $class='ace';
-elseif($vars['skin']=='2') $class='ace ace-checkbox-2';
-elseif($vars['skin']=='3') $class='ace ace-switch';
-elseif($vars['skin']=='4') $class='ace ace-switch ace-switch-2';
-elseif($vars['skin']=='5') $class='ace ace-switch ace-switch-3';
-elseif($vars['skin']=='6') $class='ace ace-switch ace-switch-4';
-elseif($vars['skin']=='7') $class='ace ace-switch ace-switch-5';
-elseif($vars['skin']=='8') $class='ace ace-switch ace-switch-6';
-elseif($vars['skin']=='9') $class='ace ace-switch ace-switch-7';
-elseif($vars['skin']=='9') $class='ace ace-switch ace-switch-8';
-else $class='';
+        if ($vars['skin'] == '1')
+            $class = 'ace';
+        elseif ($vars['skin'] == '2')
+            $class = 'ace ace-checkbox-2';
+        elseif ($vars['skin'] == '3')
+            $class = 'ace ace-switch';
+        elseif ($vars['skin'] == '4')
+            $class = 'ace ace-switch ace-switch-2';
+        elseif ($vars['skin'] == '5')
+            $class = 'ace ace-switch ace-switch-3';
+        elseif ($vars['skin'] == '6')
+            $class = 'ace ace-switch ace-switch-4';
+        elseif ($vars['skin'] == '7')
+            $class = 'ace ace-switch ace-switch-5';
+        elseif ($vars['skin'] == '8')
+            $class = 'ace ace-switch ace-switch-6';
+        elseif ($vars['skin'] == '9')
+            $class = 'ace ace-switch ace-switch-7';
+        elseif ($vars['skin'] == '9')
+            $class = 'ace ace-switch ace-switch-8';
+        else
+            $class = '';
 
         $input_html = '
-<?php if($lezaz->get("_VAL_' . $vars['name'] . '")){ $_VAL_'.$vars['name'].'_chk = "checked";} ?>            
+<?php if($lezaz->get("_VAL_' . $vars['name'] . '")){ $_VAL_' . $vars['name'] . '_chk = "checked";} ?>            
 <div class="checkbox col-sm-' . $vars['size'] . '">
     <label>
-            <input id="' . $vars['id'] . '"  name="' . $vars['name'] . '"  value="' . $vars['value'] . '" class="'.$class.'" type="' . $vars['type'] . '" {{lezaz_php}} echo $_VAL_'.$vars['name'].'_chk; {{/lezaz_php}} >
+            <input id="' . $vars['id'] . '"  name="' . $vars['name'] . '"  value="' . $vars['value'] . '" class="' . $class . '" type="' . $vars['type'] . '" {{lezaz_php}} echo $_VAL_' . $vars['name'] . '_chk; {{/lezaz_php}} >
             <span class="lbl"> ' . $vars['label'] . '</span>
     </label>
 </div>          
-'.$vars['space'].'             
+' . $vars['space'] . '             
              ';
         return $input_html;
-    } 
- 
-    
-       if ($vars['type'] == 'select') {
-           
-$input_html = '       
-<?php $_VAL_'.$vars['name'].'_'.$vars['value'].' = "selected"; if($lezaz->get("_VAL_' . $vars['name'] . '")){ $_VAL_'.$vars['name'].'_chk = "selected";} ?>            
+    }
+
+
+    if ($vars['type'] == 'select') {
+
+        $input_html = '       
+<?php $_VAL_' . $vars['name'] . '_' . $vars['value'] . ' = "selected"; if($lezaz->get("_VAL_' . $vars['name'] . '")){ $_VAL_' . $vars['name'] . '_chk = "selected";} ?>            
 //<option    
     ';
-       }
-    
-    
-    
-    
+    }
+
+
+
+
     return '';
 }
 

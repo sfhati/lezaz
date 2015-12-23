@@ -43,5 +43,5 @@ $lezaz->listen('output.filter', function($output, $filtered) use($lezaz) {
 // test input 
 $lezaz->set("_MSG_text", "error");
 $lezaz->set("_VAL_text", "maria al7elwa:)");
-$lezaz->set("_VAL_use_ajax", "maria al7elwa:)");
+$lezaz->set("_VAL_use_ajax", "");
 

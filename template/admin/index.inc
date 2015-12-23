@@ -1,6 +1,6 @@
- <lezaz:block file="{template}admin/header">  </lezaz:block>
+<lezaz:block file="{template}admin/header"></lezaz:block>
 
-<lezaz:block file="{template}admin/navbar">  </lezaz:block>	
+<lezaz:block file="{template}admin/navbar"></lezaz:block>	
 <div class="main-container" id="main-container">
     <script type="text/javascript">
         try {

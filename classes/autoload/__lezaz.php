@@ -190,6 +190,7 @@ class __LEZAZ {
 
             $func = 'lezaz_' . $element['tag'];
             if (is_callable($func)) {
+                $attr='';
                 foreach ($element['attributes'] as $k => $v) {
                     $attr[$k] = $this->GetSyantax($v, 1);
                 }
