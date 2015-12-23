@@ -18,10 +18,12 @@
 <lezaz:input id='use_ajax' type="checkbox"  label="[use ajax]"  value="1" skin="7" size="12" space='12' />
  
 <lezaz:input id='skinchoose' type='select' label="[Choose skin]"  value="skin-1" size-label='2' size='10'  space='12'>  
-                <option value="no-skin">[Defult skin]</option>
-                <option value="skin-1">[skin-1]</option>
+                <option value="no-skin">[Defult skin]</option>                <option value="skin-1">[skin-1]</option>
                 <option value="skin-2">[skin-2]</option>
                 <option value="no-skin skin-3">[skin-3]</option>
+                <option >[skin-3]</option>
+                <option value="no-skin skin-3">[skin-3]</option>
+                g  
 </lezaz:input>
 
     
@@ -103,8 +105,8 @@
  
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
-                    <lezaz:input type='submit' label='[save]' icon='fa-check' color='info2'/>
-                    <lezaz:input type='reset' label='[reset]' icon='fa-check' color='info2'/>                                                             
+                    <lezaz:input type='submit' label='[save]' icon='fa-check' color='info'/>
+                    <lezaz:input type='reset' label='[reset]' icon='fa-undo' />                                                             
                         </div>
                     </div>
                     </form>

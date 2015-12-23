@@ -190,7 +190,18 @@ function lezaz_input($vars, $html) {
 
 
     if ($vars['type'] == 'select') {
+preg_match_all('/<option\s*(.+?)\s*<\/option>/', $html,$options);
 
+$options_html='';
+ foreach($options[0] as $option){
+     preg_match('/value=(\'|\")(([ -0-9a-zA-Z:]*[ 0-9a-zA-Z;]*)*)(\'|\")/', $option,$value);
+      if(!$value[2]) $value[2]=strip_tags($option);
+      $value=$value[2];
+      $options_html.="\n".str_replace('<option', '<option <?php selected; ?>', $option);
+     echo "\n$option ---  value: $value\n ";
+ }
+ echo $options_html;
+ exit();
         $input_html = '       
 <?php $_VAL_' . $vars['name'] . '_' . $vars['value'] . ' = "selected"; if($lezaz->get("_VAL_' . $vars['name'] . '")){ $_VAL_' . $vars['name'] . '_chk = "selected";} ?>            
 //<option    

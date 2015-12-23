@@ -303,13 +303,13 @@
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
                      
-<button type="submit" class="btn  btn-info2 btn-sm   "> 
+<button type="submit" class="btn  btn-info btn-sm   "> 
     <i class="ace-icon fa fa-check"></i>  [save] 
  </button>        
             
                      
-<button type="reset" class="btn  btn-info2 btn-sm   "> 
-    <i class="ace-icon fa fa-check"></i>  [reset] 
+<button type="reset" class="btn  btn-grey btn-sm   "> 
+    <i class="ace-icon fa fa-undo"></i>  [reset] 
  </button>        
                                                                          
                         </div>
