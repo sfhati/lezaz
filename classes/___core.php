@@ -25,9 +25,8 @@ Class __CORE {
     protected $output = null;
     public $main_template = 'index';
     private $valriables = array();
-    private $language='en';
-    private $msseges='';
-    
+    private $language = 'en';
+
     public function __construct() {
         // get all plugin active inside $plugin
         $dir = PLUGIN_PATH;
@@ -42,11 +41,12 @@ Class __CORE {
         }
     }
 
-    public function language($set=''){
-        if($set) $this->language=$set;
-        return  $this->language;
+    public function language($set = '') {
+        if ($set)
+            $this->language = $set;
+        return $this->language;
     }
-    
+
     public function __add($class, $name) {
         $this->$name = new $class;
     }
@@ -77,7 +77,7 @@ Class __CORE {
     public function decrypt($string) {
         if (!CRYPT_CACHE)
             return $string;
-        return mcrypt_decrypt(MCRYPT_RIJNDAEL_128, SALT, base64_decode($string), MCRYPT_MODE_CBC, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
+        return trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_128, SALT, base64_decode($string), MCRYPT_MODE_CBC, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"));
     }
 
     public function include_plugin($file) {
@@ -131,10 +131,12 @@ Class __CORE {
 
     /*     * ******************************* END/Events/Hooks/ ************************ */
 
-    public function go($to, $using = 302) {
+    public function go($to='', $using = 302) {
+        if(!$to){ $to= SITE_LINK . trim($_GET['directory_lezaz'],'/');
+        }else{
         $scheme = parse_url($to, PHP_URL_SCHEME);
         $to = (!empty($scheme) ? $to : ( ltrim($to, '/')));
-
+        }
         if (headers_sent())
             return call_user_func_array(__FUNCTION__, array($to, 'html'));
 
@@ -226,9 +228,10 @@ Class __CORE {
         return '';
     }
 
-    public function validate($var,$consept){
+    public function validate($var, $consept) {
         //trdh gfdh 
     }
+
     public function sess($k, $i = '') {
         if (isset($_SESSION[$k]) && $i)
             return $_SESSION[$k][$i];
@@ -249,7 +252,8 @@ Class __CORE {
         $content = null;
         $settin_file = THEME_PATH . 'setting.ini';
         if (file_exists($settin_file)) {
-            $settings = file($settin_file);
+            $settings = file_get_contents($settin_file);
+            $settings = explode('{%$$$%}', $settings);
             foreach ($settings as $sett) {
                 $settkv = explode('^^^', $sett);
                 if (trim($settkv[0]) && trim($settkv[1])) {
@@ -260,24 +264,26 @@ Class __CORE {
 
         $settkey = $this->encrypt($parametr);
         $settval = $this->encrypt($value);
-        $content[$settkey] = $settval . "\n";
+        $content[$settkey] = $settval . "{%$$$%}";
         if (!$value)
             unset($content[$settkey]);
         foreach ($content as $k => $v) {
-            $contentx.="$k^^^$v";
+            $contentx.="$k^^^$v{%$$$%}";
         }
-        $this->file->_write($settin_file, $contentx);
+        $this->file->write($settin_file, $contentx);
         return '';
     }
 
     public function setting($key, $defult = '') {
         $settin_file = THEME_PATH . 'setting.ini';
         if (file_exists($settin_file)) {
-            $settings = file($settin_file);
+            $settings = file_get_contents($settin_file);
+            $settings = explode('{%$$$%}', $settings);
+
             foreach ($settings as $sett) {
                 $settkv = explode('^^^', $sett);
                 if (trim($this->decrypt($settkv[0])) == trim($key)) {
-                    return $this->decrypt(rtrim($settkv[1], "\n"));
+                    return $this->decrypt($settkv[1]);
                 }
             }
         }
@@ -289,10 +295,13 @@ Class __CORE {
         $protocol = $_SERVER['HTTPS'] == 'on' ? 'https' : 'http';
         /*         * * return the full address ** */
         $return = $protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        if (strpos($return, "?"))
+        if (strpos($return, "?")){
+            $return=  rtrim($return,'&');
+            if(substr($return, -1)!='?')
             $return.="&";
-        else
+        }else{
             $return.="?";
+        }
         return $return;
     }
 
@@ -330,27 +339,28 @@ Class __CORE {
         return $template_name;
     }
 
-    public function set_msg($msg,$type){
-        $this->msseges[$type].=$msg;
+    public function set_msg($msg, $type) {
+        $_SESSION['lezaz_msseges'][$type].=$msg;
     }
-    public function msg(){
-        $alert['danger']='times';
-        $alert['success']='check';
-        $alert['warning']='ban';
-        $alert['info']='exclamation';
-        if(is_array($this->msseges)){
-            foreach($this->msseges as $type=>$msg){                
-                $m.='<div class="alert alert-'.$type.'">
+
+    public function msg() {
+        $alert['danger'] = 'times';
+        $alert['success'] = 'check';
+        $alert['warning'] = 'ban';
+        $alert['info'] = 'exclamation';
+        if (is_array($_SESSION['lezaz_msseges'])) {
+            foreach ($_SESSION['lezaz_msseges'] as $type => $msg) {
+                $m.='<div class="alert alert-' . $type . '">
                         <button type="button" class="close" data-dismiss="alert">
                                 <i class="ace-icon fa fa-times"></i>
                         </button>
 
                         <strong>
-                                <i class="ace-icon fa fa-'.$alert[$type].'"></i>
-                                ['.$type.']
+                                <i class="ace-icon fa fa-' . $alert[$type] . '"></i>
+                                [' . $type . ']
                         </strong>
 
-                        '.$msg.'
+                        ' . $msg . '
                         <br>
                 </div>';
             }
@@ -360,21 +370,18 @@ Class __CORE {
 
     public function run() {
         $this->include_plugin('init');
- 
-         if ($_SESSION['LEZAZ_start'] == 'gr9fk4fdd'){
-             $_SESSION['LEZAZ_start'] = 'gr9fk4fdd1';
-             $this->trigger('new.guset');
-             
-           
-        }
- 
-       if ($_SESSION['LEZAZ_start'] != 'gr9fk4fdd' && $_SESSION['LEZAZ_start'] != 'gr9fk4fdd1') {
-            $_SESSION['LEZAZ_start'] = 'gr9fk4fdd';
-            $this->trigger('session.start');
-            
+
+        if ($_SESSION['LEZAZ_start'] == 'gr9fk4fdd') {
+            $_SESSION['LEZAZ_start'] = 'gr9fk4fdd1';
+            $this->trigger('new.guset');
         }
 
-      if ($_SESSION['LEZAZ_start'] == 'gr9fk4fdd1')
+        if ($_SESSION['LEZAZ_start'] != 'gr9fk4fdd' && $_SESSION['LEZAZ_start'] != 'gr9fk4fdd1') {
+            $_SESSION['LEZAZ_start'] = 'gr9fk4fdd';
+            $this->trigger('session.start');
+        }
+
+        if ($_SESSION['LEZAZ_start'] == 'gr9fk4fdd1')
             $this->trigger('requset.start');
 
 
@@ -386,6 +393,11 @@ Class __CORE {
         $print = $this->lezaz->include_tpl($this->main_template);
         $print = $this->trigger('output.filter', $print, $print);
         $this->trigger('requset.end', '');
+        
+        // clear all messages!
+        $_SESSION['lezaz_msseges'] = '';
+        unset($_SESSION['lezaz_msseges']); 
+        
         return $print;
     }
 

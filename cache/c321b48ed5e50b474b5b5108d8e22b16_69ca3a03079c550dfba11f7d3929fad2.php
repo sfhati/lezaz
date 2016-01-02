@@ -51,7 +51,7 @@ $lezaz_="0";
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 
-   <?php $GLOBALS['condition'] = '$lezaz->get( "useajax" )';
+   <?php 
 echo $lezaz->lezaz->include_tpl('{template}admin/content/'.$lezaz->get( "noajaxpage" ).'') ;
      
  ?>

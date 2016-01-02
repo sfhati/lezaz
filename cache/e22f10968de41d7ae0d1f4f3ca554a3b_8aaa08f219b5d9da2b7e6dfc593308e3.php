@@ -5,17 +5,114 @@
 <div class="page-header">
     <h1>
         [Settings]
-     
+
     </h1>
 </div><!-- /.page-header -->
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <form  id="formproduct" class="form-horizontal" method="post" enctype="multipart/form-data"> 
+        <?php echo $lezaz->msg( "" ); ?>
+         <?php 
+                       
+                       
+                     $lezaz->set("_VAL_use_ajax", $lezaz->setting("use_ajax"));
+                            
+                     $lezaz->set("_VAL_skinchoose", $lezaz->setting("skinchoose"));
+                            
+                     $lezaz->set("_VAL_site_title", $lezaz->setting("site_title"));
+                            
+                     $lezaz->set("_VAL_site_titlear", $lezaz->setting("site_titlear"));
+                            
+                     $lezaz->set("_VAL_site_phone", $lezaz->setting("site_phone"));
+                            
+                     $lezaz->set("_VAL_site_email", $lezaz->setting("site_email"));
+                            
+                     $lezaz->set("_VAL_facebook", $lezaz->setting("facebook"));
+                            
+                     $lezaz->set("_VAL_twiter", $lezaz->setting("twiter"));
+                            
+                     $lezaz->set("_VAL_instagram", $lezaz->setting("instagram"));
+                            
+                     $lezaz->set("_VAL_youtube", $lezaz->setting("youtube"));
+                            
+                     $lezaz->set("_VAL_rinning", $lezaz->setting("rinning"));
+                            
+                     $lezaz->set("_VAL_lat", $lezaz->setting("lat"));
+                            
+                     $lezaz->set("_VAL_lng", $lezaz->setting("lng"));
+                            
+                     $lezaz->set("_VAL_address", $lezaz->setting("address"));
+                            
+                     $lezaz->set("_VAL_addressar", $lezaz->setting("addressar"));
+                            
+                     $lezaz->set("_VAL_", $lezaz->setting(""));
+                          
+                        
+                        ?>  <?php
+              if($lezaz->post("submit_setting")){
+                    
+                     $lezaz->setsetting("use_ajax",$lezaz->post("use_ajax"));
+                            
+                     $lezaz->setsetting("skinchoose",$lezaz->post("skinchoose"));
+                            
+                     $lezaz->setsetting("site_title",$lezaz->post("site_title"));
+                            
+                     $lezaz->setsetting("site_titlear",$lezaz->post("site_titlear"));
+                            
+                     $lezaz->setsetting("site_phone",$lezaz->post("site_phone"));
+                            
+                     $lezaz->setsetting("site_email",$lezaz->post("site_email"));
+                            
+                     $lezaz->setsetting("facebook",$lezaz->post("facebook"));
+                            
+                     $lezaz->setsetting("twiter",$lezaz->post("twiter"));
+                            
+                     $lezaz->setsetting("instagram",$lezaz->post("instagram"));
+                            
+                     $lezaz->setsetting("youtube",$lezaz->post("youtube"));
+                            
+                     $lezaz->setsetting("rinning",$lezaz->post("rinning"));
+                            
+                     $lezaz->setsetting("lat",$lezaz->post("lat"));
+                            
+                     $lezaz->setsetting("lng",$lezaz->post("lng"));
+                            
+                     $lezaz->setsetting("address",$lezaz->post("address"));
+                            
+                     $lezaz->setsetting("addressar",$lezaz->post("addressar"));
+                           
+                                  if($_FILES["logo1"]["name"]){
+                        $x= $lezaz->file->save($_FILES["logo1"], "setting", "img");
+                        $lezaz->setsetting("logo1",$x);  
+                            }
+                           
+                                  if($_FILES["logo2"]["name"]){
+                        $x= $lezaz->file->save($_FILES["logo2"], "", "img");
+                        $lezaz->setsetting("logo2",$x);  
+                            }
+                           
+                                  if($_FILES["icon"]["name"]){
+                        $x= $lezaz->file->save($_FILES["icon"], "", "img");
+                        $lezaz->setsetting("icon",$x);  
+                            }
+                           
+                                  if($_FILES["iconmap"]["name"]){
+                        $x= $lezaz->file->save($_FILES["iconmap"], "", "img");
+                        $lezaz->setsetting("iconmap",$x);  
+                            }
+                            
+                     $lezaz->setsetting("",$lezaz->post(""));
+                           
+ $lezaz->set_msg("[save & update is done]","success");                
+ $lezaz->go();                
+}
+                   ?>  
+        <form id="settingpage" class="form-horizontal" role="form" method="post"   enctype="multipart/form-data" >
+   
             <!-- #section:elements.form -->
 
-               
 
+            
 <?php if($lezaz->get("_VAL_use_ajax")){ $_VAL_use_ajax_chk = "checked";} ?>            
 <div class="checkbox col-sm-12">
     <label>
@@ -25,19 +122,39 @@
 </div>          
 <div class="space-12"></div>             
              
- 
 
-
+            
+                       
+			<div id="input-skinchoose" class="form-group<?php if($lezaz->get("_MSG_skinchoose")){echo " has-".$lezaz->get("_MSG_skinchoose");} ?>">
+				 
+       <label class="col-sm-2 control-label no-padding-right" for="skinchoose"> [Choose skin] </label> 
     
-       
-            
-          
-               
-           
- 
-            
+				<div class="col-sm-10">
+                                   
+<select class=" col-sm-12 form-control" id="skinchoose" name="skinchoose"  data-placeholder="أختر ">
+    
+<option <?php if($lezaz->get("_VAL_skinchoose")){ if($lezaz->get("_VAL_skinchoose")=="no-skin") echo "selected ";}else{if("skin-1"=="no-skin") echo "selected ";} ?> value="no-skin">[Defult skin]</option>
+<option <?php if($lezaz->get("_VAL_skinchoose")){ if($lezaz->get("_VAL_skinchoose")=="skin-1") echo "selected ";}else{if("skin-1"=="skin-1") echo "selected ";} ?> value="skin-1">[skin-1]</option>
+<option <?php if($lezaz->get("_VAL_skinchoose")){ if($lezaz->get("_VAL_skinchoose")=="skin-2") echo "selected ";}else{if("skin-1"=="skin-2") echo "selected ";} ?> value="skin-2">[skin-2]</option>
+<option <?php if($lezaz->get("_VAL_skinchoose")){ if($lezaz->get("_VAL_skinchoose")=="no-skin skin-3") echo "selected ";}else{if("skin-1"=="no-skin skin-3") echo "selected ";} ?> value="no-skin skin-3">[skin-3]</option> 
 
+	</select>				
+				</div>
+			</div>
+                        <div class="space-12"></div> 
             
+             
+
+
+
+
+
+
+
+
+
+
+
 
             
                        
@@ -215,7 +332,7 @@
                         <div class="space-12"></div> 
             
               
-            
+
             
                        
 			<div id="input-address" class="form-group<?php if($lezaz->get("_MSG_address")){echo " has-".$lezaz->get("_MSG_address");} ?>">
@@ -249,45 +366,78 @@
             
               
 
- 
 
-            <div class="form-group">
-                <label class='col-sm-2 control-label' for="form-field-2">[site_logo_up]</label>
-                <div  class='col-sm-9' >
-                    <input name="logo1" type="file" id="id-input-file-2" />
-                </div>   
-            </div> 
             
-            <div class="space-4"></div>
+                       
+			<div id="input-logo1" class="form-group<?php if($lezaz->get("_MSG_logo1")){echo " has-".$lezaz->get("_MSG_logo1");} ?>">
+				 
+       <label class="col-sm-2 control-label no-padding-right" for="logo1"> [site_logo_up] </label> 
+    
+				<div class="col-sm-10">
+                                   
+<input type="file" name="logo1" id="logo1"  data-no_file="bassam" class="col-sm-12 imagefile" />
+
+					
+				</div>
+			</div>
+                        <div class="space-10"></div> 
             
-           <div class="form-group">
-                <label class='col-sm-2 control-label' for="form-field-2">[site_logo_down]</label>
-                <div  class='col-sm-9' >
-                    <input name="logo2" type="file" id="id-input-file-2" />
-                </div>   
-            </div> 
+             
             
-            <div class="space-4"></div>
+                       
+			<div id="input-logo2" class="form-group<?php if($lezaz->get("_MSG_logo2")){echo " has-".$lezaz->get("_MSG_logo2");} ?>">
+				 
+       <label class="col-sm-2 control-label no-padding-right" for="logo2"> [site_logo_down] </label> 
+    
+				<div class="col-sm-10">
+                                   
+<input type="file" name="logo2" id="logo2"  data-no_file="bassam" class="col-sm-12 imagefile" />
+
+					
+				</div>
+			</div>
+                        <div class="space-10"></div> 
             
-           <div class="form-group">
-                <label class='col-sm-2 control-label' for="form-field-2">[site_icon]</label>
-                <div  class='col-sm-9' >
-                    <input name="icon" type="file" id="id-input-file-2" />
-                </div>   
-            </div> 
-           <div class="space-4"></div>
+             
             
-           <div class="form-group">
-                <label class='col-sm-2 control-label' for="form-field-2">[iconmap]</label>
-                <div  class='col-sm-9' >
-                    <input name="iconmap" type="file" id="id-input-file-2" />
-                </div>   
-            </div> 
+                       
+			<div id="input-icon" class="form-group<?php if($lezaz->get("_MSG_icon")){echo " has-".$lezaz->get("_MSG_icon");} ?>">
+				 
+       <label class="col-sm-2 control-label no-padding-right" for="icon"> [site_icon] </label> 
+    
+				<div class="col-sm-10">
+                                   
+<input type="file" name="icon" id="icon"  data-no_file="bassam" class="col-sm-12 imagefile" />
+
+					
+				</div>
+			</div>
+                        <div class="space-10"></div> 
             
-            <div class="space-4"></div>
+             
             
+                       
+			<div id="input-iconmap" class="form-group<?php if($lezaz->get("_MSG_iconmap")){echo " has-".$lezaz->get("_MSG_iconmap");} ?>">
+				 
+       <label class="col-sm-2 control-label no-padding-right" for="iconmap"> [iconmap] </label> 
+    
+				<div class="col-sm-10">
+                                   
+<input type="file" name="iconmap" id="iconmap"  data-no_file="bassam" class="col-sm-12 imagefile" />
 
-                      
+					
+				</div>
+			</div>
+                        <div class="space-10"></div> 
+            
+             
+
+       
+
+
+     
+
+  
 
 
 
@@ -297,38 +447,39 @@
 
 
 
- 
 
- 
+
+
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
                      
-<button type="submit" class="btn  btn-info btn-sm   "> 
+<button type="submit"   name="submit_setting"  value="yes"  id="submit_setting" class="btn  btn-info btn-sm   "> 
     <i class="ace-icon fa fa-check"></i>  [save] 
  </button>        
             
                      
-<button type="reset" class="btn  btn-grey btn-sm   "> 
+<button type="reset"   name="reset_32764"  value="[reset]"  id="reset_32764" class="btn  btn-grey btn-sm   "> 
     <i class="ace-icon fa fa-undo"></i>  [reset] 
  </button>        
                                                                          
-                        </div>
-                    </div>
-                    </form>
+                </div>
+            </div>
+              
+        </form>
+    
 
-                    <!-- PAGE CONTENT ENDS -->
-                </div><!-- /.col -->
-            </div><!-- /.row -->
+        <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
 
-            <!-- product specific plugin scripts -->
+<!-- product specific plugin scripts -->
 
-            <!--[if lte IE 8]>
-              <script src="/template/Ace1.3.3/assets/js/excanvas.js"></script>
-            <![endif]-->
-
-      
+<!--[if lte IE 8]>
+  <script src="/template/Ace1.3.3/assets/js/excanvas.js"></script>
+<![endif]-->
 
 
 
- 
-  
+
+
+

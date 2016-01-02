@@ -52,9 +52,115 @@
   icon : {fontawsome fa-check} like check,trash-o,bigger-160 | Null
   icon-right : {fontawsome fa-check} like check,trash-o,bigger-160 | Null , left if not null
   <lezaz:input type="button" color="info2" size="xlg"/>
+ * 
+  checkbox
+  ========
+  skin    : 1-9     | Null
+
+  select
+  ======
+  skin : 1,2  | Null
+
+  upload
+  ======
+  type : file , files , image , images
+  skin : 1
+  save='folder' // in uploaded folder so if u wont save in /uploaded/site/imaages value wll be site/images , to save in other path use {template}site/any_folder
+ 
+ * ***************************** Form ***************************************************************************************
+ * <lezaz:form id="myform" type="setting|database|email" tabel="tabel name" email="email address"></lezaz:form>  
+ * 
  */
 
+function lezaz_form($vars, $html) {
+    global $lezaz;
+     $declear =$lezaz->lezaz->declear['form_'.$vars['id']];
+    if (!isset($vars['type']))
+        $vars['type'] = 'database';
+    if ($vars['type'] == 'setting') {
+        foreach ($declear as $attrs) {
+            if ($attrs['type'] == 'submit' && $attrs['use'] == $vars['id']) {
+                $php_code_top = '<?php
+              if($lezaz->post("' . $attrs['id'] . '")){
+                  ';
+
+            $php_code_bottom = ' 
+ $lezaz->set_msg("[save & update is done]","success");                
+ $lezaz->go();                
+}
+                   ?>';
+            }else if($attrs['use'] == $vars['id']){
+                if($attrs['type']=='image' || $attrs['type']=='images' ){
+                              $php_inside.=' 
+                                  if($_FILES["' . $attrs['id'] . '"]["name"]){
+                        $x= $lezaz->file->save($_FILES["' . $attrs['id'] . '"], "' . $attrs['save'] . '", "img");
+                        $lezaz->setsetting("' . $attrs['id'] . '",$x);  
+                            }
+                          ';  
+                }else{
+                 $php_inside.='  
+                     $lezaz->setsetting("' . $attrs['id'] . '",$lezaz->post("' . $attrs['id'] . '"));
+                          ';  
+                $php_inside2.='  
+                     $lezaz->set("_VAL_' . $attrs['id'] . '", $lezaz->setting("' . $attrs['id'] . '"));
+                          ';  
+                }
+                 
+            }
+            
+        }
+                   $php_inside2=' <?php 
+                       
+                     '.$php_inside2.'
+                        
+                        ?>  ';  
+     
+        if($php_code_top && $php_code_bottom){
+            $php_code=$php_inside2.$php_code_top.$php_inside.$php_code_bottom;
+        }
+####################################### Database #########################################        
+    }else if ($vars['type'] == 'database' && $vars['table']) {        
+        //check if tabel exist
+        echo (  $lezaz->db->create_table(''));
+        $alter=0;
+if( ! $lezaz->db->tableExists($vars['table'])) {
+     $sql = "CREATE table ".$vars['table']."(
+            id INT( 11 ) AUTO_INCREMENT PRIMARY KEY,";
+     $sql_end =');';
+}
+       foreach ($declear as $attrs) {
+            if ($attrs['type'] == 'submit' && $attrs['use'] == $vars['id']) {
+                $php_code_top = '<?php
+              if($lezaz->post("' . $attrs['id'] . '")){
+                  ';
+
+            $php_code_bottom = ' 
+ $lezaz->set_msg("[save & update is done]","success");                
+ $lezaz->go();                
+}
+                   ?>';
+            }else if($attrs['use'] == $vars['id']){
+      $field = $lezaz->db->query("SHOW COLUMNS FROM ".$vars['table']." LIKE '".$attrs['id']."'") ;    
+      if(!$field['Field']) $sqladd.="ALTER TABLE `".$vars['table']."` ADD `".$attrs['id']."` LONGTEXT NOT NULL ;\n";
+            }   
+       }
+        
+        
+        
+        
+        
+    }
+   
+
+    return $php_code.'  
+        <form id="' . $vars['id'] . '" class="form-horizontal" role="form" method="post"   enctype="multipart/form-data" >
+   ' . $html . '      
+        </form>
+    ';
+}
+
 function lezaz_input($vars, $html) {
+
     // General code
     if (!isset($vars['type']))
         $vars['type'] = 'text';
@@ -62,8 +168,6 @@ function lezaz_input($vars, $html) {
         $vars['id'] = $vars['type'] . '_' . rand(44, 44444);
     if (!isset($vars['name']))
         $vars['name'] = $vars['id'];
-    if (!isset($vars['value']))
-        $vars['value'] = $html;
     if (!isset($vars['size-label']))
         $vars['size-label'] = '3';
     if (isset($vars['label']))
@@ -71,20 +175,25 @@ function lezaz_input($vars, $html) {
        <label class="col-sm-' . $vars['size-label'] . ' control-label no-padding-right" for="' . $vars['id'] . '"> ' . $vars['label'] . ' </label> 
     ';
     if (isset($vars['icon'])) {
-        //$vars['icon'] = add_str_prefix($vars['icon'], 'fa-');
-        //$vars['icon'] = str_replace('fa-bigger', 'bigger', $vars['icon']);
         $icon_html = '<i class="ace-icon fa ' . $vars['icon'] . '"></i>';
     }
     if (isset($vars['icon-right'])) {
-        //$vars['icon-right'] = add_str_prefix($vars['icon-right'], 'fa-');
-        //$vars['icon-right'] = str_replace('fa-bigger', 'bigger', $vars['icon-right']);
         $icon_right_html = '<i class="ace-icon fa ' . $vars['icon-right'] . '"></i>';
     }
 
     if (is_numeric($vars['space']))
         $vars['space'] = '<div class="space-' . $vars['space'] . '"></div>';
 
+############################## Button #############################################################################
     if ($vars['type'] == 'button' || $vars['type'] == 'submit' || $vars['type'] == 'reset') {
+        if (!isset($vars['value']))
+            $vars['value'] = $html;
+        if(!$vars['value']) $vars['value']=$vars['label'];
+        if(!$vars['value']){
+            $vars['value']=$vars['type'];
+            $vars['label']=$vars['type'];
+        }
+        
         if ($icon_right_html)
             $icon_right_html = str_replace('"></i>', '', $icon_right_html) . ' icon-on-right"></i>';
         $vars['color'] = add_str_prefix($vars['color'], 'btn-', 'grey');
@@ -100,7 +209,7 @@ function lezaz_input($vars, $html) {
         if (!trim($vars['label']))
             $vars['icon'].=' icon-only ';
         $button_html = ' 
-<button type="' . $vars['type'] . '" class="btn  ' . $vars['color'] . ' ' . $vars['size'] . ' ' . $vars['option'] . ' ' . $vars['border'] . ' ' . $vars['hover'] . '">' .
+<button type="' . $vars['type'] . '"   name="' . $vars['name'] . '"  value="' . $vars['value'] . '"  id="' . $vars['id'] . '" class="btn  ' . $vars['color'] . ' ' . $vars['size'] . ' ' . $vars['option'] . ' ' . $vars['border'] . ' ' . $vars['hover'] . '">' .
                 " 
     $icon_html  $vars[label] $icon_right_html
  " . '</button> ' . $vars['space'] . '       
@@ -109,8 +218,11 @@ function lezaz_input($vars, $html) {
     }
 
 
+############################## Text #############################################################################
 
     if ($vars['type'] == 'text' || $vars['type'] == 'password') {
+        if (!isset($vars['value']))
+            $vars['value'] = $html;
         if ($icon_html)
             $icon_span = ' <span class="input-icon">';
         if ($icon_right_html)
@@ -147,6 +259,7 @@ function lezaz_input($vars, $html) {
 
 
 
+############################## Checkbox #############################################################################
 
     if ($vars['type'] == 'checkbox') {
 
@@ -179,7 +292,7 @@ function lezaz_input($vars, $html) {
 <?php if($lezaz->get("_VAL_' . $vars['name'] . '")){ $_VAL_' . $vars['name'] . '_chk = "checked";} ?>            
 <div class="checkbox col-sm-' . $vars['size'] . '">
     <label>
-            <input id="' . $vars['id'] . '"  name="' . $vars['name'] . '"  value="' . $vars['value'] . '" class="' . $class . '" type="' . $vars['type'] . '" {{lezaz_php}} echo $_VAL_' . $vars['name'] . '_chk; {{/lezaz_php}} >
+            <input id="' . $vars['id'] . '"  name="' . $vars['name'] . '"  value="' . $vars['value'] . '" class="' . $class . '" type="' . $vars['type'] . '" <?php echo $_VAL_' . $vars['name'] . '_chk; ?> >
             <span class="lbl"> ' . $vars['label'] . '</span>
     </label>
 </div>          
@@ -188,29 +301,75 @@ function lezaz_input($vars, $html) {
         return $input_html;
     }
 
+############################## Select #############################################################################
 
     if ($vars['type'] == 'select') {
-preg_match_all('/<option\s*(.+?)\s*<\/option>/', $html,$options);
+        if (trim($vars['skin']) == '1')
+            $add_class = 'chosen-select';
+        if (trim($vars['skin']) == '2')
+            $add_class = 'select2 no-border';
+        if ($vars['multiple']) {
+            $add_option = 'multiple="multiple"';
+            $ddtoname = '[]';
+        }
 
-$options_html='';
- foreach($options[0] as $option){
-     preg_match('/value=(\'|\")(([ -0-9a-zA-Z:]*[ 0-9a-zA-Z;]*)*)(\'|\")/', $option,$value);
-      if(!$value[2]) $value[2]=strip_tags($option);
-      $value=$value[2];
-      $options_html.="\n".str_replace('<option', '<option <?php selected; ?>', $option);
-     echo "\n$option ---  value: $value\n ";
- }
- echo $options_html;
- exit();
-        $input_html = '       
+        preg_match_all('/<option\s*(.+?)\s*<\/option>/', $html, $options);
+
+        $options_html = '';
+        foreach ($options[0] as $option) {
+            preg_match('/value=(\'|\")(([ -0-9a-zA-Z:]*[ 0-9a-zA-Z;]*)*)(\'|\")/', $option, $value);
+            if (!$value[2])
+                $value[2] = strip_tags($option);
+            $value = $value[2];
+            $options_html.="\n" . str_replace('<option', '<option <?php if($lezaz->get("_VAL_' . $vars['name'] . '")){ if($lezaz->get("_VAL_' . $vars['name'] . '")=="' . $value . '") echo "selected ";}else{if("' . $vars['value'] . '"=="' . $value . '") echo "selected ";} ?>', $option);
+        }
+
+        $input_html = '
+                       
+			<div id="input-' . $vars['id'] . '" class="form-group<?php if($lezaz->get("_MSG_' . $vars['id'] . '")){echo " has-".$lezaz->get("_MSG_' . $vars['id'] . '");} ?>">
+				' . $label_text . '
+				<div class="col-sm-' . $vars['size'] . '">
+                                   ' . $icon_span . '
+<select class="' . $add_class . ' col-sm-12 form-control" id="' . $vars['id'] . '" name="' . $vars['id'] . $ddtoname . '" ' . $add_option . ' data-placeholder="' . $vars['placeholder'] . '">
+    ' . $options_html . ' 
+' . $icon_right_html . $icon_html . $close_span . '
+	</select>				
+				</div>
+			</div>
+                        ' . $vars['space'] . ' 
+            
+             ';
+        return $input_html;
+        $input_html = '   
+            
 <?php $_VAL_' . $vars['name'] . '_' . $vars['value'] . ' = "selected"; if($lezaz->get("_VAL_' . $vars['name'] . '")){ $_VAL_' . $vars['name'] . '_chk = "selected";} ?>            
 //<option    
     ';
     }
 
-
-
-
+###################################### Upload ##########################################################
+    if ($vars['type'] == 'files' || $vars['type'] == 'images' || $vars['type'] == 'image' || $vars['type'] == 'file') {
+        if ($vars['type'] == 'files' || $vars['type'] == 'images') {
+            $multiple = 'multiple="multiple"';
+            $namearray = '[]';
+        }
+        $class = $vars['type'] . 'file';
+        $input_html = '
+                       
+			<div id="input-' . $vars['id'] . '" class="form-group<?php if($lezaz->get("_MSG_' . $vars['id'] . '")){echo " has-".$lezaz->get("_MSG_' . $vars['id'] . '");} ?>">
+				' . $label_text . '
+				<div class="col-sm-' . $vars['size'] . '">
+                                   ' . $icon_span . '
+<input type="file" name="' . $vars['name'] . $namearray . '" id="' . $vars['id'] . '" ' . $multiple . $placeholder . ' data-no_file="bassam" class="col-sm-12 ' . $class . '" />
+' . $icon_right_html . $icon_html . $close_span . '
+					
+				</div>
+			</div>
+                        ' . $vars['space'] . ' 
+            
+             ';
+        return $input_html;
+    }
     return '';
 }
 
@@ -281,7 +440,7 @@ function input_SYNTAX($vars) {
 				
 				<div class="col-sm-9">
                                    ' . $icon . '
-					<textarea name="' . $vars[1] . '" id="' . $vars[1] . '" placeholder="' . $vars[6] . '" class="col-xs-' . $size_input . '"  ><?php if(global_var("_VAL_' . $vars[1] . '")){echo global_var("_VAL_' . $vars[1] . '");}else{ echo "' . $vars[2] . '"; } ?></textarea>
+					<textarea name="' . $vars[1] . '" id="' . $vars[1] . '" data-placeholder="' . $vars[6] . '" class="col-xs-' . $size_input . '"  ><?php if(global_var("_VAL_' . $vars[1] . '")){echo global_var("_VAL_' . $vars[1] . '");}else{ echo "' . $vars[2] . '"; } ?></textarea>
                                       &nbsp; &nbsp;  ' . $help . '
 					
 				</div>

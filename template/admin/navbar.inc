@@ -72,7 +72,7 @@ lezaz:get(user)
                                     عربي
                                 </a>
                             </li>
-                            <lezaz:else/>
+                            <lezaz_else/>
                             <li>
                                 <a href="?set_language=en">
                                     <i class="ace-icon fa fa-globe"></i>

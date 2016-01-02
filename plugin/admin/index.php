@@ -8,6 +8,13 @@ if (!$_SESSION['language'])
     $_SESSION['language'] = 'en';
 $lezaz->language($_SESSION['language']);
 
+
+$lezaz->router(array('/test/@*', 'test'), function() use ($lezaz) {
+    
+        $lezaz->main_template = '{template}admin/test';
+    
+});
+
 $lezaz->router(array('/admin/@*', 'admin'), function() use ($lezaz) {
     if ($_SESSION['member_permission'] != 'yes') {
         $lezaz->main_template = '{template}admin/login';
@@ -44,4 +51,5 @@ $lezaz->listen('output.filter', function($output, $filtered) use($lezaz) {
 $lezaz->set("_MSG_text", "error");
 $lezaz->set("_VAL_text", "maria al7elwa:)");
 $lezaz->set("_VAL_use_ajax", "");
+$lezaz->set("_VAL_skinchoose", "no-skin skin-3");
 

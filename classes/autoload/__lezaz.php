@@ -42,7 +42,7 @@ class __LEZAZ {
     public $plugin_dir = '';
     public $element = '';
     public $topcode = '';
-
+    public $declear = array();
     public function __construct($cache_path = '', $plugin_dir = '') {
         if ($cache_path)
             $this->cache_path = $cache_path;
@@ -132,7 +132,6 @@ class __LEZAZ {
         //check for all none html lezaz syntax with echo parameter
 
         $t = $this->GetSyantax($t);
-        $t = $this->replace_Syantax($t);
 
 
         //delete old php files from cache folder
@@ -172,19 +171,8 @@ class __LEZAZ {
      * @param string $t syntax code
      * @return string php code  
      */
-    private function Syntax($str) {
-
-        $i = 0;
-        while ($x <= 10) {
-            if ($element_html) {
-                $str = $element_html;
-
-            }
-
-            //echo "$html####";
-            $new_inner = '';
-            $element = ($this->get_tag($str));
-            //print_r($element);
+    private function Syntax($str,$declear='') {
+           $element = ($this->get_tag($str));
             if (!is_array($element))
                 return $str;
 
@@ -194,13 +182,16 @@ class __LEZAZ {
                 foreach ($element['attributes'] as $k => $v) {
                     $attr[$k] = $this->GetSyantax($v, 1);
                 }
-                $new_inner = $func($attr, $element['inner']);
+                $this_declear=$element['tag'].'_'.$attr['id'];
+                if($declear)
+                $this->declear[$declear][]=$attr;
+                $element_inner = $this->Syntax($element['inner'],$this_declear);
+                $new_inner = $func($attr, $element_inner);                
+                unset($this->declear[$this_declear]);
             }
-            $element_html = str_replace($element['htmltag'], $new_inner, $element['html']);
+            return $this->Syntax(str_replace($element['htmltag'], $new_inner, $element['html']),$declear);
 
 
-            $i++;
-        }
     }
 
     /**
@@ -298,11 +289,7 @@ class __LEZAZ {
         return $this->syntax_func($t, $c);
     }
 
-    function replace_Syantax($t) {
-        $search = array('{{lezaz_php}}', '{{/lezaz_php}}');
-        $replace = array('<?php', '?>');
-        return str_replace($search, $replace, $t);
-    }
+
 
     /**
      * write output file php 

@@ -39,7 +39,7 @@
 						<div class="page-content-area" data-ajax-content="true">
 							<!-- ajax content goes here -->
 						</div><!-- /.page-content-area -->                                                                                         
-                                              <lezaz:else/>
+                                              <lezaz_else/>
 
                                                  
  <div class="row">

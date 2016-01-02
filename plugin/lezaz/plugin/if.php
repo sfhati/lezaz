@@ -10,7 +10,7 @@ pass         return this value if pass                               1
 fail         return this value if fail                               0
 print        print result attr if value = any pass like 1,true,yes   0
 
-inside code you can use <lezaz:else/> 
+inside code you can use <lezaz_else/> 
 
 Example
 --------
@@ -18,7 +18,7 @@ Example
 
 <lezaz:if id='myid' condition="lezaz$parm==1" pass="yes" fail="no" print="false">
 the value for $parm = lezaz$parm and its 1 <br>
-<lezaz:else/> 
+<lezaz_else/> 
 the value for $parm = lezaz$parm and its not 1
 </lezaz:if>
 the result for if syntax is lezaz#myid
@@ -42,7 +42,7 @@ function lezaz_if($vars, $html) {
         $vars['print'] = 0;
     $vars['print'] = (bool) $vars['print'];
 
-    $html = str_replace('<lezaz:else/>', "<?php }else{ ?>", $html);
+    $html = str_replace('<lezaz_else/>', "<?php }else{ ?>", $html);
 
     if ($vars[id]) {       
         $return = "\n" . '$lezaz_' . $vars[id] . '="' . $vars['pass'] . "\";\n";

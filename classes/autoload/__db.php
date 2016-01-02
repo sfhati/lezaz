@@ -110,7 +110,7 @@ class __db {
      * @param string $database must specify database for get tables.
      * @return object with the result set with table names in the database. */
     public function ShowTables() {
-        $dbtype = db_name_type;
+        $dbtype = db_type;
 
         if ($dbtype == "sqlsrv" || $dbtype == "mssql" || $dbtype == "ibm" || $dbtype == "dblib" || $dbtype == "odbc" || $dbtype == "sqlite2" || $dbtype == "sqlite3") {
             $sql_statement = "SELECT name FROM sysobjects WHERE xtype='U';";
@@ -125,7 +125,43 @@ class __db {
         } elseif ($dbtype == "pg") {
             $sql_statement = "SELECT relname AS name FROM pg_stat_user_tables ORDER BY relname;";
         }
-        return $this->con->query($sql_statement);
+        return $this->query($sql_statement);
+    }
+
+    function tableExists($table) {
+
+        // Try a select statement against the table
+        // Run it in try/catch in case PDO is in ERRMODE_EXCEPTION.
+        try {
+            $result = $this->con->query("SELECT 1 FROM $table LIMIT 1");
+        } catch (Exception $e) {
+            // We got an exception == table not found
+            return FALSE;
+        }
+
+        // Result is either boolean FALSE (no table found) or PDOStatement Object (table found)
+        return $result !== FALSE;
+    }
+
+    function create_table($sql) {
+
+        try {
+            $sql = "CREATE table bassam1(
+     ID INT( 11 ) AUTO_INCREMENT PRIMARY KEY,
+     Prename VARCHAR( 50 ) NOT NULL, 
+     Name VARCHAR( 250 ) NOT NULL,
+     StreetA VARCHAR( 150 ) UNIQUE KEY NOT NULL, 
+     StreetB VARCHAR( 150 ) NOT NULL, 
+     StreetC VARCHAR( 150 ) NOT NULL, 
+     County VARCHAR( 100 ) NOT NULL,
+     Postcode VARCHAR( 50 ) NOT NULL,
+     Country VARCHAR( 50 ) NOT NULL);";
+            $this->con->exec($sql);
+        } catch (PDOException $e) {
+            $lezaz->set_msg($e->getMessage(), 'warinig');
+            return false;
+        }
+        return true;
     }
 
     /**

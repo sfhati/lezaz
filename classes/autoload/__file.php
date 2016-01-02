@@ -14,31 +14,35 @@
 class __file {
 
     function save($file, $saveto = '', $validation = '') {
-        if ($validation[type] == 'img') {
-            if ($file[type] != "image/gif" && $file[type] != "image/png" && $file[type] != "image/jpg" && $file[type] != "image/jpeg") {
-                set_msg('[ERR_TYPE]', 1);
+        global $lezaz;
+        if (is_array($validation)) {
+        if ($validation['type'] == 'img') {
+            if ($file['type'] != "image/gif" && $file['type'] != "image/png" && $file['type'] != "image/jpg" && $file['type'] != "image/jpeg") {
+                $lezaz->set_msg('[ERR_TYPE]'.$file['name'].'<br>', 'danger');
+                return FALSE;
+                
+            }
+        }
+        if ($validation['size']) {
+            $validation['size'] = $validation['size'] * 1000;
+            if ($file['size'] > $validation['size']) {
+                $lezaz->set_msg('[ERR_SIZE]'.$file[name].'<br>',  'danger');
                 return FALSE;
             }
         }
-        if ($validation[size]) {
-            $validation[size] = $validation[size] * 1000;
-            if ($file[size] > $validation[size]) {
-                set_msg('[ERR_SIZE]', 1);
-                return FALSE;
-            }
         }
-        $ext = end(explode('.', $file[name]));
+        $ext = end(explode('.', $file['name']));
         if (!$ext) {
-            set_msg('[ERR_FILENAME]', 1);
+            $lezaz->set_msg('[ERR_FILENAME]: '.$file['name'].'<br>',  'danger');
             return FALSE;
         }
         $saveto = UPLOADED_PATH . $saveto . '/';
-        if (!$this->make_path($saveto)) {
-            //set_msg('[ERR_PERMITIONFOLDER]', 1);
+        if (!$this->mkdir($saveto)) {
+            $lezaz->set_msg('[ERR_PERMITIONFOLDER]',  'danger');
             return FALSE;
         }
         $fn = time() . '.' . $ext;
-        copy($file[tmp_name], $saveto . $fn);
+        copy($file['tmp_name'], $saveto . $fn);
         return $fn;
     }
 
@@ -47,8 +51,8 @@ class __file {
         if (is_dir($path))
             return true;
         $prev_path = substr($path, 0, strrpos($path, '/', -2) + 1);
-        $return = $this->make_path($prev_path);
-        return ($return && is_writable($prev_path)) ? $this->mkdir($path) : false;
+        $return = $this->mkdir($prev_path);
+        return ($return && is_writable($prev_path)) ? mkdir($path) : false;
     }
 
     function write($file, $content) {
