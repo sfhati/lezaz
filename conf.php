@@ -17,11 +17,9 @@ ini_set("session.gc_maxlifetime", '2592000'); // 30 days
 set_time_limit('100030');
 ini_set('memory_limit', '80M');
 date_default_timezone_set('Asia/Amman');
-
 define('SITE_DOMAIN',$_SERVER[HTTP_HOST]);
 
 // database mysql configration 
-
     define('db_type', 'mysql');
     define('db_host', 'localhost');
     define('db_port', '');

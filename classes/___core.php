@@ -388,12 +388,13 @@ Class __CORE {
 
         $this->include_plugin('index');
         $this->include_plugin('footer');
-        $this->include_plugin('term');
+        
 
         $print = $this->lezaz->include_tpl($this->main_template);
         $print = $this->trigger('output.filter', $print, $print);
         $this->trigger('requset.end', '');
         
+        $this->include_plugin('term');
         // clear all messages!
         $_SESSION['lezaz_msseges'] = '';
         unset($_SESSION['lezaz_msseges']); 
