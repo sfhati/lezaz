@@ -413,130 +413,59 @@ hi man your variable &lt;b&gt;my_var&lt;/b&gt; value is: lezaz:get(my_var)!
                     <!-- router -->
                     <div id="router" class="tab-pane fade">
                         
-                        <h1><span class="glyphicon glyphicon-cog"></span> Application Router</h1> <br />
+                        <h1><span class="glyphicon glyphicon-cog"></span> العناوين الذكيه - Router</h1> <br />
 
-                        <h3> &rsaquo; What is a router ? </h3>
+                        <h3> &rsaquo; ماهي العناوين الذكيه؟ </h3>
                         <p>
-                            <b>Router</b> is a library that controls the application response to the browser . <br />
-                            The router is just like a mini-web server that serves a path with its handler and when the browser call it,
-                            will be distapched . But there are many routing mechanism, the most popular is storing each route you enter in an array
-                            then when the browser enter a certain path, start searching for the matched route, this is good, but only for small apps
-                            imagine if you have many and many routes and you need the quickest and shortest response time !, you know that in big applications
-                            you need scalability and small response time even microsecond is considered valuable !, so the new verion of <code>Horus Router</code>
-                            is using another one called <code>Call on demand</code> and no routes storage in memory, <b>How ?</b> .<br />
-                            Say that you told horus to serve some routes, say <code>5 routes</code>, now when the browser request any valid one
-                            Horus will ignore any other route and just send the required response then exit, so that <b>Horus 7</b> is more faster and nearly
-                            just like plain-php code in response time .
+                            <b>Router</b> هي نظام يعمل على جعل العنوان في المتصفح مقروء ويمكن أن يوضح معني الصفحة وماهي الكلمات المفتاحيه لها 
+                            وبذلك تعمل هذه العناوين على أرشفه صحيحه لمحركات البحث وتعطي لصفحاتها قيمة أكبر ليصل لها أكبر عدد من المهتمين بمحتوى الصفحة 
+                            , فيما مضى كنا نستخدم المتغيرات لمعرفة مايطلبه المستخدم وذلك عن طريق روابط كهذا الرابط 
+                            <br>
+                            <code>http://www.site.com/?p=about_us&c=amman</code>
+                            <br/>
+                            وكما ترى فإن الرابط لايعبر عن محتوى الصفحة , الآن يمكنك إستخدام مثل هذا الرابط لإنشاء نفس الرابط السابق 
+                            <br/>
+                           <code>http://www.site.com/about_us/amman/</code>
+                           <br/>
+                           وهذه أمثله لكيفيه إستخدام الروابط وأيضا التخلص من المخرقين والمخربين وذلك من خلال الفلتره والتحقق التلقائي لجميع المدخلات 
+                           <br/>
+                           <br/>
+                           
+
                         </p>
 
-                        <h3> &rsaquo; Features :</h3>
-                        <ul>
-                            <li>Very simple .</li>
-                            <li>Very Light and <b>Really</b> very fast !</li>
-                            <li>Supports any valid <code><a target="_blank" href="http://php.net/manual/en/language.types.callable.php">PHP Callback</a> .</code></li>
-                            <li>Supports full class routing <code>like controller</code> .</li>
-                            <li>Support <code>filepath</code> as a handler to be loaded.</li>
-                            <li>Supports <b>Sub domain</b> Routing</li>
-                            <li>Lazy <code>on demand</code> route dispatch</li>
-                            <li>Uses No loop to dispatch the requested route</li>
-                            <li>Dosen't store routes in array, so any number of routes won't affect performance</li>
-                        </ul>
-
-                        <h3> &rsaquo; Clean URLs :</h3>
-                        <p>
-                            By default if your server supports <code>url_rewrite module</code> just like <code>mod_rewrite</code>
-                            you will be able to use clan urls easily . <br />
-                            But what if your server won't let you to use it !, <b>Don't worry</b> horus is here . <br />
-                            Our <b>Simulator</b> will be instead server <code>url_rewriter</code> .<br />
-                            <b>Don't worry</b> it's very simple to setup, open horus <code>.htaccess</code> you will find
-                            <code>setEnv SIMULATOR off</code> this will only work if your server supports rewriting, but if not ?
-                            <b>Horus</b> will use <code>index.php/</code> and <code>PATH_INFO</code> to do the trick . <br />
-                        </p>
-
-                        <h3> &rsaquo; Usage :</h3>
+                        <h3> &rsaquo; الإستخدام :</h3>
                         <p>
 <pre class="prettyprint"><code>&lt;?php
-
-    // --------------------------
-
-    // now load and start horus easily
-    include 'Horus.php';
-    $app = new Horus;
-
-        // Horus support any HTTP methods standard or even custom
-        // here is we will respond to the browser when it call '/hi' using 'GET'
-        $app->router->get('/hi', function(){
-            echo 'HI';
+        // هنا يتم تنفيذ الأمر عند إستدعاء الرابط   
+        // site.com/hi or site.com/hi/
+        $lezaz->router('/hi', function(){
+            echo 'HI'; // site.com/hi/ >> "HI"
         });
 
-        // here is we will respond to the browser when it call '/hi' using 'POST'
-        $app->router->post('/hi', function(){
-            echo 'HI';
+        // يتم تنفيذ الأمر التالي عند إستدعاء الرابط متبوعا بأي قيمة أخرى مثل 
+        // site.com/hi/1 or site.com/hi/my_url/any_other_url/any/any
+        $lezaz->router('/hi/@*', function(){
+            echo 'HI'; // site.com/hi/me >> "HI"
         });
 
-        // here is we will respond to the browser when it call '/hi' using 'PUT'
-        $app->router->PUT('/hi', function(){
-            echo 'HI';
+        // في هذا المثال نفس المثال السابق ولكن نريد أخذ القيمة المتبوع بكلمة هاي 
+        $lezaz->router('/hi/@*', function($e){
+            echo 'HI and '.$e; // site.com/hi/me >> "HI and me"
         });
 
-        // here is we will respond to the browser when it call '/hi' using 'XYZ' 
-        // xyz: is a custom method this means horus will respond to any 
-        //      request method
-        $app->router->xyz('/hi', function(){
-            echo 'HI';
+
+        // هنا نريد إستخدام أكثر من رابط لتنفيذ الأوامر 
+        $lezaz->router(array('/hi/','/my/','/any/other/word/'), function(){
+            echo 'hi my any other word'; // site.com/my/ >> "hi my any other word"
         });
 
-        // here is we will respond to the browser when it call '/hi' 
-        // using 'GET' or 'POST'
-        $app->router->get_post('/hi', function(){
-            echo 'HI';
+        /*في هذا المثال نريد إستخدام المكتبه الرئيسيه لزاز داخل الداله مثلا لتغيير القالب إلى الإسم الذي نريده لعمل إستدعاء لهذا القالب 
+        , في هذه الحاله نحتاج إلى إستخدام المكتبه ونكتب الكود بالطريقه التاليه 
+        */
+        $lezaz->router('/admin/@str', function($b) use ($lezaz) {
+            $lezaz->main_template = '{template}admin/'.$b; // site.com/admin/myfile >> load /template/admin/myfile.inc            
         });
-
-        // here is we will respond to the browser when it call '/hi' 
-        // using 'GET', 'POST' or 'PUT'
-        $app->router->get_post_put('/hi', function(){
-            echo 'HI';
-        });
-
-        // here is we will respond to the browser when it call '/hi' 
-        // under any http request method .
-        $app->router->any('/hi', function(){
-            echo 'HI';
-        });
-
-        // handle mutliple paths at once ?
-        $app->router->any(array('hi', 'hi-2', 'hi.html'), function(){
-            echo 'HI';
-        });
-
-        // handle a path and pass default arg(s)
-        $app->router->any('hi', function($fname, $lname){
-                echo "hi $fname $lname";
-        }, array('Mohammed', 'Al Ashaal'));
-
-        // handle group of routes based on a path ?
-        $app->router->with('/x', function() use($app) {
-            
-            // '/x/page1'
-            $app->router->any('/page1', function(){
-                echo 'page1';
-            });
-
-            // '/x/page2'
-            $app->router->any('/page2', function(){
-                echo 'page2';
-            });
-
-            // '/x/page3'
-            $app->router->any('/page2', function(){
-                echo 'page3';
-            });
-
-        });
-
-    // run it
-    $app->run();
-
 </code></pre>
 <b>URL parameter :</b><br /><br />
 <pre class="prettyprint"><code>&lt;?php
