@@ -119,7 +119,6 @@
                     <a class="list-group-item" data-toggle="tab" href="#download">تحميل</a>
                     <a class="list-group-item" data-toggle="tab" href="#setup">إعداد</a>
                     <a class="list-group-item" data-toggle="tab" href="#how">كيف تعمل</a>
-                    <a class="list-group-item" data-toggle="tab" href="#qstart">مثال بسيط</a>
                 </div>
                 <!-- SIDE.BAR-1 -->
                 
@@ -127,7 +126,7 @@
                 <p class="lead"> <span class="glyphicon glyphicon-bookmark"></span> اليوم الثاني  <small class="text-muted"> "البدء" </small> </p>
                 <div class="list-group tabs">
                     <a class="list-group-item" data-toggle="tab" href="#router">Router - العناوين الذكيه</a>
-                    <a class="list-group-item" data-toggle="tab" href="#db">قاعدة البيانات</a>
+                    <a class="list-group-item" data-toggle="tab" href="#eventshock">الأحداث والصياد</a>
                     <a class="list-group-item" data-toggle="tab" href="#helpers">مساعد</a>
                 </div>
                 <!-- SIDE.BAR-2 --> 
@@ -264,7 +263,7 @@ define('CLASSES_FOLDER', 'classes'); // مجلد الكلاسات
 define('CACHE_FOLDER', 'cache'); // مجلد الكاش 
 define('TMP_FOLDER', 'tmp'); // مجلد الملفات المؤقته
 define('PLUGIN_FOLDER', 'plugin'); // مجلد الإضافات 
-define('THEME_FOLDER', 'gulffurniture'); // مجلد الثيم الرئيسي 
+define('THEME_FOLDER', 'my_theme'); // مجلد الثيم الرئيسي 
 //يحتوي الثيم الرئيسي على جميع القوالب والصور والستالات والجافاسكريبت الخاص بمشروعك 
 
 define('SQL_CACHE', '20'); // وقت الإحتفاظ بملفات الكاش بالثواني
@@ -367,48 +366,6 @@ define('SALT','FR4d32cdvTYdw2s#gt54');//في حال أردت إستخدام ال
                     </div>
                     <!-- how-it-works -->
 
-                    <!-- qtest -->
-                    <div id="qstart" class="tab-pane fade">
-                        
-                        <h1> <span class="glyphicon glyphicon-cog"></span> مثال بسيط </h1>
-                        قم بإنشاء مجلد داخل مجلد الإضافات بإسم 
-                         <br />
-                       <code>/plugin/my_test/</code>
-                       أنشيء ملف بإسم 
-                        <code>/plugin/my_test/index.php</code>
-                        وأكتب هذا الكود داخله 
-                        
-<pre class="prettyprint"><code>&lt;?php
-/* سيتم إستدعاء القالب     
-/template/my_template/test.inc
-عند كتابة العنوان التالي 
-http://your_domain.com/test or http://your_domain.com/test/any_thing
-*/
-$lezaz->router(array('/test/@*', 'test'), function() use ($lezaz) {    
- $lezaz->main_template = '{template}my_template/test';    
-});
-
-// تم تعريف متغير لإستخدامه في القالب بإسم 
-// my_var 
-$lezaz->set('my_var','this is me :)');
-</code></pre>
-                       
-                        <br/>
-الآن أنشيء مجلد داخل مجلد القوالب  بإسم 
-<code>/template/my_template/</code>
-ثم أنشئ ملف داخل المجلد بإسم 
-<code>/template/my_template/test.inc</code>
-وقم بإضافة هذا الكود داخل الملف 
-<pre class="prettyprint"><code>
-&lt;html&gt;
-hi man your variable &lt;b&gt;my_var&lt;/b&gt; value is: lezaz:get(my_var)!
-
-&lt;/html&gt;
-</code></pre>
-
-
-                    </div>
-                    <!-- qtest -->
 
                     <!-- router -->
                     <div id="router" class="tab-pane fade">
@@ -466,238 +423,220 @@ hi man your variable &lt;b&gt;my_var&lt;/b&gt; value is: lezaz:get(my_var)!
         $lezaz->router('/admin/@str', function($b) use ($lezaz) {
             $lezaz->main_template = '{template}admin/'.$b; // site.com/admin/myfile >> load /template/admin/myfile.inc            
         });
+
+        // بعض الأمثله السريعه 
+        $lezaz->router(array('/test/@num/@str', 'test'), function($num,$str) use ($lezaz) {    
+                $lezaz->main_template = '{template}admin/test'; // إستدعاء القالب تست من المجلد أدمن داخل مجلد القوالب الرئيسي 
+                echo "Number=$num & String=$str";   // طباعه المتغيرات القادمة من الرابط ويجب أن تكون رقم ثم نص 
+                //الرباط يكون كالتالي 
+                // http://site.com/test/1/test
+        });
+
+
 </code></pre>
-<b>URL parameter :</b><br /><br />
+                        
+           <h3> &rsaquo; الرموز أو المفاتيح :</h3>
+                        <p>
+<pre class="prettyprint"><code>
+'@num' => '([0-9\.,]+)', // رقم ويمكن أن يحتوي على الفارزه والنقطه
+'@alpha' => '([a-zA-Z]+)',  // حروف كبيره وصغيره فقط 
+'@alnum' => '([a-zA-Z0-9\.\w]+)', // حروف كبيرة وصغيره بالإضافه إلى الأرقام والنقطه  
+'@str' => '([a-zA-Z0-9-_\.\w]+)', //  حروف كبيرة وصغيره بالإضافه إلى الأرقام والنقطه وإشارة الناقص والشرطه 
+'@*' => '(.*)', // يقبل كل الحروف والرموز 
+'@date' => '(([0-9]{1,2})\/([0-9]{1,2})\/(([0-9]{2})(.{0}|.{2})))', // التاريخ بفورمات كالتالي 00/00/0000
+'@null' => '^'); // لايقبل أي حرف , يجب أن يكون فارغ 
+</code></pre>                     
+                        
+                        
+   <h3> &rsaquo;  إضافة مفتاح جديد </h3>
+   
+   ماذا لو أردنا مثلا إضافة مفتاح جديد للتاريخ بحيث تكون الفورمات كالتالي 
+   <br>
+   <code>00-00-0000</code>
+   <br>
+   يمكننا ذلك من خلال إضافة مفتاح عن طريق الكود التالي ولكن يجب الإنتباه إلى أن عمليه إضافة المفتاح يجب أن تتم قبل كود العنوان 
+   
+                        <p>
+<pre class="prettyprint"><code>
+
+$lezaz->add_router('@mydate','(([0-9]{1,2})-([0-9]{1,2})-(([0-9]{2})(.{0}|.{2})))');
+        $lezaz->router('/@mydate', function($date) {
+           echo "your date is $date";        
+        });
+// url : http://site.com/1-7-2001
+
+</code></pre>                                             
+
+
+
+
+                        <h3> &rsaquo; مثال  </h3>
+                        قم بإنشاء مجلد داخل مجلد الإضافات بإسم 
+                         <br />
+                       <code>/plugin/my_test/</code>
+                       أنشيء ملف بإسم 
+                        <code>/plugin/my_test/index.php</code>
+                        وأكتب هذا الكود داخله 
+                        
 <pre class="prettyprint"><code>&lt;?php
-
-    //load horus
-    include 'Horus.php';
-
-    // start horus
-    $app = new Horus;
-
-        // respond to '/page/@num' ex: '/page/1' .. etc
-        $app->router->any('/page/@num', function($id){
-            // when the browser enter e.g: '/page/5' or any othe than '5'
-            // we will show it the number it requested
-            echo $id;
-        });
-
-        // respond to '/page/@str' ex: '/page/test-123' .. etc
-        $app->router->any('/page/@str', function($string){
-            // when the browser enter e.g: '/page/test-123' 
-            // we will show it the string it requested
-            echo $string;
-        });
-
-        // respond to '/page/@num/@str' ex: '/page/2/test-123' .. etc
-        $app->router->any('/page/@num/@str', function($number,$string){
-            // when the browser enter e.g: '/page/3/test-123'
-            // we will show it the number & string it requested
-            echo 'The number is: ', $number,  ' ,But the string is: ', $string;
-        });
-
-        // what is @num and @str ?
-        // horus is using regex and by default horus comes
-        // with regex vars and @str/@num some of them
-        // and those are the vars registered in horus router
-        /*
-            '@num'      =>  '([0-9\.,]+)',
-            '@alpha'    =>  '([a-zA-Z]+)',
-            '@alnum'    =>  '([a-zA-Z0-9\.\w]+)',
-            '@str'      =>  '([a-zA-Z0-9-_\.\w]+)',
-            '@any'      =>  '([^\/]+)',
-            '@*'        =>  '?(.*)',
-            '@date'     =>  '(([0-9]+)\/([0-9]{2,2}+)\/([0-9]{2,2}+))',
-            '@null'     =>  '^',
-            '@domain'   =>  $_SERVER['DEFAULKT_DOMAIN']
-        */
-
-        // set/override any regex var ?
-        $app->router->vars['@page1'] = '(page1)';
-
-    // run it
-    $app->run();
+/* سيتم إستدعاء القالب     
+/template/my_template/test.inc
+عند كتابة العنوان التالي 
+http://your_domain.com/test or http://your_domain.com/test/any_thing
+*/
+$lezaz->router(array('/test/@*', 'test'), function($file) use ($lezaz) {    
+ $lezaz->main_template = '{template}my_template/'.$file;    
+});
 
 </code></pre>
-
-<b> Other Router features :</b><br /><br />
-<pre class="prettyprint"><code>&lt;?php
-
-    //load horus
-    include 'Horus.php';
-
-    // start horus
-    $app = new Horus;
-
-        // you can load a file
-        $app->router->any('/page', 'path/to/file.php');
-        // note: if there were some url params, will 
-        // be as array in a var called $args, just var_dump($args)
-        // in the filename used like above
-
-
-        // you can use classes
-        // let we have this class
-        // every method will be like a seprated page
-        // every class must has 'index' method because 
-        // it will the landed page
-        // any path requested by browser that has '-' or '.'
-        // will be replaced by '_' to be correct for method name
-        // any method starts with '_' will be private/protected .
-        // the controller class should extends Horus_Controller
-        // that will provides you with simple and better tools .
-        // Horus Controller is also extending Horus_Container .
-        Class Page extends Horus_Controller
-        {
-
-            // instead of __construct
-            // optional
-            function __init()
-            {
-                // will automatically called in construction
-            }
-
-            // instead of __call
-            // optional
-            function __caller()
-            {
-                // to achive extensible controller
-                // i'm using __call() to check if the
-                // the requested method isset or not
-                // this is good for dynamically added methods
-            }
-
-            // '/' or '/index'
-            function index()
-            {
-                echo __FUNCTION__;
-                $horus = &$this->horus; // get horus object.
-            }
-
-            // 'page-1' or 'page_1'
-            function page_1()
-            {
-                echo __FUNCTION__;   
-            }
-
-            // private method [protected/private/starts with '_']
-            function _page()
-            {
-                echo 'private and protected from the router';
-            }
-        }
-
-        // to route this class, just put it's name or start and 
-        // put it's object
-        // 1). it's name
-        $app->router->any('/page', 'Page');
-        // 2). or
-        $page = new Page;
-        $page->newMethod = function(){echo 'the new method !!!'};
-        $app->router->any('/page', $page);
-
-        // Do you want to make wildcard regex routing ?
-        $app->router->any('/page-1/@*', function($requested) use($app) {
-            // $requested: will contains everything after '/page-1/'
-            // if you want to check if current path matches what you want ?
-            var_dump($app->router->is('page-1/test'));
-        });
-
-    // run it
-    $app->run();
-
+                       
+                        <br/>
+الآن أنشيء مجلد داخل مجلد القوالب  بإسم 
+<code>/template/my_template/</code>
+ثم أنشئ ملفات داخل المجلد بإسم 
+<code>/template/my_template/test.inc</code>
+<code>/template/my_template/other.inc</code>
+وقم بإضافة هذا الكود داخل الملفات بالترتيب 
+<pre class="prettyprint"><code>&lt;html&gt;
+this is &lt;b&gt;test.inc&lt;/b&gt; content!
+&lt;/html&gt;
 </code></pre>
 
-<b> Sub domain routing :</b><br /><br />
-<pre class="prettyprint"><code>&lt;?php
-
-    //load horus
-    include 'Horus.php';
-
-    // For sub domain routing, you must set the default main domain of your site
-    // localtest.me : re-route any request to your 127.0.0.1 even subdomains !
-    $_SERVER['DEFAULT_DOMAIN'] = 'localtest.me';
-
-    // start horus
-    $app = new Horus;
-
-    // handel scheme://{any-string}.localtest.me/
-    // you must write '//' in the start to tell horus that this is
-    // a sub domain routing
-    $app->router->any('//@str.@domain', function($sub){
-        echo $sub;
-    });
-
-    // note: that this feature based on your server configurations:
-    // > Virtual hosts .
-    // > Wildcard DNS support .
-
-    // run it
-    $app->run();
-
+<pre class="prettyprint"><code>&lt;html&gt;
+this is &lt;b&gt;other.inc&lt;/b&gt; content!
+&lt;/html&gt;
 </code></pre>
-                        </p>
+
+الآن عند الدخول إلى الرابط 
+<code>/test/test </code>
+يجب رؤية مافي داخل الملف الأول 
+<code>test.inc </code><br/>
+وفي حال تصفح الرابط 
+<code>/test/other</code>
+ستظهر محتويات الملف الثاني 
+<code>other.inc</code> <br/>
+وفي الحاله الأخيرة وهو الدخول إلى أي رابط غير متوفر الملف له مثل 
+<code>/test/anyword</code>
+ستظهر لنا عبارة تفيد بأن القالب غير متوفر 
+
+
+
+
+
+
+
+
+
+
 
                     </div>
                     <!-- router -->
 
-                    <!-- database -->
-                    <div id="db" class="tab-pane fade">
+  
+                    <!-- Events/Hooks -->
+                    <div id="eventshock" class="tab-pane fade">
                         
-                        <h1> <span class="glyphicon glyphicon-download"></span> Database</h1>
-                        <p class="lead">
-                            As this micro-framework only needs to be a tiny base for other php based apps, so
-                            i just extended <code>PDO</code> class and merged it with <code>PDOStatement</code> and
-                            overrided the <code>PDO::query()</code> method to provides you with a very simple interface to deal with .
-                            so you just initialize it and start coding using <code>Horus::sql</code>
-                        </p>
+                        <h1> <span class="glyphicon glyphicon-download"></span> الأحداث والصياد <small>"زناد وتنصت"</small></h1>
+                        <b></b> 
+                        الأمر هنا وكأننا نصطاد , فلدينا زناد ومستمع للطلقه أو الحدث 
+                        <br/>
+                        قبل كل هذا لنرى مايحدث فعليا ... هناك مساعد للصياد يمتلك أداوت مثل الشبكه أو كلب صيد وهذا الصياد ينتظر الزناد وذلك بالإستماع إلى صوت الطلقه 
+                        , عند إطلاق الرصاصه يقوم المساعد بتنفيذ أمر إطلاق كلب الصيد أو تهيئة الشباك 
+                        <br>
+                        هذا مايحدث فعليا في هذه المرحله , فهناك صياد 
+                        <code>trigger</code> ولدينا أيضا مستمع للزناد وهو عباره عن داله لتنفيذ الأوامر
+                        <code>listen</code><br > 
+                        
+                        الأحداث أو الزناد مثل الحصول على مخرجات التطبيق وقبل عرضها يتم عمل حدث لتتمكن من خلال المتنصت من عمل فلترة لهذه المخرجات , 
+                        أيضا هناك مثال آخر , عند تخزين مدخلات في قاعدة البيانات هنا نحتاج إلى حدث لنتمكن من معرفة المعرف الخاص بهذه المدخلات ويمكن أن نحتاج إلى المدخلات قبل إدخالها لقاعدة البيانات 
+                        حتى نتمكن من فلترة بعضها مثلا 
+                        <br/>
+                        هناك الكثير من الأمثله تستوجب مثل هذه التقنيه لجعل النظام الخاص بك مرن إلى أبعد حد 
+
+                        <h3>&raquo; الإستخدام </h3>
 <pre class="prettyprint"><code>
 
-// include horus
-include "Horus.php";
+    // إضافة مستمع , ويكون في الطبقه العليا لنظمن سماع الزناد في أي طبقه أسفلها , أي في ملفات ال
+    // init.php 
+    // $lezaz->listen('الحدث', 'داله لتنفيذ الأوامر', الأولويه وهو رقم كلما كان أقل كانت أعلى -*********************************************************************************************************************');
+    // $tag: is the category where $callable work under .
+    // $callable: any valid php callback
+    // $priority: the priority of the event, low number high priority .
+    // examples:
+    $app->listen('test.action.1', function(){
+        echo "HI, i'm 1 ...";
+    });
+    $app->listen('test.action.1', function(){
+        echo "HI, i'm 2 ...";
+    });    
+    $app->listen('test.action.1', function($arg){
+        echo "HI, i'm 3 ...", " you have passed an argument it is: ", $arg;
+    });
 
-// start it
-$app = Horus();
+    // to run them just do this
+    // and see the result
+    // here we will pass an argument to the
+    // event when triggering it, because
+    // in the last event we want an argument
+    // you can pass array of rags if there are
+    // multiple args required
+    $app->trigger('test.action.1', 'arg_1');
 
-// start the sql
-//:: $app->sql->connect($dns, [$username, $password, $options]);
-$app->sql->connect('mysql:host=xx;dbname=yy', 'username', 'password');
+    // but how about filtering a varible,word, ... etc
+    // let's register some filters
+    // by default horus will store any returned
+    // values from the last executed event
+    // and store it in the last parameter
+    // of the callback, so you can use it easily .
+    // here we want at least one param,
+    // one for the word that will be filtered
+    $app->listen('test.filter.1', function($word){
+        return "<i>$word</i>";
+    });
 
-// query
-//:: $app->sql->query($statement, [$binded_params]);
-$app->sql->query('select * from mytable') or die("cannot do select from mytable");
+    // here like the above one,
+    // but we need the value that has been filtered
+    // from last one
+    $app->listen('test.filter.1', function($word, $last_filtered){
+        // $word will be the new value
+        // $last_filtered will be the last filtered value
+        return "&lt;h1&gt;$last_filtered&lt;/h1&gt;";
+    });
+    
+    // let our word is:
+    $myword = 'test';
+    // now filter it (we will pass the $myword var)
+    echo $app->trigger('test.filter.1', $myword);
 
-// get result [all]
-var_dump($app->sql->fetchAll());
-
-// how about prepared stmnt for security ?
-$app->sql->query('select * from mytable where col1 = ? and col2 = ?', array('val1 for first ?', 'val2 for second ?')) or die("cannot do select from mytable");
-
-// now fetching using while ?
-while( $row = $app->sql->fetch(PDO::FETCH_ASSOC) )
-{
-    // your code here
-}
-
-// and so, use PDO, PDOStatement and Horus query() fron one class
-// But wait !, how about new instance of the class ?
-// just do this:
-$newSQL = $app->sql->newInstance();
-$newSQL->connect(/* .... */);
-# $newSQL-> ....
-
-
-// run it
-print $app->run(); 
-
-// or just this: 
-print $app; // o.O
+    // what if the 'test.filter.1' has no event ?
+    // yeah, this { $app->trigger('test.filter.1', $myword) }
+    // will return null , so to set the default value for it
+    // if null just pass a third param, with the value you need like this
+    echo $app->trigger('test.filter.1', $myword, 'default value');
 
 </code></pre>
 
+                        <h3>&raquo; Extend Horus</h3>
+                        You can easily extend horus from its registered events, <br />
+<pre class="prettyprint"><code>
+    // * horus.output.before    --->    an action, before showing the output .
+    // * horus.output.after     --->    an action, after showing the output .
+    // * horus.output.filter    --->    is an output filter .
+
+    // # Example:
+    // minimize the output
+    $app->listen('horus.output.filter', function($output, $filtered){
+        $output = empty($filtered) ? $output : $filtered;
+        return preg_replace('/\s+/', ' ', $output);
+    });
+
+    // to override 404 page
+    $app->e404 = function(){
+        echo '404 not found';
+    };
+</code></pre>
                     </div>
-                    <!-- database -->
+                    <!-- Events/Hooks -->
 
                     <!-- helpers -->
                     <div id="helpers" class="tab-pane fade">

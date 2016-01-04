@@ -40,7 +40,7 @@ define('CLASSES_FOLDER', 'classes');
 define('CACHE_FOLDER', 'cache');
 define('TMP_FOLDER', 'tmp');
 define('PLUGIN_FOLDER', 'plugin');
-define('THEME_FOLDER', 'gulffurniture');
+define('THEME_FOLDER', 'my_template');
 
 define('TEMPLATE_PATH', SITE_PATH . TEMPLATE_FOLDER . DIRECTORY_SEPARATOR);
 define('UPLOADED_PATH', SITE_PATH . UPLOADED_FOLDER . DIRECTORY_SEPARATOR);

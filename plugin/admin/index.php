@@ -9,10 +9,13 @@ if (!$_SESSION['language'])
 $lezaz->language($_SESSION['language']);
 
 
-$lezaz->router(array('/test/@*', 'test'), function() use ($lezaz) {
-    
+
+   
+
+
+$lezaz->router(array('/test/@num/@str', 'test'), function($num,$str) use ($lezaz) {    
         $lezaz->main_template = '{template}admin/test';
-    
+        echo "Number=$num & String=$str";    
 });
 
 $lezaz->router(array('/admin/@*', 'admin'), function() use ($lezaz) {

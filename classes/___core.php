@@ -26,6 +26,14 @@ Class __CORE {
     public $main_template = 'index';
     private $valriables = array();
     private $language = 'en';
+    private $router_vars =  array(
+            '@num' => '([0-9\.,]+)',
+            '@alpha' => '([a-zA-Z]+)',
+            '@alnum' => '([a-zA-Z0-9\.\w]+)',
+            '@str' => '([a-zA-Z0-9-_\.\w]+)',
+            '@*' => '(.*)',
+            '@date' => '(([0-9]{1,2})\/([0-9]{1,2})\/(([0-9]{2})(.{0}|.{2})))',
+            '@null' => '^');
 
     public function __construct() {
         // get all plugin active inside $plugin
@@ -47,6 +55,9 @@ Class __CORE {
         return $this->language;
     }
 
+    public function add_router($key,$regex){
+        $this->router_vars[$key]=$regex;
+    }
     public function __add($class, $name) {
         $this->$name = new $class;
     }
@@ -182,18 +193,10 @@ Class __CORE {
             return '';
         }
         $filtered = null;
-        $vars = array(
-            '@num' => '([0-9\.,]+)',
-            '@alpha' => '([a-zA-Z]+)',
-            '@alnum' => '([a-zA-Z0-9\.\w]+)',
-            '@str' => '([a-zA-Z0-9-_\.\w]+)',
-            '@*' => '(.*)',
-            '@date' => '([0-9]{1,2})\/([0-9]{1,2})\/(([0-9]{2})(.{0}|.{2}))',
-            '@null' => '^');
 
         $trimed_path = strtolower(rtrim(ltrim($path, '/'), '/'));
         $trimed_xpath = strtolower(rtrim(ltrim($_GET['directory_lezaz'], '/'), '/'));
-        $pattern = str_replace('\\\\', '\\', addcslashes(str_ireplace(array_keys($vars), array_values($vars), $trimed_path), '/'));
+        $pattern = str_replace('\\\\', '\\', addcslashes(str_ireplace(array_keys($this->router_vars), array_values($this->router_vars), $trimed_path), '/'));
         $pattern = "/^{$pattern}$/";
 
         if (preg_match($pattern, $trimed_xpath, $args)) {
