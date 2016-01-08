@@ -8,10 +8,19 @@ if (!$_SESSION['language'])
     $_SESSION['language'] = 'en';
 $lezaz->language($_SESSION['language']);
 
+$field['name']='VARCHAR(250)';
+$field['age']='int(11)';
+//$lezaz->db->create_table('user',  $field); 
+$feilds[name]='bassam';
+$feilds[age]='36';
+//$lezaz->db->save('user', $feilds);
 
-
-   
-
+  $rows = $lezaz->db->query("select * from user");
+         if (is_array($rows))
+        foreach ($rows as $row) {            
+            echo "$row[id] | $row[name] | $row[age] \n";
+        }
+echo  $lezaz->db->num_row("select * from user");
 
 $lezaz->router(array('/test/@num/@str', 'test'), function($num,$str) use ($lezaz) {    
         $lezaz->main_template = '{template}admin/test';

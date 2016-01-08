@@ -372,8 +372,9 @@ Class __CORE {
     }
 
     public function run() {
+$this->trigger('layer.init.start');
         $this->include_plugin('init');
-
+$this->trigger('layer.init.done');
         if ($_SESSION['LEZAZ_start'] == 'gr9fk4fdd') {
             $_SESSION['LEZAZ_start'] = 'gr9fk4fdd1';
             $this->trigger('new.guset');
@@ -381,23 +382,30 @@ Class __CORE {
 
         if ($_SESSION['LEZAZ_start'] != 'gr9fk4fdd' && $_SESSION['LEZAZ_start'] != 'gr9fk4fdd1') {
             $_SESSION['LEZAZ_start'] = 'gr9fk4fdd';
-            $this->trigger('session.start');
+            $this->trigger('session.guset');
         }
 
         if ($_SESSION['LEZAZ_start'] == 'gr9fk4fdd1')
-            $this->trigger('requset.start');
+            $this->trigger('requset.guset');
 
 
-
+$this->trigger('layer.index.start');
         $this->include_plugin('index');
+$this->trigger('layer.index.done');
+$this->trigger('layer.footer.start');
         $this->include_plugin('footer');
+$this->trigger('layer.footer.done');
+
+     
         
 
         $print = $this->lezaz->include_tpl($this->main_template);
         $print = $this->trigger('output.filter', $print, $print);
         $this->trigger('requset.end', '');
         
+$this->trigger('layer.term.start');
         $this->include_plugin('term');
+$this->trigger('layer.term.done');
         // clear all messages!
         $_SESSION['lezaz_msseges'] = '';
         unset($_SESSION['lezaz_msseges']); 

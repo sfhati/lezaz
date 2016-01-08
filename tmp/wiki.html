@@ -17,13 +17,13 @@
         <!-- Bootstrap -->
         <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet" />
 
-     
+
         <style>
             body {
-    padding-top: 60px;
-    direction: rtl;
-    font-size: 18px;
-}
+                padding-top: 60px;
+                direction: rtl;
+                font-size: 18px;
+            }
             .tab-pane{padding: 5px;}
             .pln{color:#fffefe!important;}
             pre .str{color:#f4645f;}
@@ -48,6 +48,8 @@
             .prettyprint .kwd,.prettyprint .tag{color:#4bb1b1;}
             .prettyprint .typ,.prettyprint .atn{color:#ef7c61;}
             pre {direction: ltr;    text-align: left;}
+            code {display: inline-block;direction: ltr;}
+            .tdfirst{ width:215px;}
         </style>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -69,7 +71,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-fire"></span>
-                    بيئة العمل لزاز
+                        بيئة العمل لزاز
                     </a>
                 </div>
 
@@ -77,13 +79,13 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav">
                         <li><a target="_blank" href="https://github.com/sfhati/lezaz">
-                            على جيتهب
+                                على جيتهب
                             </a></li>
                         <li><a target="_blank" href="https://facebook.com/lezaz.framework">
-                            على فيسبوك
+                                على فيسبوك
                             </a></li>
                         <li><a target="_blank" href="http://www.phpclasses.org/package/8642-PHP-Develop-Web-applications-using-a-micro-framework.html">
-                            على بي أتش بي كلاسيز
+                                على بي أتش بي كلاسيز
                             </a></li>
                     </ul>
                 </div>
@@ -105,15 +107,15 @@
                     <span><iframe src="http://ghbtns.com/github-btn.html?user=alash3al&type=follow&count=true" height="30" width="168" frameborder="0" scrolling="0" style="width:168px; height: 30px;" allowTransparency="true"></iframe></span>
                 </div>
             </div>
-           <!-- End Logo --> 
+            <!-- End Logo --> 
 
             <hr /> 
 
             <!-- SIDE.BARS -->
             <div class="col-md-3 tabs">
-            
+
                 <!-- SIDE.BAR-1 --> 
-                <p class="lead"> <span class="glyphicon glyphicon-bookmark"></span> اليوم الأول <small class="text-muted"> "مقدمه" </small> </p>
+                <p class="lead"> <span class="glyphicon glyphicon-bookmark"></span> نظام لزاز <small class="text-muted"> "مقدمه" </small> </p>
                 <div class="list-group nav-tabs tabs">
                     <a class="list-group-item" data-toggle="tab" href="#intro">ماهي لزاز</a>
                     <a class="list-group-item" data-toggle="tab" href="#download">تحميل</a>
@@ -121,27 +123,37 @@
                     <a class="list-group-item" data-toggle="tab" href="#how">كيف تعمل</a>
                 </div>
                 <!-- SIDE.BAR-1 -->
-                
+
                 <!-- SIDE.BAR-2 -->
-                <p class="lead"> <span class="glyphicon glyphicon-bookmark"></span> اليوم الثاني  <small class="text-muted"> "البدء" </small> </p>
+                <p class="lead"> <span class="glyphicon glyphicon-bookmark"></span> نظام لزاز<small class="text-muted"> الرئيسي </small> </p>
                 <div class="list-group tabs">
                     <a class="list-group-item" data-toggle="tab" href="#router">Router - العناوين الذكيه</a>
                     <a class="list-group-item" data-toggle="tab" href="#eventshock">الأحداث والصياد</a>
                     <a class="list-group-item" data-toggle="tab" href="#helpers">مساعد</a>
                 </div>
                 <!-- SIDE.BAR-2 --> 
-                
+
                 <!-- SIDE.BAR-3 -->
-                <p class="lead"> <span class="glyphicon glyphicon-bookmark"></span> اليوم الثالث <small class="text-muted"> "متقدم" </small> </p>
+                <p class="lead"> <span class="glyphicon glyphicon-bookmark"></span> إضافات لزاز<small class="text-muted"> "classes addons" </small> </p>
                 <div class="list-group tabs">
-                    <a class="list-group-item" data-toggle="tab" href="#events">الأحداث والصياد</a>
-                    <a class="list-group-item" data-toggle="tab" href="#container">Container</a>
+                    <a class="list-group-item" data-toggle="tab" href="#db">قواعد البيانات</a>
+                    <a class="list-group-item" data-toggle="tab" href="#files">الملفات</a>
+                    <a class="list-group-item" data-toggle="tab" href="#string">النصوص</a>
                 </div>
                 <!-- SIDE.BAR-3 --> 
-                
+
+                <!-- SIDE.BAR-3 -->
+                <p class="lead"> <span class="glyphicon glyphicon-bookmark"></span>القوالب<small class="text-muted"> "&lt;lezaz/&gt;" </small> </p>
+                <div class="list-group tabs">
+                    <a class="list-group-item" data-toggle="tab" href="#events">قواعد البيانات</a>
+                    <a class="list-group-item" data-toggle="tab" href="#container">الملفات</a>
+                    <a class="list-group-item" data-toggle="tab" href="#container">النصوص</a>
+                </div>
+                <!-- SIDE.BAR-3 --> 
+
             </div>
             <!-- SIDE.BARS --> 
-            
+
             <!-- BODY -->
             <div class="col-md-8">
 
@@ -150,43 +162,43 @@
 
                     <!-- intro -->
                     <div id="intro" class="tab-pane in active fade">
-                        
+
                         <h1> <span class="glyphicon glyphicon-road"></span> مقدمه</h1>
                         <p class="lead"><blockquote>
-                           في كثير من الأحيان نجد أن وقتا كبيرا يضيع بسبب عمليات روتينيه مثل إدخال البيانات في قاعدة بيانات وإسترجاعها 
-                           وعمليات التعديل عليها كل هذا عمله بسيط ولكنه يأخذ وقت فأنت بحاجه إلى إنشاء قاعدة البيانات ثم إنشاء صفحة 
-                           <code>HTML</code>
+                            في كثير من الأحيان نجد أن وقتا كبيرا يضيع بسبب عمليات روتينيه مثل إدخال البيانات في قاعدة بيانات وإسترجاعها 
+                            وعمليات التعديل عليها كل هذا عمله بسيط ولكنه يأخذ وقت فأنت بحاجه إلى إنشاء قاعدة البيانات ثم إنشاء صفحة 
+                            <code>HTML</code>
                             وفيها تكتب كود لإنشاء نموذج وتقوم بعمل التحقق عن طريق الجافاسكريبت ثم عمليه إرسال النموذج إلى صفحة 
                             <code>PHP</code>
-                             وهناك تتحقق من عدة أمور مثل صلاحيات المستخدم وفلترة المتغيرات بحيث لا تحتوي على كود إختراق وتخريب ومثل هذا لعميله التعديل على
-                             المدخلات بحيث يتم إسترجاعها وهكذا , 
-                             <br>
-                              كما أن هنا مشاكل في عمليه تنظيم الروابط أو مايسمى بال
-                               <code>Router</code>
-                               بحيث تواجه مشاكل لكل رابط وربما تحتاج إلى مكتبه أو كود جاهز لهذه العمليه أو تضطر لعملها بنفسك من خلال ملف 
-                                <code>.htaccess</code>
-                                والأهم من كل هذا هو التأكد من أن عملك لايتظرر بعدد الزوار الكبير ويكون سريع وهذا يحتاج إلى أنظمة كاش لتخزين المخرجات مدة معينه بحيث 
-                                لا تؤثر بعمل الموقع والكثير الكثير في عملية التصميم وإستخدام مكتبات لجعل منظر الصفحة جميل وفعال بحيث تستخدم كاليندر أو قوائم ونصوص يتم تعبئتها تلقائيا 
-                                <br>
-                                 هذا كله قامت هذه البيئة بتسهيله وجعله من الماضي 
-                            
-                        -- <a target="_blank" href="https://www.facebook.com/sfhaticom">بسام العيساوي</a>
+                            وهناك تتحقق من عدة أمور مثل صلاحيات المستخدم وفلترة المتغيرات بحيث لا تحتوي على كود إختراق وتخريب ومثل هذا لعميله التعديل على
+                            المدخلات بحيث يتم إسترجاعها وهكذا , 
+                            <br>
+                            كما أن هنا مشاكل في عمليه تنظيم الروابط أو مايسمى بال
+                            <code>Router</code>
+                            بحيث تواجه مشاكل لكل رابط وربما تحتاج إلى مكتبه أو كود جاهز لهذه العمليه أو تضطر لعملها بنفسك من خلال ملف 
+                            <code>.htaccess</code>
+                            والأهم من كل هذا هو التأكد من أن عملك لايتظرر بعدد الزوار الكبير ويكون سريع وهذا يحتاج إلى أنظمة كاش لتخزين المخرجات مدة معينه بحيث 
+                            لا تؤثر بعمل الموقع والكثير الكثير في عملية التصميم وإستخدام مكتبات لجعل منظر الصفحة جميل وفعال بحيث تستخدم كاليندر أو قوائم ونصوص يتم تعبئتها تلقائيا 
+                            <br>
+                            هذا كله قامت هذه البيئة بتسهيله وجعله من الماضي 
+
+                            -- <a target="_blank" href="https://www.facebook.com/sfhaticom">بسام العيساوي</a>
                         </blockquote></p>
-                        
+
                         <hr />
-                        
+
                         <h1> <span class="glyphicon glyphicon-flash"></span> مزايا النظام</h1>
                         <ul>
                             <li>بسيط وسهل التعلم</li>
                             <li>نظام قوالب لإستخدامات كبيرة وجمل برمجيه بسيطه عباره عن جمل 
-                            <code>HTML</code>
-                            عاديه </li>
+                                <code>HTML</code>
+                                عاديه </li>
                             <li> <code>addons syntax</code>
                                 إمكانيه إضافة المزيد من الجمل البرمجيه للقوالب بحيث يكون لك جميلك البرمجيه الخاصه  </li>
                             <li>عدة طبقات لتنفيذ الكود بحيث يمكنك ترتيب الأولويات وبذلك سرعة في تنفيذ المهام</li>
                             <li>
                                 أستخدام معظم قواعد البيانات
-                                
+
                                 <code>PDO</code>
                                 المتوفره بدون الحاجه لتغيير أي كود على شيفرتك التي قمت بكاتبتها فقط تغيير إعدادات ربط قاعدة البيانات 
                             </li>
@@ -214,26 +226,26 @@
                             <li>حفظ متغيرات </li>
 
                         </ul>
-                        
+
                     </div>
                     <!-- intro -->
 
 
                     <!-- download -->
                     <div id="download" class="tab-pane fade">
-                        
+
                         <h1> <span class="glyphicon glyphicon-download"></span> تحميل لزاز</h1>
                         <ul>
                             <li>من <a target="_blank" href="https://github.com/alash3al/Horus/releases/latest">Github جيتهب</a></li>
                             <li>من <a target="_blank" href="http://www.phpclasses.org/package/8642-PHP-Develop-Web-applications-using-a-micro-framework.html">PHPClasses بي أتش بي كلاسيز</a></li>
                         </ul>
-                        
+
                     </div>
                     <!-- download -->
 
                     <!-- setup -->
                     <div id="setup" class="tab-pane fade">
-                        
+
                         <h1> <span class="glyphicon glyphicon-cog"></span>إعدادات لزاز</h1>
                         <ul>
                             <li>بعد تحميل نسخة لزاز , قم بفك الضغط عنها</li>
@@ -241,7 +253,7 @@
                                 <code>conf.php</code>
                                 يحتوي هذا الملف على الإعدادات الرئيسيه , ربما لن تحتاج إلا لإعدادات ربط قواعد البيانات من خلال تعديل هذه السطور في الملف المذكور 
                                 <br>
-<pre class="prettyprint">
+                                <pre class="prettyprint">
 // database mysql configration 
     define('db_type', 'mysql'); // نوع قاعدة البيانات
     define('db_host', 'localhost'); // الهوست الخاص بقاعدة البانات معظم الأحيان لاتحتاج إلى تعديله 
@@ -250,7 +262,7 @@
     define('db_user', 'root'); // إسم المستخدم 
     define('db_pass', ''); // الرمز السري 
                                     
-</pre>
+                                </pre>
                             </li>
                             <li>بعض الإعدادات التي يمكنك تعديلها هي:
                                 <br>
@@ -272,14 +284,14 @@ define('SALT','FR4d32cdvTYdw2s#gt54');//في حال أردت إستخدام ال
                                 </pre>
                             </li>
                         </ul>
-                        
+
                     </div>
                     <!-- setup -->
 
                     <!-- how-it-works -->
                     <div id="how" class="tab-pane fade">
-                        
-                        <h1> <span class="glyphicon glyphicon-cog"></span> كيف تعمل لزاز ؟</h1>
+
+                        <h1> <span class="glyphicons glyphicons-question-sign"></span> كيف تعمل لزاز ؟</h1>
                         <ul>
                             <li>عند طلب الصفحة أو عمل أي طلب 
                                 <code>Request</code>
@@ -290,61 +302,61 @@ define('SALT','FR4d32cdvTYdw2s#gt54');//في حال أردت إستخدام ال
                                 ثم إستدعاء الملف 
                                 <code>conf.php</code>
                                 أخيرا يتم طباعه المخرجات والإنتهاء من العمل 
-                                
-                                
+
+
 
                             </li>
                             <li>في ملف 
                                 <code>conf.php</code>
-                            يتم تعريف الإعدادات اللازمه للنظام ومن ثم إستدعاء الملف الرئيسي 
-                            <code>___core.php</code>                               
-                            الخاص ببيئة العمل لزاز ثم إستدعاء وتحميل الملفات من مجلد 
-                            <code>/classes/autoinclude/</code>
-                            الملفات في هذا المجلد لا تحتاج إلى كود 
-                            <pre class="prettyprint">import(file.php)</pre>
-وبهذا توفر على نفسك عمل التحميل فقط بوصع الملف في هذا المجلد 
-                            <br>
-                            ثم إستدعاء ودمج الكلاسات في الملفات الموجوده في مجلد 
-                            <code>/classes/autoload/</code>
-                            وفي هذا المجلد يجب أن يحتوي الكلاس داخل الملف على مسمى معين وهيكله خاصه سيتم شرحها لاحقا 
-                           , ويصبح الكلاس محمل ومستدعى داخل الكلاس الأساسي لزاز ليتم إستدعاؤه كما يلي 
-                           
-                           <pre class="prettyprint">$lezaz->yourclassname();</pre>
-                            
-                      
+                                يتم تعريف الإعدادات اللازمه للنظام ومن ثم إستدعاء الملف الرئيسي 
+                                <code>___core.php</code>                               
+                                الخاص ببيئة العمل لزاز ثم إستدعاء وتحميل الملفات من مجلد 
+                                <code>/classes/autoinclude/</code>
+                                الملفات في هذا المجلد لا تحتاج إلى كود 
+                                <pre class="prettyprint">import(file.php)</pre>
+                                وبهذا توفر على نفسك عمل التحميل فقط بوصع الملف في هذا المجلد 
+                                <br>
+                                ثم إستدعاء ودمج الكلاسات في الملفات الموجوده في مجلد 
+                                <code>/classes/autoload/</code>
+                                وفي هذا المجلد يجب أن يحتوي الكلاس داخل الملف على مسمى معين وهيكله خاصه سيتم شرحها لاحقا 
+                                , ويصبح الكلاس محمل ومستدعى داخل الكلاس الأساسي لزاز ليتم إستدعاؤه كما يلي 
 
-                            
+                                <pre class="prettyprint">$lezaz->yourclassname();</pre>
+
+
+
+
                             </li>
                             <li>
-                            يتم إنشاء المتغير 
-                            
-                              <code>$lezaz</code> 
-                              وعند تنفيذ الأمر 
-                              <pre class="prettyprint">echo $lezaz->run();</pre>
-                            في الصفحة الرئيسيه يتم تنفيذ جميع الملفات في طبقة البدء أي الملفات التي بالإسم 
-                            <code>init.php</code>    
-                            في كل مجلد داخل مجلد الإضافات 
-                                                        <code>/plugin/folder/init.php</code>    
-                                                        وفي هذه الطبقه يمكن إنشاء المتصنت 
-                                                        <code>listener</code> 
-                                                        لكي يتم تنفيذها عند إنشاء حدث في الطبقات الأخرى 
+                                يتم إنشاء المتغير 
+
+                                <code>$lezaz</code> 
+                                وعند تنفيذ الأمر 
+                                <pre class="prettyprint">echo $lezaz->run();</pre>
+                                في الصفحة الرئيسيه يتم تنفيذ جميع الملفات في طبقة البدء أي الملفات التي بالإسم 
+                                <code>init.php</code>    
+                                في كل مجلد داخل مجلد الإضافات 
+                                <code>/plugin/folder/init.php</code>    
+                                وفي هذه الطبقه يمكن إنشاء المتصنت 
+                                <code>listener</code> 
+                                لكي يتم تنفيذها عند إنشاء حدث في الطبقات الأخرى 
 
                             </li>
                             <li>التحقق من أن الطلب قادم من متصفح أي شخص وليس من بوت ويمكنك بناء على ذلك إتخاذ أي إجراء من خلال الصياد والأحداث 
-                            <code>hock and events</code> 
+                                <code>hock and events</code> 
                             </li>
-                            
+
                             <li>
-                               تنفيذ الملفات في الطبقه الثانيه وهي الملفات ذات الإسم 
-                               <code>/plugin/folder/index.php</code> 
-                               وهذه الطبقه يفضل أن يتم تنفيذ الأوامر التي يجب فيها أن يكون الزائر شخص وليس بوت مثل تسجيل الدخول وادخال بيانات من النماذج إلى قاعدة البيانات 
-                               فهناك جدار ناري قبل هذه الطبقه يمكن من خلاله إيقاف العمليات المشبوهه قبل الوصول إلى هذه الطبقه 
+                                تنفيذ الملفات في الطبقه الثانيه وهي الملفات ذات الإسم 
+                                <code>/plugin/folder/index.php</code> 
+                                وهذه الطبقه يفضل أن يتم تنفيذ الأوامر التي يجب فيها أن يكون الزائر شخص وليس بوت مثل تسجيل الدخول وادخال بيانات من النماذج إلى قاعدة البيانات 
+                                فهناك جدار ناري قبل هذه الطبقه يمكن من خلاله إيقاف العمليات المشبوهه قبل الوصول إلى هذه الطبقه 
                             </li>
-                            
+
                             <li>
                                 تنفيذ الملفات في الطبقه الثالثه والتي تحمل الإسم 
-                                   <code>/plugin/folder/footer.php</code> 
-                                   وفي هذه الطبقه يمكنك  إكمال أي برمجيه تريدها من الإضافات الأخرى والتي تم تنفيذها في الطبقه السابقه 
+                                <code>/plugin/folder/footer.php</code> 
+                                وفي هذه الطبقه يمكنك  إكمال أي برمجيه تريدها من الإضافات الأخرى والتي تم تنفيذها في الطبقه السابقه 
                             </li>
                             <li>
                                 إستدعاء القالب الذي تم التأشير عليه من خلال الداله 
@@ -362,19 +374,19 @@ define('SALT','FR4d32cdvTYdw2s#gt54');//في حال أردت إستخدام ال
                                 طباعه المخرجات والإنهاء 
                             </li>
                         </ul>
-                        
+
                     </div>
                     <!-- how-it-works -->
 
 
                     <!-- router -->
                     <div id="router" class="tab-pane fade">
-                        
+
                         <h1><span class="glyphicon glyphicon-cog"></span> العناوين الذكيه - Router</h1> <br />
 
                         <h3> &rsaquo; ماهي العناوين الذكيه؟ </h3>
                         <p>
-                             هي نظام يعمل على جعل العنوان في المتصفح مقروء ويمكن أن يوضح معني الصفحة وماهي الكلمات المفتاحيه لها 
+                            هي نظام يعمل على جعل العنوان في المتصفح مقروء ويمكن أن يوضح معني الصفحة وماهي الكلمات المفتاحيه لها 
                             وبذلك تعمل هذه العناوين على أرشفه صحيحه لمحركات البحث وتعطي لصفحاتها قيمة أكبر ليصل لها أكبر عدد من المهتمين بمحتوى الصفحة 
                             , فيما مضى كنا نستخدم المتغيرات لمعرفة مايطلبه المستخدم وذلك عن طريق روابط كهذا الرابط 
                             <br>
@@ -382,18 +394,18 @@ define('SALT','FR4d32cdvTYdw2s#gt54');//في حال أردت إستخدام ال
                             <br/>
                             وكما ترى فإن الرابط لايعبر عن محتوى الصفحة , الآن يمكنك إستخدام مثل هذا الرابط لإنشاء نفس الرابط السابق 
                             <br/>
-                           <code>http://www.site.com/about_us/amman/</code>
-                           <br/>
-                           وهذه أمثله لكيفيه إستخدام الروابط وأيضا التخلص من المخترقين والمخربين وذلك من خلال الفلتره والتحقق التلقائي لجميع المدخلات 
-                           <br/>
-                           <br/>
-                           
+                            <code>http://www.site.com/about_us/amman/</code>
+                            <br/>
+                            وهذه أمثله لكيفيه إستخدام الروابط وأيضا التخلص من المخترقين والمخربين وذلك من خلال الفلتره والتحقق التلقائي لجميع المدخلات 
+                            <br/>
+                            <br/>
+
 
                         </p>
 
                         <h3> &rsaquo; الإستخدام :</h3>
                         <p>
-<pre class="prettyprint"><code>&lt;?php
+                        <pre class="prettyprint"><code>&lt;?php
         // هنا يتم تنفيذ الأمر عند إستدعاء الرابط   
         // site.com/hi or site.com/hi/
         $lezaz->router('/hi', function(){
@@ -434,10 +446,10 @@ define('SALT','FR4d32cdvTYdw2s#gt54');//في حال أردت إستخدام ال
 
 
 </code></pre>
-                        
-           <h3> &rsaquo; الرموز أو المفاتيح :</h3>
+
+                        <h3> &rsaquo; الرموز أو المفاتيح :</h3>
                         <p>
-<pre class="prettyprint"><code>
+                        <pre class="prettyprint"><code>
 '@num' => '([0-9\.,]+)', // رقم ويمكن أن يحتوي على الفارزه والنقطه
 '@alpha' => '([a-zA-Z]+)',  // حروف كبيره وصغيره فقط 
 '@alnum' => '([a-zA-Z0-9\.\w]+)', // حروف كبيرة وصغيره بالإضافه إلى الأرقام والنقطه  
@@ -446,18 +458,18 @@ define('SALT','FR4d32cdvTYdw2s#gt54');//في حال أردت إستخدام ال
 '@date' => '(([0-9]{1,2})\/([0-9]{1,2})\/(([0-9]{2})(.{0}|.{2})))', // التاريخ بفورمات كالتالي 00/00/0000
 '@null' => '^'); // لايقبل أي حرف , يجب أن يكون فارغ 
 </code></pre>                     
-                        
-                        
-   <h3> &rsaquo;  إضافة مفتاح جديد </h3>
-   
-   ماذا لو أردنا مثلا إضافة مفتاح جديد للتاريخ بحيث تكون الفورمات كالتالي 
-   <br>
-   <code>00-00-0000</code>
-   <br>
-   يمكننا ذلك من خلال إضافة مفتاح عن طريق الكود التالي ولكن يجب الإنتباه إلى أن عمليه إضافة المفتاح يجب أن تتم قبل كود العنوان 
-   
+
+
+                        <h3> &rsaquo;  إضافة مفتاح جديد </h3>
+
+                        ماذا لو أردنا مثلا إضافة مفتاح جديد للتاريخ بحيث تكون الفورمات كالتالي 
+                        <br>
+                        <code>00-00-0000</code>
+                        <br>
+                        يمكننا ذلك من خلال إضافة مفتاح عن طريق الكود التالي ولكن يجب الإنتباه إلى أن عمليه إضافة المفتاح يجب أن تتم قبل كود العنوان 
+
                         <p>
-<pre class="prettyprint"><code>
+                        <pre class="prettyprint"><code>
 
 $lezaz->add_router('@mydate','(([0-9]{1,2})-([0-9]{1,2})-(([0-9]{2})(.{0}|.{2})))');
         $lezaz->router('/@mydate', function($date) {
@@ -472,13 +484,13 @@ $lezaz->add_router('@mydate','(([0-9]{1,2})-([0-9]{1,2})-(([0-9]{2})(.{0}|.{2}))
 
                         <h3> &rsaquo; مثال  </h3>
                         قم بإنشاء مجلد داخل مجلد الإضافات بإسم 
-                         <br />
-                       <code>/plugin/my_test/</code>
-                       أنشيء ملف بإسم 
+                        <br />
+                        <code>/plugin/my_test/</code>
+                        أنشيء ملف بإسم 
                         <code>/plugin/my_test/index.php</code>
                         وأكتب هذا الكود داخله 
-                        
-<pre class="prettyprint"><code>&lt;?php
+
+                        <pre class="prettyprint"><code>&lt;?php
 /* سيتم إستدعاء القالب     
 /template/my_template/test.inc
 عند كتابة العنوان التالي 
@@ -489,35 +501,35 @@ $lezaz->router(array('/test/@*', 'test'), function($file) use ($lezaz) {
 });
 
 </code></pre>
-                       
+
                         <br/>
-الآن أنشيء مجلد داخل مجلد القوالب  بإسم 
-<code>/template/my_template/</code>
-ثم أنشئ ملفات داخل المجلد بإسم 
-<code>/template/my_template/test.inc</code>
-<code>/template/my_template/other.inc</code>
-وقم بإضافة هذا الكود داخل الملفات بالترتيب 
-<pre class="prettyprint"><code>&lt;html&gt;
+                        الآن أنشيء مجلد داخل مجلد القوالب  بإسم 
+                        <code>/template/my_template/</code>
+                        ثم أنشئ ملفات داخل المجلد بإسم 
+                        <code>/template/my_template/test.inc</code>
+                        <code>/template/my_template/other.inc</code>
+                        وقم بإضافة هذا الكود داخل الملفات بالترتيب 
+                        <pre class="prettyprint"><code>&lt;html&gt;
 this is &lt;b&gt;test.inc&lt;/b&gt; content!
 &lt;/html&gt;
 </code></pre>
 
-<pre class="prettyprint"><code>&lt;html&gt;
+                        <pre class="prettyprint"><code>&lt;html&gt;
 this is &lt;b&gt;other.inc&lt;/b&gt; content!
 &lt;/html&gt;
 </code></pre>
 
-الآن عند الدخول إلى الرابط 
-<code>/test/test </code>
-يجب رؤية مافي داخل الملف الأول 
-<code>test.inc </code><br/>
-وفي حال تصفح الرابط 
-<code>/test/other</code>
-ستظهر محتويات الملف الثاني 
-<code>other.inc</code> <br/>
-وفي الحاله الأخيرة وهو الدخول إلى أي رابط غير متوفر الملف له مثل 
-<code>/test/anyword</code>
-ستظهر لنا عبارة تفيد بأن القالب غير متوفر 
+                        الآن عند الدخول إلى الرابط 
+                        <code>/test/test </code>
+                        يجب رؤية مافي داخل الملف الأول 
+                        <code>test.inc </code><br/>
+                        وفي حال تصفح الرابط 
+                        <code>/test/other</code>
+                        ستظهر محتويات الملف الثاني 
+                        <code>other.inc</code> <br/>
+                        وفي الحاله الأخيرة وهو الدخول إلى أي رابط غير متوفر الملف له مثل 
+                        <code>/test/anyword</code>
+                        ستظهر لنا عبارة تفيد بأن القالب غير متوفر 
 
 
 
@@ -532,10 +544,10 @@ this is &lt;b&gt;other.inc&lt;/b&gt; content!
                     </div>
                     <!-- router -->
 
-  
+
                     <!-- Events/Hooks -->
                     <div id="eventshock" class="tab-pane fade">
-                        
+
                         <h1> <span class="glyphicon glyphicon-download"></span> الأحداث والصياد <small>"زناد وتنصت"</small></h1>
                         <b></b> 
                         الأمر هنا وكأننا نصطاد , فلدينا زناد ومستمع للطلقه أو الحدث 
@@ -546,7 +558,7 @@ this is &lt;b&gt;other.inc&lt;/b&gt; content!
                         هذا مايحدث فعليا في هذه المرحله , فهناك صياد 
                         <code>trigger</code> ولدينا أيضا مستمع للزناد وهو عباره عن داله لتنفيذ الأوامر
                         <code>listen</code><br > 
-                        
+
                         الأحداث أو الزناد مثل الحصول على مخرجات التطبيق وقبل عرضها يتم عمل حدث لتتمكن من خلال المتنصت من عمل فلترة لهذه المخرجات , 
                         أيضا هناك مثال آخر , عند تخزين مدخلات في قاعدة البيانات هنا نحتاج إلى حدث لنتمكن من معرفة المعرف الخاص بهذه المدخلات ويمكن أن نحتاج إلى المدخلات قبل إدخالها لقاعدة البيانات 
                         حتى نتمكن من فلترة بعضها مثلا 
@@ -554,86 +566,105 @@ this is &lt;b&gt;other.inc&lt;/b&gt; content!
                         هناك الكثير من الأمثله تستوجب مثل هذه التقنيه لجعل النظام الخاص بك مرن إلى أبعد حد 
 
                         <h3>&raquo; الإستخدام </h3>
-<pre class="prettyprint"><code>
 
-    // إضافة مستمع , ويكون في الطبقه العليا لنظمن سماع الزناد في أي طبقه أسفلها , أي في ملفات ال
-    // init.php 
-    // $lezaz->listen('الحدث', 'داله لتنفيذ الأوامر', الأولويه وهو رقم كلما كان أقل كانت أعلى -*********************************************************************************************************************');
-    // $tag: is the category where $callable work under .
-    // $callable: any valid php callback
-    // $priority: the priority of the event, low number high priority .
+                        إضافة مستمع , ويكون في الطبقه العليا لنظمن سماع الزناد في أي طبقه أسفلها , أي في ملفات ال
+                        <code> init.php</code> <br>
+
+
+                        <pre class="prettyprint"><code>
+//$lezaz->listen($tag,$callable,$priority);
+     // $tag: الحدث .
+    // $callable: داله لتنفيذ الأوامر
+    // $priority:الأولويه وهو رقم كلما كان أقل كانت أعلى 
     // examples:
-    $app->listen('test.action.1', function(){
-        echo "HI, i'm 1 ...";
+ $lezaz->listen('test.action.1', function(){
+        echo "this is 1 ...&lt;br/&gt;";
     });
-    $app->listen('test.action.1', function(){
-        echo "HI, i'm 2 ...";
+    $lezaz->listen('test.action.1', function(){
+        echo "this is 2 ...&lt;br/&gt;";
     });    
-    $app->listen('test.action.1', function($arg){
-        echo "HI, i'm 3 ...", " you have passed an argument it is: ", $arg;
+    $lezaz->listen('test.action.1', function($arg1,$arg2){
+        echo "this is 3 ...", " you have passed an argument it is: &lt;br/&gt;", $arg1,'|',$arg2;
+    });   
+// لتنفيذ الأوامر السابقة فقط قم بضغط الزناد عبر الأمر 
+$lezaz->trigger('test.action.1',array( 'arg_1','arg_2'));
+/*
+النتيجه 
+this is 1 ...
+this is 2 ...
+this is 3 ... you have passed an argument it is: 
+arg_1|arg_2
+*/
+
+
+// نفس المثال السابق ولكن بأولويه معينه لكل أمر 
+$lezaz->listen('test.action.1', function(){
+        echo "&lt;br/&gt;this is 1 ...&lt;br/&gt;";
+    },5);
+    $lezaz->listen('test.action.1', function(){
+        echo "&lt;br/&gt;this is 2 ...&lt;br/&gt;";
+    },10);    
+    $lezaz->listen('test.action.1', function($arg1,$arg2){
+        echo "&lt;br/&gt;this is 3 ...", " you have passed an argument it is: &lt;br/&gt;", $arg1,'|',$arg2,'&lt;br/&gt;';
+    },0);   
+
+$lezaz->trigger('test.action.1',array( 'arg_1','arg_2'));
+/*
+النتيجه 
+this is 3 ... you have passed an argument it is: 
+arg_1|arg_2
+
+this is 1 ...
+
+this is 2 ...
+*/
+
+
+// مثال لكيفية إستخدام الفلاتر 
+// إرجاع القيمة الأوليه مع أقواس 
+ $lezaz->listen('test.filter.1', function($word){
+        return "($word)";
     });
 
-    // to run them just do this
-    // and see the result
-    // here we will pass an argument to the
-    // event when triggering it, because
-    // in the last event we want an argument
-    // you can pass array of rags if there are
-    // multiple args required
-    $app->trigger('test.action.1', 'arg_1');
-
-    // but how about filtering a varible,word, ... etc
-    // let's register some filters
-    // by default horus will store any returned
-    // values from the last executed event
-    // and store it in the last parameter
-    // of the callback, so you can use it easily .
-    // here we want at least one param,
-    // one for the word that will be filtered
-    $app->listen('test.filter.1', function($word){
-        return "<i>$word</i>";
+    // إرجاع آخر تعديل على القيمة بين إشارتي ناقص 
+    $lezaz->listen('test.filter.1', function($word, $last_filtered){
+        return "-$last_filtered-";
     });
 
-    // here like the above one,
-    // but we need the value that has been filtered
-    // from last one
-    $app->listen('test.filter.1', function($word, $last_filtered){
-        // $word will be the new value
-        // $last_filtered will be the last filtered value
-        return "&lt;h1&gt;$last_filtered&lt;/h1&gt;";
+    // إرجاع القيمة الأوليه والقيمة المعدله بين إشارتي يساوي وبتنسيق خط كبير 
+    $lezaz->listen('test.filter.1', function($word, $last_filtered){
+         return "$word:&lt;h1&gt;=$last_filtered=&lt;/h1&gt;";
     });
     
-    // let our word is:
+    // لنختار كلمة 
     $myword = 'test';
-    // now filter it (we will pass the $myword var)
-    echo $app->trigger('test.filter.1', $myword);
-
-    // what if the 'test.filter.1' has no event ?
-    // yeah, this { $app->trigger('test.filter.1', $myword) }
-    // will return null , so to set the default value for it
-    // if null just pass a third param, with the value you need like this
-    echo $app->trigger('test.filter.1', $myword, 'default value');
-
+    // الآن نمرر الكلمة على الفلاتر السابقة من خلال ضغط الزناد
+    echo $lezaz->trigger('test.filter.1', $myword);
+/*
+النتيجه 
+test:&lt;h1&gt;=-(test)-=&lt;/h1&gt;
+*/
 </code></pre>
 
-                        <h3>&raquo; Extend Horus</h3>
-                        You can easily extend horus from its registered events, <br />
-<pre class="prettyprint"><code>
-    // * horus.output.before    --->    an action, before showing the output .
-    // * horus.output.after     --->    an action, after showing the output .
-    // * horus.output.filter    --->    is an output filter .
+                        <h3>&raquo; أحداث مدمجه وجاهزه للإستماع</h3>
+                        هناك أحداث كثيرة مدمجه مع النظام ويمكن أن تزداد في كل تحديث كما تحتوي بعض الإضافات على أحداث جاهزه لتتمكن من التعامل مع المخرجات وتدمج الإضافات 
+                        أو أعمالك مع هذه الإضافات 
 
-    // # Example:
-    // minimize the output
-    $app->listen('horus.output.filter', function($output, $filtered){
-        $output = empty($filtered) ? $output : $filtered;
-        return preg_replace('/\s+/', ' ', $output);
-    });
-
-    // to override 404 page
-    $app->e404 = function(){
-        echo '404 not found';
-    };
+                        <br />
+                        <pre class="prettyprint"><code>
+    // new.guset            --->  زائر جديد كليا ويمكن أن يكون بوت
+    // session.guset        --->  بداية جلسه لزائر حقيقي أي شخص تم التأكد منه
+    // requset.guset        --->  زائر يقوم بالتصفح
+    // layer.init.start     --->  بدء تنفيذ ملفات الطبقة الأولى 
+    // layer.init.done      --->  الإنتهاء من تنفيذ ملفات الطبقه الأولى 
+    // layer.index.start    --->  بدء تنفيذ ملفات الطبقة الثانيه 
+    // layer.index.done     --->  الإنتهاء من تنفيذ ملفات الطبقه الثانيه 
+    // layer.footer.start   --->  بدء تنفيذ ملفات الطبقة الثالثه 
+    // layer.footer.done    --->  الإنتهاء من تنفيذ ملفات الطبقه الثالثه 
+    // layer.term.start     --->  بدء تنفيذ ملفات الطبقة الرابعه 
+    // layer.term.done      --->  الإنتهاء من تنفيذ ملفات الطبقه الرابعه 
+    // output.filter        --->  فلتر المخرجات قبل الطباعه
+    
 </code></pre>
                     </div>
                     <!-- Events/Hooks -->
@@ -641,317 +672,497 @@ this is &lt;b&gt;other.inc&lt;/b&gt; content!
                     <!-- helpers -->
                     <div id="helpers" class="tab-pane fade">
 
-                        <h1> <span class="glyphicon glyphicon-download"></span> Helpers</h1>
-                        <h3>&rsaquo; Constants</h3>
+                        <h1> <span class="glyphicon glyphicon-download"></span>مساعد</h1>
+                        <h3>&rsaquo; ثوابت</h3>
+
                         <table class="table table-responsive table-borderd">
+
                             <tr>
-                                <td><code>URL</code></td>
-                                <td>The full http url to the the base application directory</td>
+                                <td><code>SITE_DOMAIN</code></td>
+                                <td>إسم النطاق مثل 
+                                    <br>
+                                    site.com
+
+                                </td>
                             </tr>
                             <tr>
-                                <td><code>ROUTE</code></td>
-                                <td>The full routed url that <strong>may</strong> contains <code>index.php/</code> or <code>?/</code></td>
+                                <td><code>SITE_PATH</code></td>
+                                <td>المسار الفعلي للمجلد الجذر الخاص بالموقع أو التطبيق الذي نعمل عليه
+                                    <br>
+                                    /home/antfolder/www/ or c:/xampp/htdocs/www/                             
+                                </td>
                             </tr>
                             <tr>
-                                <td><code>DS</code></td>
-                                <td>shortcut to <code>DIRECTORY_SEPARATOR</code></td>
+                                <td><code>SITE_IP</code></td>
+                                <td>عنوان الآي بي للموقع</td>
                             </tr>
                             <tr>
-                                <td><code>BASEPATH</code></td>
-                                <td>Full path to the main folder of your application <b>e.g:</b><code>\</code></td>
+                                <td><code>SITE_LINK</code></td>
+                                <td>رابط الموقع مثل 
+                                    <br>
+                                    http://site.com/
+                                </td>
                             </tr>
                             <tr>
-                                <td><code>COREPATH</code></td>
-                                <td>Full path to the folder that contains <code>Horus.php</code> <strong>e.g:</strong><code>\core\</code></td>
+                                <td><code>Version</code></td>
+                                <td>رقم النسخة الخاصه بلزاز الذي تعمل عليه</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>TEMPLATE_PATH</code></td>
+                                <td>المسار الحقيقي لمجلد القوالب</td>
                             </tr>
                             <tr>
-                                <td><code>HORUS_START_TIME</code></td>
-                                <td>The <code>microtime</code> that horus started at it</td>
+                                <td><code>UPLOADED_PATH</code></td>
+                                <td>المسار الحقيقي لمجلد الملفات المحمله</td>
                             </tr>
                             <tr>
-                                <td><code>HORUS_START_PEAK_MEM</code></td>
-                                <td>The <code>peack memory</code> when horus started</td>
+                                <td><code>CLASSES_PATH</code></td>
+                                <td>المسار الحقيقي لمجلد ملفات الكلاس</td>
                             </tr>
                             <tr>
-                                <td><code>Horus_Version</code></td>
-                                <td>The <code>Horus Version Number</code> </td>
+                                <td><code>CACHE_PATH</code></td>
+                                <td>المسار الحقيقي لمجلد الكاش أو النسخ المخبئه</td>
+                            </tr>
+                            <tr>
+                                <td><code>TMP_PATH</code></td>
+                                <td>المسار الحقيقي لمجلد الملفات المؤقته</td>
+                            </tr>
+                            <tr>
+                                <td><code>PLUGIN_PATH</code></td>
+                                <td>المسار الحقيقي لمجلد الإضافات</td>
+                            </tr>
+                            <tr>
+                                <td><code>THEME_PATH</code></td>
+                                <td>المسار الحقيقي لمجلد الثيم أو التصميم الرئيسي داخل مجلد القوالب</td>
+                            </tr>
+
+
+                            <tr>
+                                <td><code>TEMPLATE_LINK</code></td>
+                                <td>الرابط أو عنوان الويب لمجلد القوالب</td>
+                            </tr>
+                            <tr>
+                                <td><code>UPLOADED_LINK</code></td>
+                                <td>الرابط أو عنوان الويب لمجلد الملفات المحمله</td>
+                            </tr>
+                            <tr>
+                                <td><code>CLASSES_LINK</code></td>
+                                <td>الرابط أو عنوان الويب لمجلد  ملفات الكلاس</td>
+                            </tr>
+                            <tr>
+                                <td><code>CACHE_LINK</code></td>
+                                <td>الرابط أو عنوان الويب لمجلد الكاش أو النسخ المخبئه</td>
+                            </tr>
+                            <tr>
+                                <td><code>TMP_LINK</code></td>
+                                <td>الرابط أو عنوان الويب لمجلد الملفات المؤقته</td>
+                            </tr>
+                            <tr>
+                                <td><code>PLUGIN_LINK</code></td>
+                                <td>الرابط أو عنوان الويب لمجلد الإضافات</td>
+                            </tr>
+                            <tr>
+                                <td><code>THEME_LINK</code></td>
+                                <td>الرابط أو عنوان الويب لمجلد الثيم أو التصميم الرئيسي داخل مجلد القوالب</td>
                             </tr>
                         </table>
 
                         <hr />
 
-                        <h3>&rsaquo; Environment vars <code>$_SERVER</code> <small><strong>"auto-detected"</strong></small></h3>
+                        <h3>&rsaquo; أحداث مساعدة  <small><strong>تتعلق بالمتغير 
+                                    <code>$lezaz</code>
+                                </strong></small></h3>
                         <table class="table table-responsive table-borderd table-striped">
                             <tr>
-                                <td><code>DEFAULT_SCHEME</code></td>
+                                <td class='tdfirst'><code>run();</code></td>
                                 <td><code>string</code></td>
-                                <td colspan="2">The scheme used in urls <code>http, https ... etc</code></td>
+                                <td colspan="2">
+                                    تنفيذ نظام لزاز وإرجاع المخرجات جاهزه للطباعه                                    
+                                    <code>echo $lezaz->run();</code>
+                                </td>
                             </tr>
                             <tr>
-                                <td><code>DEFAULT_DOMAIN</code></td>
+                                <td class='tdfirst'><code>address();</code></td>
                                 <td><code>string</code></td>
-                                <td colspan="2">The default domain used in urls, by default it equals SERVER_NAME</td>
+                                <td colspan="2">
+                                    إرجاع عنوان الصفحة التي تم طلبها بالإضافه إلى علامة الإستفهام أو الضم لتتمكن من إضافة متغيرات بعد الرابط 
+                                    <code>echo $lezaz->address();</code>
+                                    <code>result >> http://www.site.com/? or http://www.site.com/?id=1&</code>
+                                </td>
                             </tr>
                             <tr>
-                                <td><code>SIMULATOR</code></td>
+                                <td class='tdfirst'><code>language(optional $str);</code></td>
                                 <td><code>string</code></td>
-                                <td><code>on</code> <b>or</b> <code>off</code></td>
-                                <td>whether the simulator is working or not</td>
+                                <td colspan="2">
+                                    <code>$lezaz->language(optional $str);</code><br>
+                                    إسترجاع اللغه الحاليه أو تحديد لغه أخرى في حال تم تمرير متغير يحمل اللغه الجديد 
+                                    <br><code>echo $lezaz->language() // en</code>
+                                    <br><code>$lezaz->language('ar') // set language arabic</code>
+                                </td>
                             </tr>
                             <tr>
-                                <td><code>SIMULATED</code></td>
-                                <td><code>bool</code></td>
-                                <td><code>true</code> <strong>or</strong> <code>false</code> </td>
-                                <td>checks whether the simulator started or not</td>
+                                <td class='tdfirst'><code>set_tpl($tpl)</code></td>
+                                <td><code>Null</code></td>
+                                <td colspan="2">
+                                    لتحديد القالب الذي تريد تنفيذه من مجلد القوالب<br/>
+                                    لتحديد قالب موجود في مجلد القوالب داخل مجلد بإسم أدمن نكتب كالتالي<br/>
+                                    <code>$lezaz->set_tpl({template}admin/my_template.inc)</code><br/>
+                                    ولتحديد قالب موجود في نفس مجلد الثيم الرئيسي فقط نكتب إسم ملف القالب كما يلي <br/>
+                                    <code>$lezaz->set_tpl(my_template.inc)</code><br/>
+                                    مسميات يمكن إستخدامها داخل القوالب لتحديد رابط المجلد : <br/>
+                                    {template} , {plugin} , {tmp} , {classes} , {theme} , {cahce}
+                                </td>
                             </tr>
                             <tr>
-                                <td><code>ROUTE</code></td>
+                                <td class='tdfirst'><code>encrypt($str)</code></td>
                                 <td><code>string</code></td>
-                                <td colspan="2">Full routed url of current request url <code>with/without index.php/</code></td>
+                                <td colspan="2">
+                                    لتشفير النصوص
+                                    <code>echo $lezaz->encrypt($string);</code>
+                                </td>
                             </tr>
+                            <tr>
+                                <td class='tdfirst'><code>decrypt($str)</code></td>
+                                <td><code>string</code></td>
+                                <td colspan="2">
+                                    فك تشفير النصوص
+                                    <code>echo $lezaz->decrypt($string);</code>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='tdfirst'><code>go($to,$using)</code></td>
+                                <td><code>Null</code></td>
+                                <td colspan="2">
+                                    لعمل إعادة توجيه بإستخدام عدة طرق <br/>
+                                    <code># using HTTP 302 <br> $lezaz->go('page/1');</code><br/>
+                                    <code># using HTTP 301 <br> $lezaz->go('page/1',301);</code><br/>
+                                    <code># using HTML & redirect after 3 seconds <br> $lezaz->go('page/1','html:3');</code><br/>
+                                    <code># using JS & redirect after 6 seconds <br> $lezaz->go('page/1','js:6');</code><br/>
+                                    <code># redirect to external url  <br> $lezaz->go('http://google.com','html:8');</code><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='tdfirst'><code>statics()</code></td>
+                                <td><code>Array</code></td>
+                                <td colspan="2">
+                                    إرجاع بعض الإحصائيات مثل مدة التنفيذ
+                                    <code>print_r( $lezaz->statics());</code>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='tdfirst'><code>set($key, $value)</code></td>
+                                <td><code>Null</code></td>
+                                <td colspan="2">
+                                    لإضافة متغير لتتمكن من إستخدامه في القوالب أو في صفحات أخرى لأن جميع المتغرات في الملفات التي تنفذ داخل الطبقات 
+                                    ستكون خاصه بالملف الذي هي فيه وهذه الداله تساعدك لنقل المتغير إلى الطبقات الأخرى في حال أردت إستخدامها
+                                    <code>$lezaz->set('my_var',$my_var);</code>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='tdfirst'><code>get($key, $item(optional))</code></td>
+                                <td><code>string</code></td>
+                                <td colspan="2">
+                                    إرجاع قيمة المتغيرات القادمه من الطريقه 
+                                    <code>$_GET</code>
+                                    وفي حال عدم وجودها يقوم النظام بالبحث عن المتغيرات التي قمت بإسنادها عن طريق الداله السابقة 
+                                    <code>set()</code>
+                                    <br>
+                                    في حال كان المتغير القادم من الطريقه 
+                                    <code>$_GET</code> 
+                                    عباره عن مصفوفه يمكنك الوصول إلى المستوى الأول من المصفوفه بإستخدام المتغير الثاني 
+                                    <code>$_GET[id] is same $lezaz->get('id');</code><br/>
+                                    <code>$_GET[array][item] is same $lezaz->get('array','item');</code><br/>
+                                    <code>$lezaz->set('x','1'); echo $lezaz->get('x'); // result is 1</code><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='tdfirst'><code>post($key, $item(optional))</code></td>
+                                <td><code>string</code></td>
+                                <td colspan="2">
+                                    إرجاع قيمة المتغيرات القادمه من الطريقه 
+                                    <code>$_POST</code>
+                                    <br>
+                                    في حال كان المتغير القادم من الطريقه 
+                                    <code>$_POST</code> 
+                                    عباره عن مصفوفه يمكنك الوصول إلى المستوى الأول من المصفوفه بإستخدام المتغير الثاني 
+                                    <code>$_POST[id] is same $lezaz->post('id');</code><br/>
+                                    <code>$_POST[array][item] is same $lezaz->post('array','item');</code><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='tdfirst'><code>sess($key, $item(optional))</code></td>
+                                <td><code>string</code></td>
+                                <td colspan="2">
+                                    إرجاع قيمة المتغيرات القادمه من الطريقه 
+                                    <code>$_SESSION</code>
+                                    <br>
+                                    في حال كان المتغير القادم من الطريقه 
+                                    <code>$_SESSION</code> 
+                                    عباره عن مصفوفه يمكنك الوصول إلى المستوى الأول من المصفوفه بإستخدام المتغير الثاني 
+                                    <code>$_SESSION[id] is same $lezaz->sess('id');</code><br/>
+                                    <code>$_SESSION[array][item] is same $lezaz->sess('array','item');</code><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='tdfirst'><code>cons($key, $item(optional))</code></td>
+                                <td><code>string</code></td>
+                                <td colspan="2">
+                                    إرجاع قيمة المتغيرات القادمه من الطريقه 
+                                    <code>defined</code>
+                                    <br>
+                                    في حال كان المتغير القادم من الطريقه 
+                                    <code>defined</code> 
+                                    عباره عن مصفوفه يمكنك الوصول إلى المستوى الأول من المصفوفه بإستخدام المتغير الثاني 
+                                    <code>SITE_DOMAIN is same $lezaz->cons('SITE_DOMAIN');</code><br/>
+                                    <code>ANYCONSIPT[item] is same $lezaz->cons('ANYCONSIPT','item');</code><br/>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td class='tdfirst'><code>setsetting($parametr, $value = '')</code></td>
+                                <td><code>Null</code></td>
+                                <td colspan="2">
+                                    لحفظ متغيرات على مستوى عالمي  ولمدة طويله , 
+                                    يمكن إستخدام هذه المتغيرات كإعدادات للموقع مثل إسم الموقع وماهي اللغه الرئيسيه 
+                                    <br/>
+                                    يتم حفظ البيانات داخل ملف في القالب الرئيسي بإسم 
+                                    <code>setting.ini</code> بشكل مشفر للحمايه القصوى 
+
+                                    <code>$lezaz->setsetting('my_var','my value');</code>  <br>
+                                    لحذف متغير فقط قم بإسناد المتغير بدون قيمه 
+                                    <code>$lezaz->setsetting('my_var'); // delete my_var</code>  <br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='tdfirst'><code>setting($key, $defult (optional))</code></td>
+                                <td><code>string</code></td>
+                                <td colspan="2">
+                                    لإسترجاع  قيمة متغير تم حفظها كإعداد من الداله 
+                                    <br>
+                                    <code>echo $lezaz->setsetting('my_var','my value');</code><br>
+                                    <code>echo $lezaz->setting('my_var'); // result : my value</code><br>
+                                    في حال أردت وجود قيمه إفتراضيه يمكنك إستخدام المتغير الثاني , وفي هذه الحاله إذا لم توجد قيمة للمتغير ستظهر القيمة الإفتراضيه 
+
+                                    <br>
+                                    <code>echo $lezaz->setting(Null,'my defult value'); // result : my defult value</code><br>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='tdfirst'><code>set_msg($msg, $type)</code></td>
+                                <td><code>Null</code></td>
+                                <td colspan="2">
+                                    لإضافة رسائل أو تنبيهات يمكن إظهارها للمستخدم 
+                                    <br>
+                                    المتغير الأول نص الرساله والمتغير الثاني نوع الرساله وأنواع الرسائل هي 
+                                    <br>
+
+                                    <code>danger</code>
+                                    <code>success</code>
+                                    <code>warning</code>
+                                    <code>info</code>
+                                    <br>
+                                    <code>$lezaz->set_msg('this is error with your file!', 'danger')</code>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='tdfirst'><code>msg()</code></td>
+                                <td><code>string</code></td>
+                                <td colspan="2">
+                                    إسترجاع كامل الرسائل التي تم حفظها في الطلب 
+                                    <code>echo $lezaz->msg();</code>
+                                </td>
+                            </tr>                                   
                         </table>
 
-                        <h3>&rsaquo; Helpers methods <small><code>$app = new Horus;</code></small> </h3>
-                        <br />
-                        <h4># <code>Horus()</code> <small>Get horus instance</small></h4>
-                        <br />
-                        <h4># <code>echo/print $app</code> <small>$app->run()</small></h4>
-                        <br />
-                        <h4># <code>Horus::instance()</code> <small>Get horus instance</small></h4>
-                        <hr />
-                        <h4># <code>$app->input($needle = '', $default = false, $callable)</code> <small>Get from current request array and optionally filter it by callable</small></h4>
-<pre class="prettyprint"><code>
-    // instead of $_GET & $_POST but just like $_REQUEST
-    // but more , it reads 'php://input' too !
-    // also it (may) work with json
-    // now get a key from GET '?key1=val1&k2=v2'
-    $app->input('key1');
-
-    // get from POST key called 'post-key'
-    $app->input('post-key');
-
-    // also get from any request method
-    // but what if the key not exists ?
-    $app->input('nokey', false);
-    // if the current request don't has key called 'nokey'
-    // it will return false 
-    
-    // another example:
-    $app->input('nokey', -1);
-    // if the current request don't has key called 'nokey'
-    // it will return -1
-
-    // to get all inputs array
-    var_dump($app->input());
-</code></pre>
-                        <hr />
-                        <h4># <code>$app->autoload($directory, $extension = 'php')</code> <small>Autoloading</small></h4>
-<pre class="prettyprint"><code>
-    // make any class/interface/namespace in any directory
-    // loaded on demand
-    // example:
-    // make the '\vendor\' directory be autoloaded with it's 
-    // files' extension 'php'
-    $app->autoload('\vendor');
-    // or with extension '.class.php'
-    $app->autoload('\vendor', 'class.php');
-</code></pre>
-                        <hr />
-                        <h4># <code>$app->go($to, $using = '302')</code> <small>Redirect helper</small></h4>
-<pre class="prettyprint"><code>
-// this method helps you doing any type of redirection
-// html,javascript (after some seconds) and php
-// it also support Horus Router, if you want to
-// do an internal redirection, just don't write
-// url scheme (http,https, ... etc) ate the start
-// but if you want to redirect to another site
-// you must type the url schema .
-
-# redirect to internal site url [/page/1] 
-# using HTTP 302
-$app->go('page/1');
-# using HTTP 301
-$app->go('page/1', 301);
-# using HTML after 0 seconds
-$app->go('page/1', 'html:0');
-# using HTML after 5 seconds
-$app->go('page/1', 'html:5');
-# using Javascript after 3 seconds
-$app->go('page/1', 'js:3');
-
-# redirect to external url [http://google.com] 
-# using HTTP 302
-$app->go('http://google.com');
-# using HTTP 301
-$app->go('http://google.com', 301);
-# using HTML after 0 seconds
-$app->go('http://google.com', 'html:0');
-# using HTML after 5 seconds
-$app->go('http://google.com', 'html:5');
-# using Javascript after 3 seconds
-$app->go('http://google.com', 'js:3');
-</code></pre>
-
-                        <hr />
-                        <h4># <code>$app->debug($state = true)</code> <small>show/hide errors</small></h4>
-<pre class="prettyprint"><code>
-    // show errors
-    $app->debug(true);
-
-    // hide errors
-    $app->debug(false);
-</code></pre>
-                        <hr />
-                        <h4># <code>$app->statics</code> <small>returns object of "current memory usage, peak memory &amp; exec-time"</small></h4>
-
-                        <hr />
 
                     </div>
                     <!-- helpers -->
 
-                    <!-- Events/Hooks -->
-                    <div id="events" class="tab-pane fade">
+                    <!-- db -->
+                    <div id="db" class="tab-pane fade">
+
+                        <h1> <span class="glyphicon glyphicon-download"></span> قواعد البيانات <small>"$lezaz->db"</small></h1>
+                        يمكنك إستخدام أي نوع من أنواع قواعد البيانات ولكن لم يتم التأكد إلا من 
+                        <code>MYSQL</code>
+                        حتى الآن , يمكنك تجربة أي قاعدة بيانات وإخبارنا بنجاحها 
+
+
+                        <h3>&raquo; <code>$lezaz->db</code></h3>
+                        لدينا الكثير من الدوال التي توفر عليك الوقت والجهد كما أننا تركنا لك المجال لإستخدام الدوال الجاهزه في 
+                        <code>PDO</code>
+                        <br>
+                        <code>transaction</code>
+                        <pre class="prettyprint"><code>
+                        $lezaz->db->transaction($type);
+                        //$type = B=begin, C=commit & R=rollback
+                        </code></pre>  
+
+
+                        <br>
+                        <code>execute</code>
+                        <pre class="prettyprint"><code>
+                        $lezaz->db->execute($sp_query);
+                        //تنفيذ إستعلامات عن طريق دوال بي أتس بي الجاهزه 
+                        </code></pre>                          
+
+                       <br>
+                        <code>ShowTables</code>
+                        <pre class="prettyprint"><code>
+                        $lezaz->db->ShowTables();
+                        // عرض جميع الجداول في قاعدة البيانات داخل مصفوفه  
+
+print_r($lezaz->db->ShowTables());
+/*
+Result:
+Array
+(
+    [1] => Array
+        (
+            [Tables_in_mydatabase] => pages
+        )
+    [2] => Array
+        (
+            [Tables_in_mydatabase] => memb_perm
+        )
+    [3] => Array
+        (
+            [Tables_in_mydatabase] => members
+        )  
+)
+*/
+                        </code></pre>                          
+
+                       <br>
+                        <code> tableExists</code>
+                        <pre class="prettyprint"><code>
+$lezaz->db->tableExists($table);
+//التاكد من وجود الجدول في قاعدة البيانات , تعيد الداله 
+//True , False 
+                        </code></pre>                          
+
+                       <br>
+                        <code>create_table</code>
+                        <pre class="prettyprint"><code>
+$lezaz->db->create_table($tbl_name, $fields = array())
+// تستخدم هذه الداله لإنشاء جدول والتعديل عليه مثل إضافة حقول جديده أو حذفها أو تغيير نوعها 
+$field['info1']='VARCHAR(250)';
+$field['info2']='int(11)';
+$field['any_field']='VARCHAR(15) NOT NULL';
+
+$lezaz->db->create_table('my_table',  $field); 
+
+// في حال لم تقم بإنشاء حقل معرف 
+// ID 
+// سيتم تعريفه بشكل تلقائي 
+// وإذا قمت بتنفيذ نفس الكود السابق مع حذف وإضافه حقول أخرى وتغيير نوع أحد الحقول فسيتم تعديل ذلك فورا 
+
+$field['info1']='VARCHAR(20)';
+$field['info3']='int(14)';
+$field['any_field']='VARCHAR(15) NOT NULL';
+
+$lezaz->db->create_table('my_table',  $field); 
+
+                        </code></pre>                          
+
                         
+                       <br>
+                        <code>query</code>
+                        تتميز هذه الداله بعمل نسخة مخبئة من النتائج لمدة معينه ممايخفف الضغط عن الخادم في حال أن النتائج لا يتم تحديها طوال فترة معينه , مثل 
+                        صفحات الموقع الثابته والأخبار والمنتجات فجميعها فقط يتم تحديثها من قبل المدير لذلك فهذه البيانات لاتحتاج إلى إعادة تحميلها لكل زائر ويمكنك
+                        جعل مدة حفظ نسخة منها مدة سنه ولا تقلق فالنظام يقوم بحذف النسخ المخبئة في حال إدخال أو تعديل أو حذف أي خبر أو منتج 
+                        <pre class="prettyprint"><code>
+$lezaz->db->query($query, $cacheTime = 0);
+// للإستعلام عن جمل سيكول وإرجاع مصفوفه بجميع النتائج 
+// المتغير كاش تايم الثاني إختياري , في حال لم يتم إضافته فسيتم أخذ نسخة مخبئة مدة الإعداد 
+//SQL_CACHE
+//في حال لم ترد أخذ نسخة مخبئة وتريد البيانات مباشرة من قاعدة البيانات فقط قم بجعل قيمة الكاش واحد 
+
+  $rows = $lezaz->db->query("select * from user");
+         if (is_array($rows))
+        foreach ($rows as $row) {            
+            echo "$row[id] | $row[name] | $row[age] \n";
+        }
+//result
+1 | afnan | 8 
+2 | ahmed | 10 
+3 | bassam | 36 
+                        </code></pre>                          
+
+                        
+                       <br>
+                        <code>num_row</code>
+                        لإرجاع عدد السجلات الناتجه عن جملة إستعلام سيكول
+                        <pre class="prettyprint"><code>
+$lezaz->db->num_row($query);
+echo  $lezaz->db->num_row("select * from user"); // 43
+//  النتيجه تكون رقم وهو عدد السجلات
+                        </code></pre>                          
+
+                        
+                       <br>
+                        <code>execute</code>
+                        <pre class="prettyprint"><code>
+$lezaz->db->execute($sp_query);
+//تنفيذ إستعلامات عن طريق دوال بي أتس بي الجاهزه 
+                        </code></pre>                          
+
+                       <br>
+                        <code>execute</code>
+                        <pre class="prettyprint"><code>
+$lezaz->db->execute($sp_query);
+//تنفيذ إستعلامات عن طريق دوال بي أتس بي الجاهزه 
+                        </code></pre>                          
+
+                       <br>
+                        <code>execute</code>
+                        <pre class="prettyprint"><code>
+$lezaz->db->execute($sp_query);
+//تنفيذ إستعلامات عن طريق دوال بي أتس بي الجاهزه 
+                        </code></pre>                          
+
+                        
+                          
+                    </div>
+                    <!-- db -->
+
+                    <!-- files -->
+                    <div id="files" class="tab-pane fade">
+
                         <h1> <span class="glyphicon glyphicon-download"></span> Horus events <small>"extend your application"</small></h1>
                         <b>Horus Events</b> helps you easily to extend your application, it works like
                         <code>actions/filters</code> with no big code, just a two methods to <code>listen / trigger</code> them easily .<br />
 
-                        <h3>&raquo; Usage</h3>
-<pre class="prettyprint"><code>
-    // load and start horus
-    include 'Horus.php';
-    $app = new Horus;
-
-    // to add event:
-    // $app->listen($tag, $callable, $priority);
-    // $tag: is the category where $callable work under .
-    // $callable: any valid php callback
-    // $priority: the priority of the event, low number high priority .
-    // examples:
-    $app->listen('test.action.1', function(){
-        echo "HI, i'm 1 ...";
-    });
-    $app->listen('test.action.1', function(){
-        echo "HI, i'm 2 ...";
-    });    
-    $app->listen('test.action.1', function($arg){
-        echo "HI, i'm 3 ...", " you have passed an argument it is: ", $arg;
-    });
-
-    // to run them just do this
-    // and see the result
-    // here we will pass an argument to the
-    // event when triggering it, because
-    // in the last event we want an argument
-    // you can pass array of rags if there are
-    // multiple args required
-    $app->trigger('test.action.1', 'arg_1');
-
-    // but how about filtering a varible,word, ... etc
-    // let's register some filters
-    // by default horus will store any returned
-    // values from the last executed event
-    // and store it in the last parameter
-    // of the callback, so you can use it easily .
-    // here we want at least one param,
-    // one for the word that will be filtered
-    $app->listen('test.filter.1', function($word){
-        return "<i>$word</i>";
-    });
-
-    // here like the above one,
-    // but we need the value that has been filtered
-    // from last one
-    $app->listen('test.filter.1', function($word, $last_filtered){
-        // $word will be the new value
-        // $last_filtered will be the last filtered value
-        return "&lt;h1&gt;$last_filtered&lt;/h1&gt;";
-    });
-    
-    // let our word is:
-    $myword = 'test';
-    // now filter it (we will pass the $myword var)
-    echo $app->trigger('test.filter.1', $myword);
-
-    // what if the 'test.filter.1' has no event ?
-    // yeah, this { $app->trigger('test.filter.1', $myword) }
-    // will return null , so to set the default value for it
-    // if null just pass a third param, with the value you need like this
-    echo $app->trigger('test.filter.1', $myword, 'default value');
-
-</code></pre>
-
-                        <h3>&raquo; Extend Horus</h3>
-                        You can easily extend horus from its registered events, <br />
-<pre class="prettyprint"><code>
-    // * horus.output.before    --->    an action, before showing the output .
-    // * horus.output.after     --->    an action, after showing the output .
-    // * horus.output.filter    --->    is an output filter .
-
-    // # Example:
-    // minimize the output
-    $app->listen('horus.output.filter', function($output, $filtered){
-        $output = empty($filtered) ? $output : $filtered;
-        return preg_replace('/\s+/', ' ', $output);
-    });
-
-    // to override 404 page
-    $app->e404 = function(){
-        echo '404 not found';
-    };
-</code></pre>
+                        <h3>&raquo; files</h3>
+                        <pre class="prettyprint"><code>
+   
+                        </code></pre>                      
                     </div>
-                    <!-- Events/Hooks -->
+                    <!-- files -->
 
-                    <!-- container -->
-                    <div id="container" class="tab-pane fade">
-                        
-                        <h1> <span class="glyphicon glyphicon-download"></span> Horus Container <small>"Registry Pattern"</small></h1>
-                        <b>By default</b> horus extending the container, so you can deal with horus as a container,
-                        the main <code>Horus_Container</code>  implements the following interfaces:
-                        <code>{ ArrayAccess, Countable, IteratorAggregate, Serializable }</code> . <br />
-                        it can be used as following : <br />
-<pre class="prettyprint"><code>
-    // load and start horus
-    include 'Horus.php';
-    $app = new Horus;
+                    <!-- string -->
+                    <div id="string" class="tab-pane fade">
 
-    // initialize it
-    $obj = new Horus_Container
+                        <h1> <span class="glyphicon glyphicon-download"></span> Horus events <small>"extend your application"</small></h1>
+                        <b>Horus Events</b> helps you easily to extend your application, it works like
+                        <code>actions/filters</code> with no big code, just a two methods to <code>listen / trigger</code> them easily .<br />
 
-    // add a property
-    $obj->myprop = 'value';
-
-    // add method
-    $obj->method = function(){
-        echo 'test method';
-    };
-    $obj->method();
-
-    // remove any thing
-    unset($obj->myprop);
-
-    // deal as array
-    $obj['x'] = 'y';
-    echo $obj->x;
-
-    // export the registered data as array ?
-    $data = $obj->export();
-    
-    // import data ?
-    $obj->import(array(/* data here as k => v */));
-
-    // you can also import on construction
-    $obj = new Horus_container(array(/* ... */));
-
-    // Note: Horus is already extending Horus_container
-    // so you can deal with $app as $obj
-    $app->xxx = 'yy'; // and so ...
-</code></pre>
+                        <h3>&raquo; string</h3>
+                        <pre class="prettyprint"><code>
+   
+                        </code></pre>                      
                     </div>
-                    <!-- container -->
+                    <!-- string -->
 
-              </div>
+                    <!--  glyphicons glyphicons-embed-close -->
+
+
+
+
+
+                </div>
                 <!-- CONTENTS -->
             </div>
             <!-- BODY -->
@@ -963,11 +1174,11 @@ $app->go('http://google.com', 'js:3');
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <script src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
         <script type="text/javascript">
-            $(document).ready(function(){
+            $(document).ready(function() {
                 $('[data-toggle="tooltip"').tooltip();
-                $('tabs a').click(function (e) {
-                  e.preventDefault();
-                  $(this).tab('show');
+                $('tabs a').click(function(e) {
+                    e.preventDefault();
+                    $(this).tab('show');
                 });
             });
         </script>

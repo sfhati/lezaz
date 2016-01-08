@@ -128,7 +128,7 @@ class __db {
         return $this->query($sql_statement);
     }
 
-    function tableExists($table) {
+     function tableExists($table) {
 
         // Try a select statement against the table
         // Run it in try/catch in case PDO is in ERRMODE_EXCEPTION.
@@ -143,25 +143,88 @@ class __db {
         return $result !== FALSE;
     }
 
-    function create_table($sql) {
+    function create_table($tbl_name, $fields = array()) {
+        
+        //List of types mysql
+        //http://help.scibit.com/mascon/masconMySQL_Field_Types.html
+        $LISTOFTYPE['TINYINT']='4';
+        $LISTOFTYPE['SMALLINT']='6';
+        $LISTOFTYPE['MEDIUMINT']='9';
+        $LISTOFTYPE['INT']='11';
+        $LISTOFTYPE['INTEGER']='11';
+        $LISTOFTYPE['BIGINT']='20';
+        $LISTOFTYPE['FLOAT']='';
+        $LISTOFTYPE['DOUBLE']='';
+        $LISTOFTYPE['REAL']='';
+        $LISTOFTYPE['BIT']='1';
+        $LISTOFTYPE['BOOLEAN']='';
+        $LISTOFTYPE['PRECISION']='255';
+        $LISTOFTYPE['DECIMAL']='10';
+        $LISTOFTYPE['NUMERIC']='255';
+        $LISTOFTYPE['DATE']='';
+        $LISTOFTYPE['DATETIME']='';
+        $LISTOFTYPE['TIMESTAMP']='';
+        $LISTOFTYPE['TIME']='';
+        $LISTOFTYPE['YEAR']='';
+        $LISTOFTYPE['CHAR']='10';
+        $LISTOFTYPE['TINYBLOB']='';
+        $LISTOFTYPE['TINYTEXT']='';
+        $LISTOFTYPE['BLOB']='';
+        $LISTOFTYPE['TEXT']='';
+        $LISTOFTYPE['MEDIUMBLOB']='';
+        $LISTOFTYPE['MEDIUMTEXT']='';
+        $LISTOFTYPE['LONGBLOB']='';
+        $LISTOFTYPE['LONGTEXT']='';
+        $LISTOFTYPE['VARCHAR']='250';
+        //remove spaces and check if same!
+        //ALTER TABLE `bassam` CHANGE `hi_day` `hi_day` DATETIME NULL DEFAULT CURRENT_TIMESTAMP;
+        //$fields['name']='VARCHAR;250;no';
+        global $lezaz;
+        $idcolum=0;
+        if ($this->tableExists($tbl_name)) { //table exist
+            //ALTER TABLE tablename MODIFY columnname INTEGER;
+           $oldfields= $this->query("SHOW COLUMNS FROM $tbl_name", '1');
+           
+            foreach ($oldfields as $field) {
+                  if($k=='id'){
+                    $idcolum=1;
+                  }else{
+                $arr_fields[$field['Field']]=$field['Type'];               
+                  }
+            }            
+           foreach ($fields as $k => $v) {
+               
+                if($arr_fields[$k]){ //field found then change and do nothing
+                    $this->execute("ALTER TABLE $tbl_name MODIFY $k $v;");
+                    unset($arr_fields[$k]);                    
+                }else{ //fields not found then add it                    
+                    $this->execute("ALTER TABLE $tbl_name ADD $k $v;");
+                } 
+            }
+            
+            foreach ($arr_fields as $k => $v) {              
+                 //field must drop
+                 $this->execute("ALTER TABLE $tbl_name DROP COLUMN $k;");                
+            }
+            if(!$idcolum){ // add colum id if not exist
+                $this->execute("ALTER TABLE $tbl_name ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT FIRST,  ADD PRIMARY KEY (id);");
+            }
 
-        try {
-            $sql = "CREATE table bassam1(
-     ID INT( 11 ) AUTO_INCREMENT PRIMARY KEY,
-     Prename VARCHAR( 50 ) NOT NULL, 
-     Name VARCHAR( 250 ) NOT NULL,
-     StreetA VARCHAR( 150 ) UNIQUE KEY NOT NULL, 
-     StreetB VARCHAR( 150 ) NOT NULL, 
-     StreetC VARCHAR( 150 ) NOT NULL, 
-     County VARCHAR( 100 ) NOT NULL,
-     Postcode VARCHAR( 50 ) NOT NULL,
-     Country VARCHAR( 50 ) NOT NULL);";
-            $this->con->exec($sql);
-        } catch (PDOException $e) {
-            $lezaz->set_msg($e->getMessage(), 'warinig');
-            return false;
+        } else {            
+            try {
+                $sql = "CREATE table $tbl_name(
+                        id INT( 11 ) AUTO_INCREMENT PRIMARY KEY,";
+                foreach ($fields as $k => $v) { 
+                   $sql.="$k $v,";
+                }
+                $sql= rtrim($sql,',').");";
+                $this->con->exec($sql);
+            } catch (PDOException $e) {
+                $lezaz->set_msg($e->getMessage(), 'warinig');
+                return false;
+            }
+            return true;
         }
-        return true;
     }
 
     /**
@@ -176,7 +239,7 @@ class __db {
             return '';
         if (!$cacheTime)
             $cacheTime = SQL_CACHE;
-        if (SQL_CACHE != 0) {
+        if ($cacheTime != 0 && $cacheTime!=1) {
             $this->clear_cache();
             // $query: mysql query word  $cacheTime: seconds
             $cachefile = CACHE_PATH . 'cacheSQLfile_' . $cacheTime . '_' . md5($query);
@@ -220,7 +283,7 @@ class __db {
         return 0;
     }
 
-    function clear_cache() {
+    private function clear_cache() {
         if ($dh = opendir(CACHE_PATH)) {
             while (($file = readdir($dh)) !== false) {
                 if (strpos($file, 'SQLfile_')) {

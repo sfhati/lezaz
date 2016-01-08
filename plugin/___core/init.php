@@ -1,13 +1,13 @@
 <?php
 
 
-$lezaz->listen('requset.start', function() use($lezaz) {
+$lezaz->listen('requset.guset', function() use($lezaz) {
     //  echo "requset.start";
     //    $lezaz->go($lezaz->address(),'html:15');
 });
 
 
-$lezaz->listen('session.start', function() use($lezaz) {
+$lezaz->listen('session.guset', function() use($lezaz) {
     echo 'Please wait!';
     $lezaz->go($lezaz->address());
     exit();
