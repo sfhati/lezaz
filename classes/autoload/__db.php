@@ -300,10 +300,10 @@ class __db {
 
     function row($table, $condetion, $row = '*') {
         if (is_numeric($condetion))
-            $condetion = 'id=' . $id;
+            $condetion = 'id=' . $condetion;
         $sql = $this->query("select $row from `$table` where $condetion limit 1 ");
         $sql = &$sql[1];
-        if ($row != '*')
+        if ($row != '*' && !strpos($row,','))
             return $sql[$row];
         return $sql;
     }
@@ -340,7 +340,7 @@ class __db {
     function delete($table, $condetion) {
         if (is_numeric($condetion))
             $condetion = 'id=' . $id;
-        $return = $this->query("select * from $table1 where $condetion");
+        $return = $this->query("select * from $table where $condetion");
         $this->_delete($table, $condetion);
         return $return;
     }

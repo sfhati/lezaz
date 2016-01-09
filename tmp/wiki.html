@@ -1103,24 +1103,99 @@ echo  $lezaz->db->num_row("select * from user"); // 43
 
                         
                        <br>
-                        <code>execute</code>
+                        <code>row</code>
                         <pre class="prettyprint"><code>
-$lezaz->db->execute($sp_query);
-//تنفيذ إستعلامات عن طريق دوال بي أتس بي الجاهزه 
+row($table, $condetion, $row = '*');
+//$table : إسم الجدول
+//$condetion :  الشرط 
+//$row :  الحقول التي سيتم إرجاعها , وهو إختياري والقيمة التلقائيه جميع الحقول , في حال تم وضع إسم حقل واحد يتم إرجاع قيمة نصيه وهي قيمة الحقل أما تركها فارغا فيتم إرجاع مصفوفه 
+
+
+// إعادة العمر من جدول المستخدمين للحقل إسم يساوي أفنان
+echo $lezaz->db->row('user', 'name="afnan"','age'); // 8
+
+// إعادة جميع الحقول من الجدول مستخدمين للحقل إسم يساوي أفنان
+print_r(  $lezaz->db->row('user', 'name="afnan"'));
+/*
+Array
+(
+    [id] => 1
+    [name] => afnan
+    [age] => 8
+)
+*/
+
+// إذا كان الشرط رقم سيعتبر أنك تبحث عن الآي دي رقم 1 مثلا 
+print_r(  $lezaz->db->row('user', 1));
+/*
+Array
+(
+    [id] => 1
+    [name] => afnan
+    [age] => 8
+)
+*/
                         </code></pre>                          
 
                        <br>
-                        <code>execute</code>
+                        <code>save</code>
+                        حفظ أو تعديل أي بيانات أي عمليات 
+                        <code>insert & update</code> 
+                        المتغيرات المطلوبه هي إسم الجدول والحقول مع قيمتها كمصفوفه لعمليه الإدخال أما التعديل فتحتاج إلى باقي المتغيرات وهي الشرط ونوع العمليه 
+                        يتم جعل قيمتها واحد 
                         <pre class="prettyprint"><code>
-$lezaz->db->execute($sp_query);
-//تنفيذ إستعلامات عن طريق دوال بي أتس بي الجاهزه 
+$lezaz->db->save($table, $feilds, $condetion = '', $type = 0) ;
+/*
+$table : إسم الجدول
+$feilds : الحقول كمصفوفه
+$condetion : إختياري , الشرط 
+$type : إختياري , صفر معناها إدخل وواحد معناها تعديل 
+*/
+$fields['name']='bassam';
+$fields['age']='36';
+
+// إدخال البيانات في قاعدة البيانات
+$lezaz->db->save('user',$fields);
+
+// تعديل البيانات بشرط الإسم يساوي أفنان
+$lezaz->db->save('user',$fields,'name="afnan"',1);
                         </code></pre>                          
 
                        <br>
-                        <code>execute</code>
+                        <code>delete</code>
+                        لحذف سجل من قاعدة البيانات , المتغير الأول لإسم الجدول والثاني للشرط 
+                        <br>
+                        يمكن أن يكون الشرط فقط رقم ليتم حذف الآي دي لهذا السجل
                         <pre class="prettyprint"><code>
-$lezaz->db->execute($sp_query);
-//تنفيذ إستعلامات عن طريق دوال بي أتس بي الجاهزه 
+$lezaz->db->delete($table, $condetion);
+/*
+$table: إسم الجدول
+$condetion: الشرط 
+ترجع الداله مصفوفه بالسجلات التي تم حذفها
+*/
+
+print_r($lezaz->db->delete('user','`name`="bassam"'));
+/*
+Array
+(
+    [1] => Array
+        (
+            [id] => 8
+            [name] => bassam
+            [age] => 36
+        )
+    [2] => Array
+        (
+            [id] => 9
+            [name] => bassam
+            [age] => 36
+        )
+)
+*/
+
+// لحذف السجل الذي له آي دي 5  أي 
+// delete from user where id=5 
+$lezaz->db->delete('user',5)); 
                         </code></pre>                          
 
                         
@@ -1131,28 +1206,272 @@ $lezaz->db->execute($sp_query);
                     <!-- files -->
                     <div id="files" class="tab-pane fade">
 
-                        <h1> <span class="glyphicon glyphicon-download"></span> Horus events <small>"extend your application"</small></h1>
-                        <b>Horus Events</b> helps you easily to extend your application, it works like
-                        <code>actions/filters</code> with no big code, just a two methods to <code>listen / trigger</code> them easily .<br />
+                        <h1> <span class="glyphicon glyphicon-download"></span> التعامل مع الملفات <small><code>$lezaz->file</code></small></h1>
+                        هذه الدوال خاصه بالملفات كتحميلها والتعامل مع والكتابه والقراءه وغيرها من الأمور 
 
-                        <h3>&raquo; files</h3>
+                        <h3>&raquo; <code>$lezaz->file</code></h3>
+                        
+                        <code>save</code><br/>
+                        لحفظ الملفات المرفوعه 
                         <pre class="prettyprint"><code>
-   
+$lezaz->file->save($file, $saveto = '', $validation = '');
+/*
+$file: إسم المتغير القادم من المصفوفه $_FILES
+$saveto: المجلد الذي سيتم حفظ الملف به ويكون وداخل المجلد أبلوديدuploaded
+$validation: للتحقق من الملف ويكون التحقق بمصفوفه 
+*/
+
+if ($_FILES[file1]) {
+    $valid[whitelist] = array("gif", "png", "jpg", "jpeg");
+    $valid[blacklist] = array("exe", "php");
+    $valid[size] = array(20, 30);
+
+    echo $lezaz->file->save($_FILES[file1], 'folder', $valid);
+}
+
+/*
+result if success 
+1452285393.png
+>> file save in : /uploaded/folder/1452285393.png
+
+* result if error type 
+[danger] [ERR_TYPE]full.txt 
+
+* result if error size 
+[danger] [ERR_SIZE]23_pv-micro-inverters-105259-6801101.jpg:52.267KB 
+*/
                         </code></pre>                      
+
+
+                       <code>mkdir</code><br/>
+                        لإنشاء مجلد حتى لو كان المجلد الأب غير موجود فيتم إنشاؤه 
+                        <pre class="prettyprint"><code>
+$lezaz->file->mkdir($path);
+/*
+$path : مسار المجلد الذي نود إنشاؤه 
+ترجع الداله صح أو خطا لتأكيد نجاح العمليه أو فشلها 
+*/
+
+echo $lezaz->file->mkdir(UPLOADED_PATH.'bassam'); // 1 
+echo $lezaz->file->mkdir(UPLOADED_PATH.'bas~ ^$#*&*(`sam'); // Null
+echo $lezaz->file->mkdir(UPLOADED_PATH.'a/s/d/f/g/h'); // 1 
+
+ 
+                        </code></pre>                      
+
+
+                       <code>write</code><br/>
+                        إنشاء ملف نصي وحذف الملف إن كان موجودا وإعادة إنشاؤه 
+                        <pre class="prettyprint"><code>
+$lezaz->file->write($file, $content);
+ /*
+$file : إسم الملف مع المسار كامل 
+$content : المحتوى الخاص بالملف لإضافته 
+لا تعيد الداله أي قيمة 
+*/
+
+$lezaz->file->write(UPLOADED_PATH.'a/a.txt', "this is a test \n new line here!");
+/*
+create file in /uploaded/a/a.txt with content:
+this is a test 
+ new line here!
+*/
+
+                        </code></pre>                      
+
+
+
+                       <code>listfile</code><br/>
+                        لإرجاع مصفوفه تحتوي على قائمة بجميع الملفات في مجلد معين بالإضافة لإمكانيه البحث داخل المجلدات الفرعيه للمجلد المطلوب 
+                        , كما يمكنك البحث عن ملفات ذات إمتداد معين 
+                        <pre class="prettyprint"><code>
+$lezaz->file->listfile($dir, $ext = '', $sub = 0) ;
+ /*
+$dir: مسار المجلد المطلوب البحث فيه 
+$ext: إختياري , للبحث عن إمتداد ملفات معينه
+$sub: إختياري , للبحث في المجلدات الفرعيه في حال كان له قيمه 
+تعيد هذه الداله مصفوفه بجميع الملفات 
+*/
+
+$dir = UPLOADED_PATH;
+print_r($lezaz->file->listfile($dir));
+/*
+Array
+(
+    [C:\xampp\htdocs\fw\uploaded\] => Array
+        (
+            [0] => .htaccess
+            [1] => 1451032564.png
+        )
+
+    [C:\xampp\htdocs\fw\uploaded\a/] => Array
+        (
+            [0] => a.txt
+        )
+
+    [C:\xampp\htdocs\fw\uploaded\setting/] => Array
+        (
+            [0] => 1451033222.png
+        )
+
+    [C:\xampp\htdocs\fw\uploaded\site/] => Array
+        (
+            [0] => 1447581949.png
+        )
+
+)
+*/
+
+
+print_r($lezaz->file->listfile($dir, $ext = 'png', 1));
+/*
+Array
+(
+    [C:\xampp\htdocs\fw\uploaded\] => Array
+        (
+            [0] => 1451032564.png
+        )
+
+)
+*/
+
+                        </code></pre>                      
+
+
+
+                       <code>view</code><br/>
+                        لعرض ملفات مخبئة بصيغه 
+                         <code>HTML</code>
+                        <pre class="prettyprint"><code>
+$lezaz->file->view($cachefile);
+ /*
+$cachefile: مسار ملف الويب الكامل
+*/
+
+$lezaz->file->view(UPLOADED_PATH.'a/a.txt');
+/*
+result wll be content of file : 
+
+this is a test 
+ new line here!
+
+*/
+                        </code></pre>                      
+
+
+                  
                     </div>
                     <!-- files -->
 
                     <!-- string -->
                     <div id="string" class="tab-pane fade">
 
-                        <h1> <span class="glyphicon glyphicon-download"></span> Horus events <small>"extend your application"</small></h1>
-                        <b>Horus Events</b> helps you easily to extend your application, it works like
-                        <code>actions/filters</code> with no big code, just a two methods to <code>listen / trigger</code> them easily .<br />
+                        <h1> <span class="glyphicon glyphicon-download"></span>النصوص <small><code>$lezaz->string</code> </small></h1>
+                        تتضمن لزاز إضافة البحث داخل النصوص لتوفير الوقت والجهد , وهي دوال بسيطه يمكن من خلالها البحث عن أي نص بكل سهوله 
+                        <br />
 
-                        <h3>&raquo; string</h3>
+                        <h3>&raquo; $lezaz->string</h3>
+
+
+
+
+                       <code>after</code><br/>
+                        
                         <pre class="prettyprint"><code>
-   
-                        </code></pre>                      
+$lezaz->string->after($strthis, $inthat);
+ 
+$strthis='abscdefsghijklmnopqrstuvswxyz';
+$find= $lezaz->string->after('s',$strthis );
+echo "result search for 's' after $strthis is : \n $find";
+
+/*
+result search for 's' after abscdefsghijklmnopqrstuvswxyz is : 
+ cdefsghijklmnopqrstuvswxyz
+*/
+                        </code></pre>    
+
+
+
+                       <code>after_last</code><br/>
+                        
+                        <pre class="prettyprint"><code>
+$lezaz->string->after_last($strthis, $inthat);
+ 
+$strthis='abscdefsghijklmnopqrstuvswxyz';
+$find= $lezaz->string->after_last('s',$strthis );
+echo "result search for 's' after_last $strthis is : \n $find";
+
+/*
+result search for 's' after_last abscdefsghijklmnopqrstuvswxyz is : 
+ wxyz
+*/
+
+                        </code></pre>    
+                       
+                      <code>before</code><br/>
+                        
+                        <pre class="prettyprint"><code>
+$lezaz->string->before($strthis, $inthat);
+ 
+$strthis='abscdefsghijklmnopqrstuvswxyz';
+$find= $lezaz->string->before('s',$strthis );
+echo "result search for 's' before $strthis is : \n $find";
+
+/*
+result search for 's' after_last abscdefsghijklmnopqrstuvswxyz is : 
+ ab
+*/
+
+                        </code></pre>    
+                       
+                      <code>after_last</code><br/>
+                        
+                        <pre class="prettyprint"><code>
+$lezaz->string->before_last($strthis, $inthat);
+ 
+$strthis='abscdefsghijklmnopqrstuvswxyz';
+$find= $lezaz->string->before_last('s',$strthis );
+echo "result search for 's' before_last $strthis is : \n $find";
+
+/*
+result search for 's' before_last abscdefsghijklmnopqrstuvswxyz is : 
+ abscdefsghijklmnopqrstuv
+*/
+
+                        </code></pre>    
+                       
+                      <code>between</code><br/>
+                        
+                        <pre class="prettyprint"><code>
+$lezaz->string->between($strthis, $that, $inthat);
+ 
+$strthis='abscdefsghijklmnopqrstuvswxyz';
+$find= $lezaz->string->between('s','s',$strthis );
+echo "result search for between 's' and 's' in $strthis is : \n $find";
+
+/*
+result search for between 's' and 's' in abscdefsghijklmnopqrstuvswxyz is : 
+ cdef
+*/
+
+                        </code></pre>    
+                       
+                      <code>between_last</code><br/>
+                        
+                        <pre class="prettyprint"><code>
+$lezaz->string->between_last($strthis, $that, $inthat);
+ 
+$strthis='abscdefsghijklmnopqrstuvswxyz';
+$find= $lezaz->string->between_last('s','s',$strthis );
+echo "result search for between_last 's' and 's' in $strthis is : \n $find";
+
+/*
+result search for between_last 's' and 's' in abscdefsghijklmnopqrstuvswxyz is : 
+ tuv
+*/
+
+                        </code></pre>    
+                       
                     </div>
                     <!-- string -->
 

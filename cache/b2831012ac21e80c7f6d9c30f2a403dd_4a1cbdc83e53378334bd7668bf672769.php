@@ -1,8 +1,8 @@
-<html>
-hi man your variable <b>my_var</b> value is: lezaz:get(my_var)!
+<?php global $lezaz;?><html>
+hi man your variable <b>my_var</b> value is: <?php echo $lezaz->get( "my_var" ); ?>!
 <br><br><hr>
 
-lezaz:msg()
+<?php echo $lezaz->msg( "" ); ?>
 
 <hr>
 

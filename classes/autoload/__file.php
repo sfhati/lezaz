@@ -15,30 +15,33 @@ class __file {
 
     function save($file, $saveto = '', $validation = '') {
         global $lezaz;
-        if (is_array($validation)) {
-        if ($validation['type'] == 'img') {
-            if ($file['type'] != "image/gif" && $file['type'] != "image/png" && $file['type'] != "image/jpg" && $file['type'] != "image/jpeg") {
-                $lezaz->set_msg('[ERR_TYPE]'.$file['name'].'<br>', 'danger');
-                return FALSE;
-                
-            }
-        }
-        if ($validation['size']) {
-            $validation['size'] = $validation['size'] * 1000;
-            if ($file['size'] > $validation['size']) {
-                $lezaz->set_msg('[ERR_SIZE]'.$file[name].'<br>',  'danger');
+         $ext = end(explode('.', $file['name']));
+
+
+        if (is_array($validation['whitelist']))
+            if (!in_array($ext, $validation['whitelist'])) {
+                $lezaz->set_msg('[ERR_TYPE]' . $file['name'] . '<br>', 'danger');
                 return FALSE;
             }
-        }
-        }
-        $ext = end(explode('.', $file['name']));
+        if (is_array($validation['blacklist']))
+            if (in_array($ext, $validation['blacklist'])) {
+                $lezaz->set_msg('[ERR_TYPE]' . $file['name'] . '<br>', 'danger');
+                return FALSE;
+            }
+            $file_size=$file['size'] / 1000;
+        if (is_array($validation['size']))
+            if ($file_size < $validation['size'][0] || $file_size > $validation['size'][1]) {
+                $lezaz->set_msg('[ERR_SIZE]' . $file['name']. ':' .  $file_size . 'KB<br>', 'danger');
+                return FALSE;
+            }
+
         if (!$ext) {
-            $lezaz->set_msg('[ERR_FILENAME]: '.$file['name'].'<br>',  'danger');
+            $lezaz->set_msg('[ERR_FILENAME]: ' . $file['name'] . '<br>', 'danger');
             return FALSE;
         }
         $saveto = UPLOADED_PATH . $saveto . '/';
         if (!$this->mkdir($saveto)) {
-            $lezaz->set_msg('[ERR_PERMITIONFOLDER]',  'danger');
+            $lezaz->set_msg('[ERR_PERMITIONFOLDER]', 'danger');
             return FALSE;
         }
         $fn = time() . '.' . $ext;
@@ -52,13 +55,13 @@ class __file {
             return true;
         $prev_path = substr($path, 0, strrpos($path, '/', -2) + 1);
         $return = $this->mkdir($prev_path);
-        return ($return && is_writable($prev_path)) ? mkdir($path) : false;
+        return ($return && is_writable($prev_path)) ? @mkdir($path) : false;
     }
 
     function write($file, $content) {
         @unlink($file);
         $fp = fopen($file, 'w');
-        if (flock($fp, LOCK_EX | LOCK_NB)) {           
+        if (flock($fp, LOCK_EX | LOCK_NB)) {
             fwrite($fp, $content);
             fflush($fp);
             flock($fp, LOCK_UN);
@@ -66,22 +69,23 @@ class __file {
         fclose($fp);
     }
 
-    function listfile($dir,$ext='',$sub=0) {
+    function listfile($dir, $ext = '', $sub = 0) {
         $listDir = array();
-        if(!is_dir($dir)) return $listDir;
+        if (!is_dir($dir))
+            return $listDir;
         if ($handler = opendir($dir)) {
             while (($file = readdir($handler)) !== FALSE) {
                 if ($file != "." && $file != "..") {
                     if (is_file($dir . $file)) {
-                        if($ext){
-                            if(end(explode('.', $file))==$ext)                                    
-                        $listDir[$dir][] = $file;
-                        }else{
-                           $listDir[$dir][] = $file; 
+                        if ($ext) {
+                            if (end(explode('.', $file)) == $ext)
+                                $listDir[$dir][] = $file;
+                        }else {
+                            $listDir[$dir][] = $file;
                         }
                     } else if (is_dir($dir . $file . '/')) {
-                        if(!$sub)
-                        $listDir = array_merge_recursive($listDir, $this->listfile($dir . $file . '/',$ext));
+                        if (!$sub)
+                            $listDir = array_merge_recursive($listDir, $this->listfile($dir . $file . '/', $ext));
                     }
                 }
             }

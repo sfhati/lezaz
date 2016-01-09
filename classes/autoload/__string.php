@@ -1,11 +1,4 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of __string
  *
@@ -13,7 +6,7 @@
  */
 class __string {
 
-    function in_array_r($needle, $haystack, $strict = false) {
+    private function in_array_r($needle, $haystack, $strict = false) {
         if (is_array($haystack)) {
             foreach ($haystack as $item) {
                 if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && $this->in_array_r($needle, $item, $strict))) {
@@ -23,6 +16,15 @@ class __string {
         }
 
         return false;
+    }
+
+// use strrevpos function in case your php version does not include it
+    private function strrevpos($instr, $needle) {
+        $rev_pos = strpos(strrev($instr), strrev($needle));
+        if ($rev_pos === false) {
+            return false;
+        } else
+            return strlen($instr) - $rev_pos - strlen($needle);
     }
 
     function after($strthis, $inthat) {
@@ -51,15 +53,6 @@ class __string {
 
     function between_last($strthis, $that, $inthat) {
         return $this->after_last($strthis, $this->before_last($that, $inthat));
-    }
-
-// use strrevpos function in case your php version does not include it
-    function strrevpos($instr, $needle) {
-        $rev_pos = strpos(strrev($instr), strrev($needle));
-        if ($rev_pos === false) {
-            return false;
-        } else
-            return strlen($instr) - $rev_pos - strlen($needle);
     }
 
 }
