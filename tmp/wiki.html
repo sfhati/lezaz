@@ -17,7 +17,6 @@
         <!-- Bootstrap -->
         <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet" />
 
-
         <style>
             body {
                 padding-top: 60px;
@@ -145,9 +144,16 @@
                 <!-- SIDE.BAR-3 -->
                 <p class="lead"> <span class="glyphicon glyphicon-bookmark"></span>القوالب<small class="text-muted"> "&lt;lezaz/&gt;" </small> </p>
                 <div class="list-group tabs">
-                    <a class="list-group-item" data-toggle="tab" href="#events">قواعد البيانات</a>
-                    <a class="list-group-item" data-toggle="tab" href="#container">الملفات</a>
-                    <a class="list-group-item" data-toggle="tab" href="#container">النصوص</a>
+                    <a class="list-group-item" data-toggle="tab" href="#thelper">مساعد</a>
+                    <a class="list-group-item" data-toggle="tab" href="#lezazif">الجمل الشرطيه</a>
+                    <a class="list-group-item" data-toggle="tab" href="#lezazfor">التكرار</a>
+                    <a class="list-group-item" data-toggle="tab" href="#lezazeach">التكرار للشيء</a>
+                    <a class="list-group-item" data-toggle="tab" href="#lezazblock">تضمين القوالب</a>
+                    <a class="list-group-item" data-toggle="tab" href="#lezazimport">تضمين الستايل والجافاسكريبت</a>
+                    <a class="list-group-item" data-toggle="tab" href="#lezazsql">قواعد البيانات</a>
+                    <a class="list-group-item" data-toggle="tab" href="#lezazinput">الحقول والنماذج</a>
+                    <a class="list-group-item" data-toggle="tab" href="#lezazselect">القوائم</a>
+                    <a class="list-group-item" data-toggle="tab" href="#lezazphp">لغة بي أتش بي</a>
                 </div>
                 <!-- SIDE.BAR-3 --> 
 
@@ -1008,7 +1014,7 @@ test:&lt;h1&gt;=-(test)-=&lt;/h1&gt;
                         //تنفيذ إستعلامات عن طريق دوال بي أتس بي الجاهزه 
                         </code></pre>                          
 
-                       <br>
+                        <br>
                         <code>ShowTables</code>
                         <pre class="prettyprint"><code>
                         $lezaz->db->ShowTables();
@@ -1035,7 +1041,7 @@ Array
 */
                         </code></pre>                          
 
-                       <br>
+                        <br>
                         <code> tableExists</code>
                         <pre class="prettyprint"><code>
 $lezaz->db->tableExists($table);
@@ -1043,7 +1049,7 @@ $lezaz->db->tableExists($table);
 //True , False 
                         </code></pre>                          
 
-                       <br>
+                        <br>
                         <code>create_table</code>
                         <pre class="prettyprint"><code>
 $lezaz->db->create_table($tbl_name, $fields = array())
@@ -1067,8 +1073,8 @@ $lezaz->db->create_table('my_table',  $field);
 
                         </code></pre>                          
 
-                        
-                       <br>
+
+                        <br>
                         <code>query</code>
                         تتميز هذه الداله بعمل نسخة مخبئة من النتائج لمدة معينه ممايخفف الضغط عن الخادم في حال أن النتائج لا يتم تحديها طوال فترة معينه , مثل 
                         صفحات الموقع الثابته والأخبار والمنتجات فجميعها فقط يتم تحديثها من قبل المدير لذلك فهذه البيانات لاتحتاج إلى إعادة تحميلها لكل زائر ويمكنك
@@ -1091,8 +1097,8 @@ $lezaz->db->query($query, $cacheTime = 0);
 3 | bassam | 36 
                         </code></pre>                          
 
-                        
-                       <br>
+
+                        <br>
                         <code>num_row</code>
                         لإرجاع عدد السجلات الناتجه عن جملة إستعلام سيكول
                         <pre class="prettyprint"><code>
@@ -1101,8 +1107,8 @@ echo  $lezaz->db->num_row("select * from user"); // 43
 //  النتيجه تكون رقم وهو عدد السجلات
                         </code></pre>                          
 
-                        
-                       <br>
+
+                        <br>
                         <code>row</code>
                         <pre class="prettyprint"><code>
 row($table, $condetion, $row = '*');
@@ -1137,7 +1143,7 @@ Array
 */
                         </code></pre>                          
 
-                       <br>
+                        <br>
                         <code>save</code>
                         حفظ أو تعديل أي بيانات أي عمليات 
                         <code>insert & update</code> 
@@ -1161,7 +1167,7 @@ $lezaz->db->save('user',$fields);
 $lezaz->db->save('user',$fields,'name="afnan"',1);
                         </code></pre>                          
 
-                       <br>
+                        <br>
                         <code>delete</code>
                         لحذف سجل من قاعدة البيانات , المتغير الأول لإسم الجدول والثاني للشرط 
                         <br>
@@ -1198,8 +1204,8 @@ Array
 $lezaz->db->delete('user',5)); 
                         </code></pre>                          
 
-                        
-                          
+
+
                     </div>
                     <!-- db -->
 
@@ -1210,7 +1216,7 @@ $lezaz->db->delete('user',5));
                         هذه الدوال خاصه بالملفات كتحميلها والتعامل مع والكتابه والقراءه وغيرها من الأمور 
 
                         <h3>&raquo; <code>$lezaz->file</code></h3>
-                        
+
                         <code>save</code><br/>
                         لحفظ الملفات المرفوعه 
                         <pre class="prettyprint"><code>
@@ -1243,7 +1249,7 @@ result if success
                         </code></pre>                      
 
 
-                       <code>mkdir</code><br/>
+                        <code>mkdir</code><br/>
                         لإنشاء مجلد حتى لو كان المجلد الأب غير موجود فيتم إنشاؤه 
                         <pre class="prettyprint"><code>
 $lezaz->file->mkdir($path);
@@ -1260,7 +1266,7 @@ echo $lezaz->file->mkdir(UPLOADED_PATH.'a/s/d/f/g/h'); // 1
                         </code></pre>                      
 
 
-                       <code>write</code><br/>
+                        <code>write</code><br/>
                         إنشاء ملف نصي وحذف الملف إن كان موجودا وإعادة إنشاؤه 
                         <pre class="prettyprint"><code>
 $lezaz->file->write($file, $content);
@@ -1281,7 +1287,7 @@ this is a test
 
 
 
-                       <code>listfile</code><br/>
+                        <code>listfile</code><br/>
                         لإرجاع مصفوفه تحتوي على قائمة بجميع الملفات في مجلد معين بالإضافة لإمكانيه البحث داخل المجلدات الفرعيه للمجلد المطلوب 
                         , كما يمكنك البحث عن ملفات ذات إمتداد معين 
                         <pre class="prettyprint"><code>
@@ -1339,9 +1345,9 @@ Array
 
 
 
-                       <code>view</code><br/>
+                        <code>view</code><br/>
                         لعرض ملفات مخبئة بصيغه 
-                         <code>HTML</code>
+                        <code>HTML</code>
                         <pre class="prettyprint"><code>
 $lezaz->file->view($cachefile);
  /*
@@ -1359,7 +1365,7 @@ this is a test
                         </code></pre>                      
 
 
-                  
+
                     </div>
                     <!-- files -->
 
@@ -1375,8 +1381,8 @@ this is a test
 
 
 
-                       <code>after</code><br/>
-                        
+                        <code>after</code><br/>
+
                         <pre class="prettyprint"><code>
 $lezaz->string->after($strthis, $inthat);
  
@@ -1392,8 +1398,8 @@ result search for 's' after abscdefsghijklmnopqrstuvswxyz is :
 
 
 
-                       <code>after_last</code><br/>
-                        
+                        <code>after_last</code><br/>
+
                         <pre class="prettyprint"><code>
 $lezaz->string->after_last($strthis, $inthat);
  
@@ -1407,9 +1413,9 @@ result search for 's' after_last abscdefsghijklmnopqrstuvswxyz is :
 */
 
                         </code></pre>    
-                       
-                      <code>before</code><br/>
-                        
+
+                        <code>before</code><br/>
+
                         <pre class="prettyprint"><code>
 $lezaz->string->before($strthis, $inthat);
  
@@ -1423,9 +1429,9 @@ result search for 's' after_last abscdefsghijklmnopqrstuvswxyz is :
 */
 
                         </code></pre>    
-                       
-                      <code>after_last</code><br/>
-                        
+
+                        <code>after_last</code><br/>
+
                         <pre class="prettyprint"><code>
 $lezaz->string->before_last($strthis, $inthat);
  
@@ -1439,9 +1445,9 @@ result search for 's' before_last abscdefsghijklmnopqrstuvswxyz is :
 */
 
                         </code></pre>    
-                       
-                      <code>between</code><br/>
-                        
+
+                        <code>between</code><br/>
+
                         <pre class="prettyprint"><code>
 $lezaz->string->between($strthis, $that, $inthat);
  
@@ -1455,9 +1461,9 @@ result search for between 's' and 's' in abscdefsghijklmnopqrstuvswxyz is :
 */
 
                         </code></pre>    
-                       
-                      <code>between_last</code><br/>
-                        
+
+                        <code>between_last</code><br/>
+
                         <pre class="prettyprint"><code>
 $lezaz->string->between_last($strthis, $that, $inthat);
  
@@ -1471,14 +1477,337 @@ result search for between_last 's' and 's' in abscdefsghijklmnopqrstuvswxyz is :
 */
 
                         </code></pre>    
-                       
+
                     </div>
                     <!-- string -->
 
                     <!--  glyphicons glyphicons-embed-close -->
 
+                    <!-- lezaz -->
+                    <div id="thelper" class="tab-pane fade">
+                        <h1> <span class="glyphicon  icon-star-empty"></span>دوال مساعدة</h1>
+                        يمكن إستخدام هذه الدوال داخل القوالب لتسهيل بعض الإجراءات 
+                        <pre class="prettyprint">
+// لإستدعاء أي داله , توضع المتغيرات بدون إشارات التنصيص 
+lezaz~func(parm1,parm2) // for function call and echo result  its mean  func(parm1,parm2) 
+
+// لأي كود لزاز داخل القوالب هناك معرف ويمكن الوصول إلى هذا المعرف من خلال هذا الأمر
+lezaz#id // echo value for lezaz syntax use id  its mean $lezaz_id
+
+// نفس الأمر السابق ولكن في حال كان المتغير عباره عن مصفوفه يمكن كتابة الأمر بهذه الطريقه
+lezaz#id[parm] // echo value for lezaz syntax use id parameter  its mean  $lezaz_id[parm]
+
+// في حال تم إستخدام الجمل الخاصه بشيفرة بي أتش بي يمكن الوصول إلى المتغيرات من خلال هذا الأمر
+lezaz$parm // echo $parm from php files  its mean $parm 
+
+// نفس الأمر السابق ولكن في حال كان المتغير عباره عن مصفوفه
+lezaz$parm[item] // echo array item from $parm using in php files  its mean $parm[item] 
+
+// للوصول إلى الدوال الخاصه بمنصه لزاز 
+lezaz:func(parm) // echo result from lezaz class its mean $lezaz->func(parm)
+
+// للوصول إلى المتغيرات في لغة ب أتش بي  وهذه أيضا تعتبر بعض الأمثله للأمر السابق
+    lezaz:get(param) // $_GET[param]
+    lezaz:post(param) // $_POST[param]
+    lezaz:cons(param) // param
+    lezaz:sess(param) // $_SESSION[param]
+    lezaz:sess(param,key) // $_SESSION[param][key]
+
+                        </pre>
+                    </div>
+
+                    
+                    <div id="lezazif" class="tab-pane fade">
+                        <h1> <span class="glyphicon glyphicon-bookmark"></span>الجمل الشرطيه</h1>
+                       
+                        <pre class="prettyprint">
 
 
+&lt;lezaz:if/&gt;
+Attribute	Description        Default
+--------------------------------------------
+id           referance for this syntax use like lezaz#id             Null
+condition    condition if syntax                                     1==1
+pass         return this value if pass                               1
+fail         return this value if fail                               0
+print        print result attr if value = any pass like 1,true,yes   0
+
+inside code you can use &lt;lezaz_else/&gt; 
+
+Example
+--------
+&lt;lezaz:if id='myid' condition="lezaz$parm==1" pass="yes" fail="no" print="false"/&gt;
+
+&lt;lezaz:if id='myid' condition="lezaz$parm==1" pass="yes" fail="no" print="false"&gt;
+the value for $parm = lezaz$parm and its 1 &lt;br&gt;
+&lt;lezaz_else/&gt; 
+the value for $parm = lezaz$parm and its not 1
+&lt;/lezaz:if&gt;
+the result for if syntax is lezaz#myid
+
+
+
+                        </pre>
+                    </div>
+                    
+                    
+
+                    
+                    <div id="lezazfor" class="tab-pane fade">
+                        <h1> <span class="glyphicon glyphicon-bookmark"></span>التكرار</h1>
+                        <pre class="prettyprint">
+  &lt;lezaz:for/&gt;
+  Attribute	Description        Default
+  --------------------------------------------
+  id         referance for this syntax use like lezaz#id             Null
+  condition  condition for syntax you can use $i as primary          $i&lt;=to
+  from       start count for from                                    1
+  to         end count for                                           10
+  step       number of step jump                                     0
+  print        print result attr if value = any pass like 1,true,yes 0
+
+  inside code you can use lezaz#id to print for value repete
+
+  Example
+  --------
+  &lt;lezaz:for id='idfor' from="5" to="100" step="5"/&gt;
+
+  &lt;lezaz:for id="idfor" from='3' condition='$i&lt;lezaz:get(bass)' to='27' step='1' print='false'&gt;
+  lezaz#idfor &lt;br&gt;
+  &lt;/lezaz:for&gt;
+  the result syntax is lezaz#idfor as last value for this variable
+
+
+                        </pre>
+                    </div>
+                    
+                    
+
+                    
+                    <div id="lezazeach" class="tab-pane fade">
+                        <h1> <span class="glyphicon glyphicon-bookmark"></span>تكرار الشيء - للمصفوفات</h1>
+                        <pre class="prettyprint">
+ 
+&lt;lezaz:each/&gt;
+  Attribute	Description        Default
+  --------------------------------------------
+  id         referance for this syntax use like lezaz#id             Null
+  array      array parameter without $ or $_SESSION                  Null
+  type       type of array use session for $_SESSION['array']        variable  you can use session,server,get,post,cookie,request,variable
+  counter    initial value for counter parameter                     1
+
+  inside code you can use
+  lezaz#id_key to print key item
+  lezaz#id_value to print value item
+  lezaz#id_counter to print counter item
+
+  Example
+  --------
+  &lt;lezaz:each id='ideach' array="variable1" type="session" counter="5" /&gt;
+
+  &lt;lezaz:each id='ideach' array="variable1" type="session" counter="5"&gt;
+  lezaz#ideach_counter: lezaz#ideach_key =&gt;  lezaz#ideach_value &lt;br&gt;
+  &lt;/lezaz:each&gt;
+  the result syntax for lezaz#ideach is true if there is at least 1 item in array
+
+                        </pre>
+                    </div>
+                    
+                    
+
+                    
+                    <div id="lezazblock" class="tab-pane fade">
+                        <h1> <span class="glyphicon glyphicon-bookmark"></span>تضمين القوالب</h1>
+                        <pre class="prettyprint">
+&lt;lezaz:block/&gt;
+  Attribute	Description        Default
+  --------------------------------------------
+  id         referance for this syntax use like lezaz#id             Null
+  file       template file to include                                Null
+  param1     you can use parameter to set before including file      Null
+
+  Example
+  --------
+    &lt;lezaz:block file="header_en" param1="bassam" param2="ahmad"/&gt;
+    &lt;lezaz:block id='myid' file="{template}folder/template.inc"/&gt;
+
+                        </pre>
+                    </div>
+                    
+                    
+
+                    
+                    <div id="lezazimport" class="tab-pane fade">
+                        <h1> <span class="glyphicon glyphicon-bookmark"></span>تضمين الستايل والجافاسكريبت</h1>
+                        <pre class="prettyprint">
+
+  &lt;lezaz:import/&gt;
+  Attribute	Description        Default
+  ----------------------------------------------------------------------
+  dir    import all files from this dir                           Null
+  type         css/js                                             Null
+  compress     to compress all files in one                       Null
+ * 1   &gt;&gt; without compress 
+ * 2   &gt;&gt; with compress                  
+  sort        fort import files ASC DESC                          ASC
+
+  inside code you can use list of file to import link like
+ * {theme}js/jquery.js ; //inside theme folder use js folder then file 
+ * js/jquery.js; //same apove coz defult directory is theme 
+ * {template}admin/js/file.js; // inside template folder use admin folder then js file
+  TODO: * url:http://sdn.com/file.js -&gt; {theme}js/file.js ;//check if url valid and return 200 then import else import from your server
+
+  Example
+  --------
+  &lt;lezaz:import dir='js' type="css"/&gt;
+  &lt;lezaz:import dir='js' type="css"&gt;
+  {template}admin/css/file.css
+  url:http://sdn.com/file.css -&gt; css/file2.css
+  &lt;/lezaz:import&gt;
+                        </pre>
+                    </div>
+                    
+                    
+
+                    
+                    <div id="lezazsql" class="tab-pane fade">
+                        <h1> <span class="glyphicon glyphicon-bookmark"></span>قواعد البيانات</h1>
+                        <pre class="prettyprint">
+&lt;lezaz:sql/&gt;
+Attribute	Description        Default
+--------------------------------------------
+id           referance for this syntax use like lezaz#id                   Null
+sql          SQL syntax                                                    null
+limit        number of rows to show                                        null
+style1 
+multipage    for using pagination value = true                             false      
+print        print result attr if value = any pass like 1,true,yes         0
+counter      initial value for counter parameter                           1
+
+inside code you can use lezaz#id[field] &gt;&gt; print field value
+                        lezaz#id_num &gt;&gt; print number of rows 
+                        lezaz#id_counter &gt;&gt; print counter for this row or last counter if use after colse sql
+                        lezaz#id_multipage &gt;&gt; show paginition
+
+Example
+--------
+&lt;lezaz:sql id='myid' sql="select * from table where id=lezaz$parm" limit="1" print="true"/&gt;
+
+&lt;lezaz:sql id='myid' sql="select * from table where id=lezaz$parm" limit="1"&gt;
+the value of field name = lezaz#myid[name] &lt;br&gt;
+&lt;/lezaz:sql&gt;
+
+                        </pre>
+                    </div>
+                    
+                    
+
+                    
+                    <div id="lezazinput" class="tab-pane fade">
+                        <h1> <span class="glyphicon glyphicon-bookmark"></span>الحقول</h1>
+                        <pre class="prettyprint">
+
+ 
+
+  &lt;lezaz:input/&gt;
+  Attribute	Description        Default
+  --------------------------------------------
+  type        text,password,select,check,radio,button,submit,reset,textarea,date,                             text
+  id          referance for this input use like lezaz#id, if there is no attr name we wll use id as name      null
+  value       its a value!
+  label       label text if no attr label we wll not add label element!
+  size        number from 1:12 defult is 9 , this is size of this element
+  sizegroup   number from 1:12 defult is 12 , this is size of groub form for this element
+  space       number from 1-12
+  size-label   number from 1-12  defult is 3                                                                         null
+  validation &gt;&gt;
+  optional or o: Only validate when the field is not empty
+  required or r: Field is required
+  length[100] or l : Between x and y characters allowed
+  Max:7 or M: Set the maximum chr
+  min:7 : Set the minimum chr
+  confirm[fieldID] c: Match the other field (ie:confirm[password] or c[password])
+  telephone or t: Match telephone regEx rule.
+  email or e: Match email regEx rule.
+  number or n: Numbers only
+  nospecialcaracters or s: No special characters allowed
+  letter : Letters only
+  exemptString : Will not validate if the string match
+  date or d:  date format Ex. d[yy,dd,mm:datehere]
+  regx : regular expression use like rege:^[a-z\ \']+
+  placeholder   normal
+  icon          icon for element from awsomefont
+  help          show button for help , when press this attr value wll show          Null
+  msgvalidation if fail validation this msg wll show                                Null
+
+
+  Example
+  --------
+  &lt;lezaz:sql id='myid' sql="select * from table where id=lezaz$parm" limit="1" print="true"/&gt;
+
+  &lt;lezaz:sql id='myid' sql="select * from table where id=lezaz$parm" limit="1"&gt;
+  the value of field name = lezaz#myid[name] &lt;br&gt;
+  &lt;/lezaz:sql&gt;
+
+
+  button
+  ======
+  color : info2,purple,pink,light,yellow,grey,white | grey
+  size  : xlg,mini,minier,sm | sm width-auto
+  border: true,false or 1,0 | 1
+  hover : true,false or 1,0 | 1
+  option : bold,round,app | Null
+  icon : {fontawsome fa-check} like check,trash-o,bigger-160 | Null
+  icon-right : {fontawsome fa-check} like check,trash-o,bigger-160 | Null , left if not null
+  &lt;lezaz:input type="button" color="info2" size="xlg"/&gt;
+ * 
+  checkbox
+  ========
+  skin    : 1-9     | Null
+
+  select
+  ======
+  skin : 1,2  | Null
+
+  upload
+  ======
+  type : file , files , image , images
+  skin : 1
+  save='folder' // in uploaded folder so if u wont save in /uploaded/site/imaages value wll be site/images , to save in other path use {template}site/any_folder
+ 
+ * ***************************** Form ***************************************************************************************
+ * &lt;lezaz:form id="myform" type="setting|database|email" tabel="tabel name" email="email address"&gt;&lt;/lezaz:form&gt;  
+ * 
+ */
+
+                        </pre>
+                    </div>
+                    
+                    
+
+                    
+                    <div id="lezazselect" class="tab-pane fade">
+                        <h1> <span class="glyphicon glyphicon-bookmark"></span>cccxxx</h1>
+                        <pre class="prettyprint">
+gfdsgdfsgfdsg
+                        </pre>
+                    </div>
+                    
+                    
+
+                    
+                    <div id="lezazphp" class="tab-pane fade">
+                        <h1> <span class="glyphicon glyphicon-bookmark"></span>cccxxx</h1>
+                        <pre class="prettyprint">
+gfdsgdfsgfdsg
+                        </pre>
+                    </div>
+                    
+                    
+                
+
+
+                    <!--/ lezaz -->
 
 
                 </div>
