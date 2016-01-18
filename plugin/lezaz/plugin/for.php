@@ -17,7 +17,7 @@
   --------
   <lezaz:for id='idfor' from="5" to="100" step="5"/>
 
-  <lezaz:for id="idfor" from='3' condition='$i<lezaz:get(bass)' to='27' step='1' print='false'>
+  <lezaz:for id="idfor" from='3' condition='$i<lezaz:set(bass)' to='27' step='1' print='false'>
   lezaz#idfor <br>
   </lezaz:for>
   the result syntax is lezaz#idfor as last value for this variable

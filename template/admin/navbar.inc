@@ -45,7 +45,7 @@
                         <img class="nav-user-photo" src="{{upload}}site/lezaz:setting(logo1)" alt="admin" />
                         <span class="user-info">
                             <small>[Welcome]</small>
-lezaz:get(user)
+lezaz:set(user)
                         </span>
 
                         <i class="ace-icon fa fa-caret-down"></i>

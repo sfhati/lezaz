@@ -26,14 +26,14 @@ Class __CORE {
     public $main_template = 'index';
     private $valriables = array();
     private $language = 'en';
-    private $router_vars =  array(
-            '@num' => '([0-9\.,]+)',
-            '@alpha' => '([a-zA-Z]+)',
-            '@alnum' => '([a-zA-Z0-9\.\w]+)',
-            '@str' => '([a-zA-Z0-9-_\.\w]+)',
-            '@*' => '(.*)',
-            '@date' => '(([0-9]{1,2})\/([0-9]{1,2})\/(([0-9]{2})(.{0}|.{2})))',
-            '@null' => '^');
+    private $router_vars = array(
+        '@num' => '([0-9\.,]+)',
+        '@alpha' => '([a-zA-Z]+)',
+        '@alnum' => '([a-zA-Z0-9\.\w]+)',
+        '@str' => '([a-zA-Z0-9-_\.\w]+)',
+        '@*' => '(.*)',
+        '@date' => '(([0-9]{1,2})\/([0-9]{1,2})\/(([0-9]{2})(.{0}|.{2})))',
+        '@null' => '^');
 
     public function __construct() {
         // get all plugin active inside $plugin
@@ -55,9 +55,10 @@ Class __CORE {
         return $this->language;
     }
 
-    public function add_router($key,$regex){
-        $this->router_vars[$key]=$regex;
+    public function add_router($key, $regex) {
+        $this->router_vars[$key] = $regex;
     }
+
     public function __add($class, $name) {
         $this->$name = new $class;
     }
@@ -142,11 +143,12 @@ Class __CORE {
 
     /*     * ******************************* END/Events/Hooks/ ************************ */
 
-    public function go($to='', $using = 302) {
-        if(!$to){ $to= SITE_LINK . trim($_GET['directory_lezaz'],'/');
-        }else{
-        $scheme = parse_url($to, PHP_URL_SCHEME);
-        $to = (!empty($scheme) ? $to : ( ltrim($to, '/')));
+    public function go($to = '', $using = 302) {
+        if (!$to) {
+            $to = SITE_LINK . trim($_GET['directory_lezaz'], '/');
+        } else {
+            $scheme = parse_url($to, PHP_URL_SCHEME);
+            $to = (!empty($scheme) ? $to : ( ltrim($to, '/')));
         }
         if (headers_sent())
             return call_user_func_array(__FUNCTION__, array($to, 'html'));
@@ -211,28 +213,49 @@ Class __CORE {
         return 'x';
     }
 
-    public function set($k, $v) {
-        $this->valriables[$k] = &$v;
+    public function set($k, $v = '') {
+        if ($v)
+            $this->valriables[$k] = &$v;
+        else
+            return $this->valriables[$k];
+        return false;
     }
 
-    public function get($k, $i = '') {
-        if (isset($_GET[$k]) && $i)
-            return $_GET[$k][$i];
-        if (isset($_GET[$k]))
-            return $_GET[$k];
-        return $this->valriables[$k];
+    public function get($k, $validate = '') {
+        if (!isset($_GET[$k]))
+            return false;
+        if(!$validate) {
+            if($this->setting('VALIDATION__'.$k)){
+                $validate=$this->setting('VALIDATION__'.$k);
+            }
+        }        
+        if ($validate) {
+            if ($this->validaition($validate, $_GET[$k])) {
+                return $_GET[$k];
+            }
+            $this->set("_MSG_".$k,'error');            
+            return false;
+        }
+        return $_GET[$k];
     }
 
-    public function post($k, $i = '') {
-        if (isset($_POST[$k]) && $i)
-            return $_POST[$k][$i];
-        if (isset($_POST[$k]))
-            return $_POST[$k];
-        return '';
-    }
-
-    public function validate($var, $consept) {
-        //trdh gfdh 
+    public function post($k, $validate = '') {
+        
+        if (!isset($_POST[$k]))
+            return false;
+        if(!$validate) {
+            if($this->setting('VALIDATION__'.$k)){
+                $validate=$this->setting('VALIDATION__'.$k);
+            }
+        }
+        if ($validate) {
+            if ($this->validaition($validate, $_POST[$k])) {
+                return $_POST[$k];
+            }
+            $this->set("_MSG_".$k,'error');
+            return false;
+        }
+        return $_POST[$k];
     }
 
     public function sess($k, $i = '') {
@@ -298,11 +321,11 @@ Class __CORE {
         $protocol = $_SERVER['HTTPS'] == 'on' ? 'https' : 'http';
         /*         * * return the full address ** */
         $return = $protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        if (strpos($return, "?")){
-            $return=  rtrim($return,'&');
-            if(substr($return, -1)!='?')
-            $return.="&";
-        }else{
+        if (strpos($return, "?")) {
+            $return = rtrim($return, '&');
+            if (substr($return, -1) != '?')
+                $return.="&";
+        }else {
             $return.="?";
         }
         return $return;
@@ -371,10 +394,118 @@ Class __CORE {
         return $m;
     }
 
+    public function validaition($syntax, $str) {
+        global $lezaz;
+        foreach (explode(';', $syntax) as $valid) {
+            $varchek = explode(':', $valid);
+            $varchek1 = strtolower(trim($varchek[0]));
+            $varchek2 = strtolower(trim($varchek[1]));
+
+            switch ($varchek1) {
+                case 'optional':
+                case 'o':
+                    if (!$str)
+                        return true;
+
+                case 'required':
+                case 'r':
+                    if (!$str) {
+                        $lezaz->set_msg('[ERR_required]', 'warning');
+                        return FALSE;
+                    }
+                    break;
+                case 'length':
+                case 'l':
+                    if (strlen($str) != $varchek2) {
+                        $lezaz->set_msg('[ERR_length]', 'warning');
+                        return FALSE;
+                    }
+                    break;
+                case 'min':
+                case 'm':
+                    if (strlen($str) < $varchek2) {
+                        $lezaz->set_msg('[ERR_min]' . $varchek2, 'warning');
+                        return FALSE;
+                    }
+                    break;
+                case 'max':
+                case 'x':
+                    if (strlen($str) > $varchek2) {
+                        $lezaz->set_msg('[ERR_max]' . $varchek2, 'warning');
+                        return FALSE;
+                    }
+                    break;
+                case 'email':
+                case 'e':
+                    if (!preg_match("/^([a-z0-9])(([-a-z0-9._])*([a-z0-9]))*\@([a-z0-9])(([a-z0-9-])*([a-z0-9]))+(\.([a-z0-9])([-a-z0-9_-])?([a-z0-9])+)+$/i", $str)) {
+                        $lezaz->set_msg('[ERR_email]', 'warning');
+                        return FALSE;
+                    }
+                    break;
+                case 'url':
+                case 'u':
+                    if (!preg_match("/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i", $str)) {
+                        $lezaz->set_msg('[ERR_url]', 'warning');
+                        return FALSE;
+                    }
+                    break;
+
+                case 'date':
+                case 'd':
+                    $split = explode('-', $str);
+                    if (!preg_match("/\d{2}\-\d{2}-\d{4}/", $str) && !checkdate($split[1], $split[2], $split[0])) {
+                        $lezaz->set_msg('[ERR_date]', 'warning');
+                        return FALSE; // format dd-mm-yyyy
+                    }
+                    break;
+
+
+                case 'number':
+                case 'n':
+                    if (!is_numeric($str)) {
+                        $lezaz->set_msg('[ERR_number]', 'warning');
+                        return FALSE;
+                    }
+                    if ($varchek2) {
+                        $mnmx = explode(',', $varchek2);
+                        if (is_numeric($mnmx[0]) && $str <= $mnmx[0]) {
+                            $lezaz->set_msg($str . '[ERR_numberMin]' . $mnmx[0], 'warning');
+                            return FALSE;
+                        }
+                        if (is_numeric($mnmx[1]) && $str >= $mnmx[1]) {
+                            $lezaz->set_msg($str . '[ERR_numberMax]' . $mnmx[1], 'warning');
+                            return FALSE;
+                        }
+                    }
+                    break;
+
+                case 'tablein':
+                case 'ti':
+                    $feild = explode(',', $varchek2);
+                  //  $lezaz->set_msg($lezaz->db->row($feild[0], "`$feild[1]`='$str' $options", $feild[1]),'warning');
+                    if ($lezaz->db->row($feild[0], "`$feild[1]`='$str' $options", $feild[1])) {
+                        $lezaz->set_msg('[ERR_tableIn]', 'warning');                        
+                        return FALSE;
+                    }
+                    break;
+                case 'tableout':
+                case 'to':
+                    $feild = explode(',', $varchek2);
+                    if (!$lezaz->db->row($feild[0], "`$feild[1]`='$str' $options", $feild[1])) {
+                        $lezaz->set_msg('[ERR_tableOut]', 'warning');
+                        return FALSE;
+                    }
+                    break;
+            }
+        }
+
+        return true;
+    }
+
     public function run() {
-$this->trigger('layer.init.start');
+        $this->trigger('layer.init.start');
         $this->include_plugin('init');
-$this->trigger('layer.init.done');
+        $this->trigger('layer.init.done');
         if ($_SESSION['LEZAZ_start'] == 'gr9fk4fdd') {
             $_SESSION['LEZAZ_start'] = 'gr9fk4fdd1';
             $this->trigger('new.guset');
@@ -389,27 +520,27 @@ $this->trigger('layer.init.done');
             $this->trigger('requset.guset');
 
 
-$this->trigger('layer.index.start');
+        $this->trigger('layer.index.start');
         $this->include_plugin('index');
-$this->trigger('layer.index.done');
-$this->trigger('layer.footer.start');
+        $this->trigger('layer.index.done');
+        $this->trigger('layer.footer.start');
         $this->include_plugin('footer');
-$this->trigger('layer.footer.done');
+        $this->trigger('layer.footer.done');
 
-     
-        
+
+
 
         $print = $this->lezaz->include_tpl($this->main_template);
         $print = $this->trigger('output.filter', $print, $print);
         $this->trigger('requset.end', '');
-        
-$this->trigger('layer.term.start');
+
+        $this->trigger('layer.term.start');
         $this->include_plugin('term');
-$this->trigger('layer.term.done');
+        $this->trigger('layer.term.done');
         // clear all messages!
         $_SESSION['lezaz_msseges'] = '';
-        unset($_SESSION['lezaz_msseges']); 
-        
+        unset($_SESSION['lezaz_msseges']);
+
         return $print;
     }
 

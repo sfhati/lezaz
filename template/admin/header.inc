@@ -6,7 +6,7 @@
 
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <lezaz:if condition='lezaz:get(useajax)'>
+    <lezaz:if condition='lezaz:set(useajax)'>
 
         <!--[if !IE]> -->
         <link rel="stylesheet" href="{template}admin/css/extra/pace.css" />
@@ -45,7 +45,7 @@
 
 </head>
 
-<body class="lezaz:get(skin) [style-rtl]">
+<body class="lezaz:set(skin) [style-rtl]">
 <lezaz:import dir='{template}admin/css' type='css' compress='0'/>
 <lezaz:import dir='{template}admin/js' type='js' compress='0'/>
 

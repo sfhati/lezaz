@@ -35,7 +35,7 @@
                            
 						<!-- /section:settings.box -->
 
-                                                <lezaz:if condition="lezaz:get(useajax)">
+                                                <lezaz:if condition="lezaz:set(useajax)">
 						<div class="page-content-area" data-ajax-content="true">
 							<!-- ajax content goes here -->
 						</div><!-- /.page-content-area -->                                                                                         
@@ -45,7 +45,7 @@
  <div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
-<lezaz:block file="{template}admin/content/'.lezaz:get(noajaxpage).'"/>
+<lezaz:block file="{template}admin/content/'.lezaz:set(noajaxpage).'"/>
 								<!-- PAGE CONTENT ENDS -->
 							</div><!-- /.col -->
 						</div><!-- /.row -->

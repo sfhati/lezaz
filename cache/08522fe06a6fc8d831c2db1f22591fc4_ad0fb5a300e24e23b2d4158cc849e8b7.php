@@ -45,7 +45,7 @@
                         <img class="nav-user-photo" src="http://fw.cms/uploaded/site/<?php echo $lezaz->setting( "logo1" ); ?>" alt="admin" />
                         <span class="user-info">
                             <small>[Welcome]</small>
-<?php echo $lezaz->get( "user" ); ?>
+<?php echo $lezaz->set( "user" ); ?>
                         </span>
 
                         <i class="ace-icon fa fa-caret-down"></i>

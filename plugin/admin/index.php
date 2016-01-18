@@ -21,8 +21,8 @@ $lezaz->router(array('/admin/@*', 'admin'), function() use ($lezaz) {
         $lezaz->main_template = '{template}admin/index';
         $lezaz->set('noajaxpage', 'index');
         $lezaz->set('index', 'open');
-        if ($lezaz->get('set_language')) {
-            $_SESSION['language'] = $lezaz->get('set_language');
+        if ($lezaz->set('set_language')) {
+            $_SESSION['language'] = $lezaz->set('set_language');
             $lezaz->go(SITE_LINK . 'admin/');
         }
     }
@@ -37,7 +37,7 @@ $lezaz->router('/admin/@str', function($b) use ($lezaz) {
 
 $lezaz->listen('output.filter', function($output, $filtered) use($lezaz) {
     $search = array('{{ajxurl}}', '{plugin}', '{template}', '{tmp}', '{cache}', '{uploaded}', '{theme}');
-    $replace = array($lezaz->get('ajxURL'), PLUGIN_LINK, TEMPLATE_LINK, TMP_LINK, CACHE_LINK, UPLOADED_LINK, THEME_LINK);
+    $replace = array($lezaz->set('ajxURL'), PLUGIN_LINK, TEMPLATE_LINK, TMP_LINK, CACHE_LINK, UPLOADED_LINK, THEME_LINK);
 
 
     $output = empty($filtered) ? $output : $filtered;

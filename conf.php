@@ -23,7 +23,7 @@ define('SITE_DOMAIN',$_SERVER[HTTP_HOST]);
     define('db_type', 'mysql');
     define('db_host', 'localhost');
     define('db_port', '');
-    define('db_name', 'gulffurniture');
+    define('db_name', 'fw');
     define('db_user', 'root');
     define('db_pass', '');
 
@@ -63,7 +63,7 @@ define('Main_Domain', 'http://server.sfhati.com/');
 define('Version', '1.00');
 define('DEVELOP_MODE', true); // no sql cache is defult
 
-define('SQL_CACHE', '20'); // no sql cache is defult
+define('SQL_CACHE', '0'); // no sql cache is defult
 define('CRYPT_CACHE', true); // no sql cache is defult
 define('SALT','FR4d32cdvTYdw2s#gt54');
 define('LEZAZ_START_TIME', microtime(1), true);

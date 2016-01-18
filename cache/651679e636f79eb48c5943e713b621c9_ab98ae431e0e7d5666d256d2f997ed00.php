@@ -7,7 +7,7 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     
-   <?php  if ($lezaz->get( "useajax" )) { 
+   <?php  if ($lezaz->set( "useajax" )) { 
 
 $lezaz_="0";
  ?>      
@@ -59,7 +59,7 @@ $lezaz_="0";
 
 </head>
 
-<body class="<?php echo $lezaz->get( "skin" ); ?> [style-rtl]">
+<body class="<?php echo $lezaz->set( "skin" ); ?> [style-rtl]">
 <?php                     
                     echo compressCSS("{template}admin/css",0,0);
                         ?>

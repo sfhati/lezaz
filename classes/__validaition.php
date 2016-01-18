@@ -1,9 +1,6 @@
 <?php
 
-function validation_register($var, $valid) {
-    $_SESSION['validaition'][$var][$valid] = $valid;
-}
-
+//r;m:8;x:15;ti:members,name
 /* validation_register('bassam1', 'o');
   validation_register('bassam1', 'l:5');
   validation_register('bassam1', 'm:3');
@@ -17,10 +14,11 @@ function validation_register($var, $valid) {
   validation_register('bassam1', 'd');
   $testc = '';
  */
+class __validaition {
 
-function validation_check($var, $str , $options='') {
-            $haverr = false;
-    if(is_array($_SESSION['validaition'][$var])) foreach ($_SESSION['validaition'][$var] as $valid) {
+function check($syntax, $str) {
+    global $lezaz;
+   foreach (explode(';', $syntax) as $valid) {
         $varchek = explode(':', $valid);
         $varchek1 = strtolower(trim($varchek[0]));
         $varchek2 = strtolower(trim($varchek[1]));
@@ -29,48 +27,48 @@ function validation_check($var, $str , $options='') {
             case 'optional':
             case 'o':
                 if (!$str)
-                    return false;
+                    return true;
 
             case 'required':
             case 'r':
                 if (!$str) {
-                    set_msg('[ERR_required]', 1);
-                    $haverr = true;
+                    $lezaz->set_msg('[ERR_required]', 'warning');
+                    return FALSE;
                 }
                 break;
             case 'length':
             case 'l':
                 if (strlen($str) != $varchek2) {
-                    set_msg('[ERR_length]', 1);
-                    $haverr = true;
+                     $lezaz->set_msg('[ERR_length]', 'warning');
+                    return FALSE;
                 }
                 break;
             case 'min':
             case 'm':
                 if (strlen($str) < $varchek2) {
-                    set_msg('[ERR_min]', 1);
-                    $haverr = true;
+                     $lezaz->set_msg('[ERR_min]'.$varchek2, 'warning');
+                    return FALSE;
                 }
                 break;
             case 'max':
             case 'x':
                 if (strlen($str) > $varchek2) {
-                    set_msg('[ERR_max]', 1);
-                    $haverr = true;
+                     $lezaz->set_msg('[ERR_max]'.$varchek2, 'warning');
+                    return FALSE;
                 }
                 break;
             case 'email':
             case 'e':
                 if (!preg_match("/^([a-z0-9])(([-a-z0-9._])*([a-z0-9]))*\@([a-z0-9])(([a-z0-9-])*([a-z0-9]))+(\.([a-z0-9])([-a-z0-9_-])?([a-z0-9])+)+$/i", $str)) {
-                    set_msg('[ERR_email]', 1);
-                    $haverr = true;
+                     $lezaz->set_msg('[ERR_email]', 'warning');
+                    return FALSE;
                 }
                 break;
             case 'url':
             case 'u':
                 if (!preg_match("/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i", $str)) {
-                    set_msg('[ERR_url]', 1);
-                    $haverr = true;
+                     $lezaz->set_msg('[ERR_url]', 'warning');
+                    return FALSE;
                 }
                 break;
 
@@ -78,8 +76,8 @@ function validation_check($var, $str , $options='') {
             case 'd':
                 $split = explode('-', $str);
                 if (!preg_match("/\d{2}\-\d{2}-\d{4}/", $str) && !checkdate($split[1], $split[2], $split[0])) {
-                    set_msg('[ERR_date]', 1);
-                    $haverr = true; // format dd-mm-yyyy
+                     $lezaz->set_msg('[ERR_date]', 'warning');
+                    return FALSE; // format dd-mm-yyyy
                 }
                 break;
 
@@ -87,18 +85,18 @@ function validation_check($var, $str , $options='') {
             case 'number':
             case 'n':
                 if (!is_numeric($str)) {
-                    set_msg('[ERR_number]', 1);
-                    $haverr = true;
+                     $lezaz->set_msg('[ERR_number]', 'warning');
+                    return FALSE;
                 }
                 if ($varchek2) {
                     $mnmx = explode(',', $varchek2);
                     if (is_numeric($mnmx[0]) && $str <= $mnmx[0]) {
-                        set_msg('[ERR_numberMin]', 1);
-                        $haverr = true;
+                         $lezaz->set_msg($str.'[ERR_numberMin]'.$mnmx[0], 'warning');
+                        return FALSE;
                     }
                     if (is_numeric($mnmx[1]) && $str >= $mnmx[1]) {
-                        set_msg('[ERR_numberMax]', 1);
-                        $haverr = true;
+                         $lezaz->set_msg($str.'[ERR_numberMax]'.$mnmx[1], 'warning');
+                        return FALSE;
                     }
                 }
                 break;
@@ -106,30 +104,30 @@ function validation_check($var, $str , $options='') {
             case 'tablein':
             case 'ti':
                 $feild = explode(',', $varchek2);               
-                if (check_db($feild[0], "`$feild[1]`='$str' $options", $feild[1])) {
-                    set_msg('[ERR_tableIn]', 1);
-                    $haverr = true;
+                if ($lezaz->db->row($feild[0], "`$feild[1]`='$str' $options", $feild[1])) {
+                     $lezaz->set_msg('[ERR_tableIn]', 'warning');
+                    return FALSE;
                 }
                 break;
             case 'tableout':
             case 'to':
                 $feild = explode(',', $varchek2);
-                if (!check_db($feild[0], "`$feild[1]`='$str' $options", $feild[1])) {
-                    set_msg('[ERR_tableOut]', 1);
-                    $haverr = true;
+                if (!$lezaz->db->row($feild[0], "`$feild[1]`='$str' $options", $feild[1])) {
+                     $lezaz->set_msg('[ERR_tableOut]', 'warning');
+                    return FALSE;
                 }
                 break;
         }
     }
 
-    return $haverr;
+    return true;
 }
 
 /**
  * Validator class 
  * Let simplify the validation :) 
  */
-class __Validator {
+
 
     private static function helper($string, $exclude = "") {
         if (empty($exclude))

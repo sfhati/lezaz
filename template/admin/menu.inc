@@ -2,7 +2,7 @@
                                 
 
 				<ul class="nav nav-list">
-					<li class="lezaz:get(index)">
+					<li class="lezaz:set(index)">
 						<a href="/admin/{{ajxurl}}index">
 							<i class="menu-icon fa fa-tachometer"></i>
 							<span class="menu-text"> [Dashboard] </span>
@@ -12,7 +12,7 @@
 					</li> 
 
                                       
-					<li class='lezaz:get(add_member_m) lezaz:get(managment_members_m)'>
+					<li class='lezaz:set(add_member_m) lezaz:set(managment_members_m)'>
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
 							<span class="menu-text"> [members] </span>
@@ -23,7 +23,7 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="lezaz:get(add_member)">
+							<li class="lezaz:set(add_member)">
 								<a href="/admin/{{ajxurl}}add_member">
 									<i class="menu-icon fa fa-caret-right"></i>
 									[add member]
@@ -32,7 +32,7 @@
 								<b class="arrow"></b>
 							</li>
 
-							<li class="lezaz:get(managment_members)">
+							<li class="lezaz:set(managment_members)">
 								<a href="/admin/{{ajxurl}}managment_members">
 									<i class="menu-icon fa fa-caret-right"></i>
 									[manage members]
@@ -43,7 +43,7 @@
 						</ul>
 					</li>
                                         
-					<li class='lezaz:get(add_page_m) lezaz:get(managment_pages_m)'>
+					<li class='lezaz:set(add_page_m) lezaz:set(managment_pages_m)'>
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
 							<span class="menu-text"> [pages] </span>
@@ -51,14 +51,14 @@
 						</a>
 						<b class="arrow"></b>
 						<ul class="submenu">
-							<li class="lezaz:get(add_page)">
+							<li class="lezaz:set(add_page)">
 								<a href="/admin/{{ajxurl}}add_page">
 									<i class="menu-icon fa fa-caret-right"></i>
 									[add page]
 								</a>
 								<b class="arrow"></b>
 							</li>
-							<li class="lezaz:get(managment_pages)">
+							<li class="lezaz:set(managment_pages)">
 								<a href="/admin/{{ajxurl}}managment_pages">
 									<i class="menu-icon fa fa-caret-right"></i>
 									[manage pages]
@@ -68,7 +68,7 @@
 						</ul>
 					</li>
 
-					<li class='lezaz:get(add_slider_m) lezaz:get(managment_sliders_m)'>
+					<li class='lezaz:set(add_slider_m) lezaz:set(managment_sliders_m)'>
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
 							<span class="menu-text"> [sliders] </span>
@@ -76,14 +76,14 @@
 						</a>
 						<b class="arrow"></b>
 						<ul class="submenu">
-							<li class="lezaz:get(add_slider)">
+							<li class="lezaz:set(add_slider)">
 								<a href="/admin/{{ajxurl}}add_slider">
 									<i class="menu-icon fa fa-caret-right"></i>
 									[add slider]
 								</a>
 								<b class="arrow"></b>
 							</li>
-							<li class="lezaz:get(managment_sliders)">
+							<li class="lezaz:set(managment_sliders)">
 								<a href="/admin/{{ajxurl}}managment_sliders">
 									<i class="menu-icon fa fa-caret-right"></i>
 									[manage sliders]
@@ -94,7 +94,7 @@
 					</li>
                                         
     
-					<li class='lezaz:get(add_media_m) lezaz:get(managment_medias_m)'>
+					<li class='lezaz:set(add_media_m) lezaz:set(managment_medias_m)'>
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
 							<span class="menu-text"> [medias] </span>
@@ -102,14 +102,14 @@
 						</a>
 						<b class="arrow"></b>
 						<ul class="submenu">
-							<li class="lezaz:get(add_media)">
+							<li class="lezaz:set(add_media)">
 								<a href="/admin/{{ajxurl}}add_media">
 									<i class="menu-icon fa fa-caret-right"></i>
 									[add media]
 								</a>
 								<b class="arrow"></b>
 							</li>
-							<li class="lezaz:get(managment_medias)">
+							<li class="lezaz:set(managment_medias)">
 								<a href="/admin/{{ajxurl}}managment_medias">
 									<i class="menu-icon fa fa-caret-right"></i>
 									[manage medias]

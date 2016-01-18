@@ -120,31 +120,79 @@ function lezaz_form($vars, $html) {
         }
 ####################################### Database #########################################        
     }else if ($vars['type'] == 'database' && $vars['table']) {        
-        //check if tabel exist
-        echo (  $lezaz->db->create_table(''));
-        $alter=0;
-if( ! $lezaz->db->tableExists($vars['table'])) {
-     $sql = "CREATE table ".$vars['table']."(
-            id INT( 11 ) AUTO_INCREMENT PRIMARY KEY,";
-     $sql_end =');';
-}
-       foreach ($declear as $attrs) {
+ 
+         foreach ($declear as $attrs) {
+             if($attrs['field-type']){
+                 $field[$attrs['id']]=$attrs['field-type'];
+             }
             if ($attrs['type'] == 'submit' && $attrs['use'] == $vars['id']) {
+                $attr_id=$attrs['id'];
                 $php_code_top = '<?php
-              if($lezaz->post("' . $attrs['id'] . '")){
+if ($lezaz->get("UPDATE_' . $attrs['id'] . '")) {
+    $memp = $lezaz->db->row("'.$vars['table'].'", " `id`=".$lezaz->get("UPDATE_submit_member"));
+    if ($memp && is_array($memp)) {  
+        foreach($memp as $k=>$v){
+        $lezaz->set("_VAL_".$k,$v);
+        }       
+    }else{
+         $lezaz->set_msg("[Record Not Found!]","info");      
+    }         
+}                    
+
+
+        if ($lezaz->post("' . $attrs['id'] . '")) {
+            $data_insert="";
+            $cond = "";
+            $ty = 0;
+            $data_insert = "";
+            if ($lezaz->post("EDIT_' . $attrs['id'] . '")) {
+                $cond = "id = " . $lezaz->post("EDIT_' . $attrs['id'] . '");
+                $ty = 1;
+            }
+                  
+
+
                   ';
 
             $php_code_bottom = ' 
- $lezaz->set_msg("[save & update is done]","success");                
- $lezaz->go();                
-}
-                   ?>';
+if(!$lezaz->msg() && $lezaz->db->save("'.$vars['table'].'",$data_insert,$cond,$ty)){                
+ $lezaz->set_msg("[save & update is done]","success");            
+ $lezaz->go();          
+}else{
+';
             }else if($attrs['use'] == $vars['id']){
-      $field = $lezaz->db->query("SHOW COLUMNS FROM ".$vars['table']." LIKE '".$attrs['id']."'") ;    
-      if(!$field['Field']) $sqladd.="ALTER TABLE `".$vars['table']."` ADD `".$attrs['id']."` LONGTEXT NOT NULL ;\n";
-            }   
-       }
-        
+               $php_code_bottom_x.= '$lezaz->set("_VAL_' . $attrs['id'] . '", $_POST["' . $attrs['id'] . '"]);';
+                if($attrs['type']=='image' || $attrs['type']=='images' ){
+                              $php_inside.=' 
+                                  if($_FILES["' . $attrs['id'] . '"]["name"]){
+                        $x= $lezaz->file->save($_FILES["' . $attrs['id'] . '"], "' . $attrs['save'] . '", "img");
+                        $lezaz->setsetting("' . $attrs['id'] . '",$x);  
+                            }
+                          ';  
+                }else{
+                 $php_inside.='
+                     $data_insert["' . $attrs['id'] . '"] = $lezaz->post("' . $attrs['id'] . '");
+                          ';                 
+                }
+                 
+            }
+            
+        }
+$html='<?php if ($lezaz->get("UPDATE_' . $attr_id . '")) { '
+        . ''
+        . 'echo "<input type=\"hidden\" name=\"EDIT_' . $attr_id . '\" value=\"".$lezaz->get("UPDATE_' . $attr_id . '")."\"/>";'
+        . '} ?>'.$html;        
+$lezaz->db->create_table($vars['table'],  $field);   
+
+                   $php_inside2=' <?php 
+                       
+                     '.$php_inside2.'
+                        
+                        ?>  ';  
+     
+        if($php_code_top && $php_code_bottom){
+            $php_code=$php_inside2.$php_code_top.$php_inside.$php_code_bottom.$php_code_bottom_x.'}}?>';
+        }      
         
         
         
@@ -160,7 +208,7 @@ if( ! $lezaz->db->tableExists($vars['table'])) {
 }
 
 function lezaz_input($vars, $html) {
-
+global $lezaz;
     // General code
     if (!isset($vars['type']))
         $vars['type'] = 'text';
@@ -184,6 +232,9 @@ function lezaz_input($vars, $html) {
     if (is_numeric($vars['space']))
         $vars['space'] = '<div class="space-' . $vars['space'] . '"></div>';
 
+    if($vars['validation']){  // save validation in setting file
+        $lezaz->setsetting('VALIDATION__'.$vars['id'],$vars['validation']);
+    }
 ############################## Button #############################################################################
     if ($vars['type'] == 'button' || $vars['type'] == 'submit' || $vars['type'] == 'reset') {
         if (!isset($vars['value']))
@@ -238,11 +289,11 @@ function lezaz_input($vars, $html) {
         }
         $input_html = '
                        
-			<div id="input-' . $vars['id'] . '" class="form-group<?php if($lezaz->get("_MSG_' . $vars['id'] . '")){echo " has-".$lezaz->get("_MSG_' . $vars['id'] . '");} ?>">
+			<div id="input-' . $vars['id'] . '" class="form-group<?php if($lezaz->set("_MSG_' . $vars['id'] . '")){echo " has-".$lezaz->set("_MSG_' . $vars['id'] . '");} ?>">
 				' . $label_text . '
 				<div class="col-sm-' . $vars['size'] . '">
                                    ' . $icon_span . '
-<input type="' . $vars['type'] . '" name="' . $vars['name'] . '" id="' . $vars['id'] . '" value="<?php if($lezaz->get("_VAL_' . $vars['id'] . '")){echo $lezaz->get("_VAL_' . $vars['id'] . '");}else{ echo "' . $vars['value'] . '"; } ?>" ' . $placeholder . ' class="col-sm-12" />
+<input type="' . $vars['type'] . '" name="' . $vars['name'] . '" id="' . $vars['id'] . '" value="<?php if($lezaz->set("_VAL_' . $vars['id'] . '")){echo $lezaz->set("_VAL_' . $vars['id'] . '");}else{ echo "' . $vars['value'] . '"; } ?>" ' . $placeholder . ' class="col-sm-12" />
 ' . $icon_right_html . $icon_html . $close_span . '
 					
 				</div>
@@ -289,7 +340,7 @@ function lezaz_input($vars, $html) {
             $class = '';
 
         $input_html = '
-<?php if($lezaz->get("_VAL_' . $vars['name'] . '")){ $_VAL_' . $vars['name'] . '_chk = "checked";} ?>            
+<?php if($lezaz->set("_VAL_' . $vars['name'] . '")){ $_VAL_' . $vars['name'] . '_chk = "checked";} ?>            
 <div class="checkbox col-sm-' . $vars['size'] . '">
     <label>
             <input id="' . $vars['id'] . '"  name="' . $vars['name'] . '"  value="' . $vars['value'] . '" class="' . $class . '" type="' . $vars['type'] . '" <?php echo $_VAL_' . $vars['name'] . '_chk; ?> >
@@ -321,12 +372,12 @@ function lezaz_input($vars, $html) {
             if (!$value[2])
                 $value[2] = strip_tags($option);
             $value = $value[2];
-            $options_html.="\n" . str_replace('<option', '<option <?php if($lezaz->get("_VAL_' . $vars['name'] . '")){ if($lezaz->get("_VAL_' . $vars['name'] . '")=="' . $value . '") echo "selected ";}else{if("' . $vars['value'] . '"=="' . $value . '") echo "selected ";} ?>', $option);
+            $options_html.="\n" . str_replace('<option', '<option <?php if($lezaz->set("_VAL_' . $vars['name'] . '")){ if($lezaz->set("_VAL_' . $vars['name'] . '")=="' . $value . '") echo "selected ";}else{if("' . $vars['value'] . '"=="' . $value . '") echo "selected ";} ?>', $option);
         }
 
         $input_html = '
                        
-			<div id="input-' . $vars['id'] . '" class="form-group<?php if($lezaz->get("_MSG_' . $vars['id'] . '")){echo " has-".$lezaz->get("_MSG_' . $vars['id'] . '");} ?>">
+			<div id="input-' . $vars['id'] . '" class="form-group<?php if($lezaz->set("_MSG_' . $vars['id'] . '")){echo " has-".$lezaz->set("_MSG_' . $vars['id'] . '");} ?>">
 				' . $label_text . '
 				<div class="col-sm-' . $vars['size'] . '">
                                    ' . $icon_span . '
@@ -342,7 +393,7 @@ function lezaz_input($vars, $html) {
         return $input_html;
         $input_html = '   
             
-<?php $_VAL_' . $vars['name'] . '_' . $vars['value'] . ' = "selected"; if($lezaz->get("_VAL_' . $vars['name'] . '")){ $_VAL_' . $vars['name'] . '_chk = "selected";} ?>            
+<?php $_VAL_' . $vars['name'] . '_' . $vars['value'] . ' = "selected"; if($lezaz->set("_VAL_' . $vars['name'] . '")){ $_VAL_' . $vars['name'] . '_chk = "selected";} ?>            
 //<option    
     ';
     }
@@ -356,7 +407,7 @@ function lezaz_input($vars, $html) {
         $class = $vars['type'] . 'file';
         $input_html = '
                        
-			<div id="input-' . $vars['id'] . '" class="form-group<?php if($lezaz->get("_MSG_' . $vars['id'] . '")){echo " has-".$lezaz->get("_MSG_' . $vars['id'] . '");} ?>">
+			<div id="input-' . $vars['id'] . '" class="form-group<?php if($lezaz->set("_MSG_' . $vars['id'] . '")){echo " has-".$lezaz->set("_MSG_' . $vars['id'] . '");} ?>">
 				' . $label_text . '
 				<div class="col-sm-' . $vars['size'] . '">
                                    ' . $icon_span . '
@@ -383,125 +434,3 @@ function add_str_prefix($str, $word, $defult = '') {
     return implode(' ', $a);
 }
 
-function input_SYNTAX($vars) {
-    global $syntaxcode;
-    foreach ($vars as $v => $var) {
-        $vars[$v] = $syntaxcode->Syntax($var);
-    }
-    if (!$vars[0])
-        $vars[0] = 'text';
-
-    if (!$vars[1])
-        $vars[1] = $vars[0] . rand(3000, 90000) . time();
-    if (!$vars[3])
-        $vars[3] = $vars[0];
-    if ($vars[5]) {
-        $validate = explode(';', $vars[5]);
-        foreach ($validate as $valid) {
-            $validation.='<?php validation_register("' . $vars[1] . '","' . $valid . '") ?>' . "\n";
-        }
-    }
-    if ($vars[4]) {
-        $size_input = $vars[4];
-        $size_lable = 12 - $size_input;
-    } else {
-        $size_input = 9;
-        $size_lable = 3;
-    }
-
-    if ($vars[9]) {
-        $help = '<div class="help-block col-xs-12 col-sm-reset inline">' . $vars[9] . '</div>';
-    }
-    if ($vars[8]) {  // icon
-        $icon = '<span class="input-group-addon iconleftx"><i class="ace-icon fa ' . $vars[8] . '"></i></span>';
-    }
-    switch ($vars[0]) {
-        case 'text':
-        case 'password':
-            $input_code = '
-			<div id="input-' . $vars[1] . '" class="form-group<?php if(global_var("_SUBMIT_' . $vars[1] . '")){echo " has-error";} ?>">
-				<label class="col-sm-2 control-label no-padding-right" for="' . $vars[1] . '"> ' . $vars[3] . ' </label>
-				
-				<div class="col-sm-9">
-                                   ' . $icon . '
-					<input type="' . $vars[0] . '" name="' . $vars[1] . '" id="' . $vars[1] . '" value="<?php if(global_var("_VAL_' . $vars[1] . '")){echo global_var("_VAL_' . $vars[1] . '");}else{ echo "' . $vars[2] . '"; } ?>" placeholder="' . $vars[6] . '" class="col-xs-' . $size_input . '" />
-                                      &nbsp; &nbsp;  ' . $help . '
-					
-				</div>
-			</div>
-                        <div class="space-4"></div>
-            
-             ';
-            break;
-        case 'textarea':
-            $input_code = '
-			<div id="input-' . $vars[1] . '" class="form-group<?php if(global_var("_SUBMIT_' . $vars[1] . '")){echo " has-error";} ?>">
-				<label class="col-sm-2 control-label no-padding-right" for="' . $vars[1] . '"> ' . $vars[3] . ' </label>
-				
-				<div class="col-sm-9">
-                                   ' . $icon . '
-					<textarea name="' . $vars[1] . '" id="' . $vars[1] . '" data-placeholder="' . $vars[6] . '" class="col-xs-' . $size_input . '"  ><?php if(global_var("_VAL_' . $vars[1] . '")){echo global_var("_VAL_' . $vars[1] . '");}else{ echo "' . $vars[2] . '"; } ?></textarea>
-                                      &nbsp; &nbsp;  ' . $help . '
-					
-				</div>
-			</div>
-                        <div class="space-4"></div>
-            
-             ';
-            break;
-        case 'hidden':
-            $input_code = '<input type="' . $vars[0] . '" name="' . $vars[1] . '" id="' . $vars[1] . '" value="<?php if(global_var("_VAL_' . $vars[1] . '")){echo global_var("_VAL_' . $vars[1] . '");}else{ echo "' . $vars[2] . '"; } ?>" placeholder="' . $vars[6] . '" class="col-xs-' . $size_input . '" />';
-            break;
-
-        case 'date':
-            $input_code = '
-<div id="input-' . $vars[1] . '" class="form-group<?php if(global_var("_SUBMIT_' . $vars[1] . '")){echo " has-error";} ?>">
-<label class="col-sm-2 control-label no-padding-right" for="' . $vars[1] . '">' . $vars[3] . '</label>
-    <div class="col-sm-9">               
-        <div class="input-group">
-            <input data-date-format="' . $vars[6] . '" class="form-control date-picker" type="text" name="' . $vars[1] . '" id="' . $vars[1] . '" value="<?php if(global_var("_VAL_' . $vars[1] . '")){echo global_var("_VAL_' . $vars[1] . '");}else{ echo "' . $vars[2] . '"; } ?>" />                    
-            <span class="input-group-addon">
-                <i class="fa fa-calendar bigger-110"></i>
-            </span>
-        </div>
-    </div>
-</div>
-<div class="space-4"></div>
-';
-            break;
-
-        case 'image':
-        case 'file':
-            if ($vars[2] == 'multiple') {
-                $multiple = 'multiple="multiple"';
-                $namearray = '[]';
-            }
-            $input_code = '     
-            <div class="form-group">
-                <label class="col-sm-2 control-label" for="' . $vars[1] . '">' . $vars[3] . '</label>
-                <div  class="col-sm-9" > <div  class="col-sm-' . $size_input . '" >
-                    <input ' . $multiple . ' name="' . $vars[1] . $namearray . '" class="' . $vars[1] . 'file" type="file" id="' . $vars[1] . '" />
-                </div> </div>   
-            </div> 
-            
-            <div class="space-4"></div>
-';
-            break;
-
-        case 'button':
-        case 'submit':
-        case 'reset':
-            $input_code = ' 
-            <button type="' . $vars[0] . '" name="' . $vars[1] . '" id="' . $vars[1] . '" value="' . $vars[2] . '" class="btn ' . $vars[3] . '">
-                <i class="ace-icon fa ' . $vars[4] . ' bigger-110"></i>
-                ' . $vars[2] . '
-            </button>            
-             ';
-
-            break;
-    }
-
-
-
-    return $validation . $input_code;
-}

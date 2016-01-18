@@ -92,11 +92,13 @@ $html
 //page counter for mem_sql function *you can use it in other way
 function page_counter($page, $total_pages, $limit, $path, $pn = '', $style = array()) {
     if (!$style[3])
-        $style[3] = 'current ui-state-default ui-state-highlight';
+        $style[3] = 'active';
     if (!$style[4])
         $style[4] = 'pagination';
     if (!$style[2])
-        $style[2] = 'ui-state-default';
+        $style[2] = 'disabled';
+   if (!$style[1])
+        $style[1] = '';
     $pattern = '/page_' . $pn . '=(.*?)[\&]/';
     $path = preg_replace($pattern, "", $path);
 
@@ -118,64 +120,64 @@ function page_counter($page, $total_pages, $limit, $path, $pn = '', $style = arr
 
         $pagination = "";
         if ($lastpage > 1) {
-            $pagination .= "<div class='$style[4]'>";
+            $pagination .= "<ul class='$style[4]'>";
             if ($page > 1)
-                $pagination.= "<a class='$style[2]' href='" . $path . "page_$pn=$prev'> &#171; </a>";
+                $pagination.= "<li class='$style[1]'><a href='" . $path . "page_$pn=$prev'> &#171; </a></li>";
             else
-                $pagination.= "<span class='disabled'> &#171; </span>";
+                $pagination.= "<li class='$style[2]'><a href='javascript:'> &#171; </a></li>";
 
             if ($lastpage < 7 + ($adjacents * 2)) {
                 for ($counter = 1; $counter <= $lastpage; $counter++) {
                     if ($counter == $page)
-                        $pagination.= "<a href='" . $path . "page_$pn=$counter' class='$style[3]'>$counter</a>";
+                        $pagination.= "<li class='$style[3]'><a href='" . $path . "page_$pn=$counter' >$counter</a></li>";
                     else
-                        $pagination.= "<a class='$style[2]' href='" . $path . "page_$pn=$counter'>$counter</a>";
+                        $pagination.= "<li class='$style[1]'><a href='" . $path . "page_$pn=$counter'>$counter</a></li>";
                 }
             }
             elseif ($lastpage > 5 + ($adjacents * 2)) {
                 if ($page < 1 + ($adjacents * 2)) {
                     for ($counter = 1; $counter < 4 + ($adjacents * 2); $counter++) {
                         if ($counter == $page)
-                            $pagination.= "<a href='" . $path . "page_$pn=$counter' class='$style[3]'>$counter</a>";
+                            $pagination.= "<li class='$style[3]'><a href='" . $path . "page_$pn=$counter' >$counter</a></li>";
                         else
-                            $pagination.= "<a class='$style[2]' href='" . $path . "page_$pn=$counter'>$counter</a>";
+                            $pagination.= "<li class='$style[1]'><a href='" . $path . "page_$pn=$counter'>$counter</a></li>";
                     }
-                    $pagination.= "...";
-                    $pagination.= "<a class='$style[2]' href='" . $path . "page_$pn=$lpm1'>$lpm1</a>";
-                    $pagination.= "<a class='$style[2]' href='" . $path . "page_$pn=$lastpage'>$lastpage</a>";
+                    $pagination.= "<li class='$style[2]'><a href='javascript:'> ... </a></li>";
+                    $pagination.= "<li class='$style[1]'><a href='" . $path . "page_$pn=$lpm1'>$lpm1</a>";
+                    $pagination.= "<li class='$style[1]'><a href='" . $path . "page_$pn=$lastpage'>$lastpage</a>";
                 }
                 elseif ($lastpage - ($adjacents * 2) > $page && $page > ($adjacents * 2)) {
-                    $pagination.= "<a class='$style[2]' href='" . $path . "page_$pn=1'>1</a>";
-                    $pagination.= "<a class='$style[2]' href='" . $path . "page_$pn=2'>2</a>";
-                    $pagination.= "...";
+                    $pagination.= "<li class='$style[1]'><a href='" . $path . "page_$pn=1'>1</a>";
+                    $pagination.= "<li class='$style[1]'><a href='" . $path . "page_$pn=2'>2</a>";
+                    $pagination.= "<li class='$style[2]'><a href='javascript:'> ... </a></li>";
                     for ($counter = $page - $adjacents; $counter <= $page + $adjacents; $counter++) {
                         if ($counter == $page)
-                            $pagination.= "<a href='" . $path . "page_$pn=$counter' class='$style[3]'>$counter</a>";
+                            $pagination.= "<li class='$style[3]'><a href='" . $path . "page_$pn=$counter'>$counter</a></li>";
                         else
-                            $pagination.= "<a class='$style[2]' href='" . $path . "page_$pn=$counter'>$counter</a>";
+                            $pagination.= "<li class='$style[1]'><a href='" . $path . "page_$pn=$counter'>$counter</a></li>";
                     }
-                    $pagination.= "..";
-                    $pagination.= "<a class='$style[2]' href='" . $path . "page_$pn=$lpm1'>$lpm1</a>";
-                    $pagination.= "<a class='$style[2]' href='" . $path . "page=$lastpage'>$lastpage</a>";
+                    $pagination.= "<li class='$style[2]'><a href='javascript:'> ... </a></li>";
+                    $pagination.= "<li class='$style[1]'><a href='" . $path . "page_$pn=$lpm1'>$lpm1</a>";
+                    $pagination.= "<li class='$style[1]'><a href='" . $path . "page=$lastpage'>$lastpage</a>";
                 }
                 else {
-                    $pagination.= "<a class='$style[2]' href='" . $path . "page_$pn=1'>1</a>";
-                    $pagination.= "<a class='$style[2]' href='" . $path . "page_$pn=2'>2</a>";
-                    $pagination.= "..";
+                    $pagination.= "<li class='$style[1]'><a href='" . $path . "page_$pn=1'>1</a>";
+                    $pagination.= "<li class='$style[1]'><a href='" . $path . "page_$pn=2'>2</a>";
+                    $pagination.= "<li class='$style[2]'><a href='javascript:'> ... </a></li>";
                     for ($counter = $lastpage - (2 + ($adjacents * 2)); $counter <= $lastpage; $counter++) {
                         if ($counter == $page)
-                            $pagination.= "<a href='" . $path . "page_$pn=$counter' class='$style[3]'>$counter</a>";
+                            $pagination.= "<li class='$style[3]'><a href='" . $path . "page_$pn=$counter'>$counter</a></li>";
                         else
-                            $pagination.= "<a class='$style[2]' href='" . $path . "page_$pn=$counter'>$counter</a>";
+                            $pagination.= "<li class='$style[1]'><a href='" . $path . "page_$pn=$counter'>$counter</a></li>";
                     }
                 }
             }
 
             if ($page < $counter - 1)
-                $pagination.= "<a class='$style[2]' href='" . $path . "page_$pn=$next'> &#187; </a>";
+                $pagination.= "<li class='$style[1]'><a href='" . $path . "page_$pn=$next'> &#187; </a></li>";
             else
-                $pagination.= "<span class='disabled'> &#187; </span>";
-            $pagination.= "</div>\n";
+                $pagination.= "<li class='$style[2]'><a href='javascript:'> &#187; </a></li>";
+            $pagination.= "</ul>\n";
         }
         return $pagination;
     }

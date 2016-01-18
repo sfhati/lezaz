@@ -1,5 +1,5 @@
 <html>
-hi man your variable <b>my_var</b> value is: lezaz:get(my_var)!
+hi man your variable <b>my_var</b> value is: lezaz:set(my_var)!
 <br><br><hr>
 
 lezaz:msg()

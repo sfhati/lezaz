@@ -3,6 +3,8 @@
 if (!defined('YOUCANINCLUDE'))
     exit('No direct script access allowed');
 
+
+
 $lezaz->router('/admin/logout', function() use ($lezaz){
 $_SESSION['member_permission'] = 'no';
     session_unset();

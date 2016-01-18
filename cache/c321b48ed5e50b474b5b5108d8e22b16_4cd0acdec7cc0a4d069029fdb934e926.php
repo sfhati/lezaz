@@ -36,7 +36,7 @@
 						<!-- /section:settings.box -->
 
                                                 
-   <?php  if ($lezaz->get( "useajax" )) { 
+   <?php  if ($lezaz->set( "useajax" )) { 
 
 $lezaz_="0";
  ?>      
@@ -52,7 +52,7 @@ $lezaz_="0";
 								<!-- PAGE CONTENT BEGINS -->
 
    <?php 
-echo $lezaz->lezaz->include_tpl('{template}admin/content/'.$lezaz->get( "noajaxpage" ).'') ;
+echo $lezaz->lezaz->include_tpl('{template}admin/content/'.$lezaz->set( "noajaxpage" ).'') ;
      
  ?>
 

@@ -59,6 +59,7 @@ class __file {
     }
 
     function write($file, $content) {
+        if(!$file) return false;
         @unlink($file);
         $fp = fopen($file, 'w');
         if (flock($fp, LOCK_EX | LOCK_NB)) {

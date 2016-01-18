@@ -86,7 +86,18 @@ class __db {
     }
 
     private function insert($table, $data) {
-        $this->con->exec("INSERT INTO " . $table . " SET $data;");
+        global $lezaz;
+        try {
+            $this->con->exec("INSERT INTO " . $table . " SET $data;");
+        } catch (PDOException $e) {
+            if (strpos($e->getMessage(), 'Duplicate entry')) {
+                $lezaz->set_msg('[Duplicate entry]', 'danger');
+                return false;
+            } else {
+                $lezaz->set_msg($e->getMessage(), 'danger');
+                return false;
+            }
+        }
         return $this->con->lastInsertId();
     }
 
@@ -102,7 +113,13 @@ class __db {
      * @brief execute, this method is special for execute store procedures.
      * @param string $sp_query is the sp to execute. */
     public function execute($sp_query) {
-        return $this->con->exec($sp_query);
+        global $lezaz;
+        try {
+            $return = $this->con->exec($sp_query);
+        } catch (PDOException $e) {
+            $lezaz->set_msg($e->getMessage(), 'danger');
+            return false;
+        }
     }
 
     /**
@@ -128,7 +145,7 @@ class __db {
         return $this->query($sql_statement);
     }
 
-     function tableExists($table) {
+    function tableExists($table) {
 
         // Try a select statement against the table
         // Run it in try/catch in case PDO is in ERRMODE_EXCEPTION.
@@ -144,80 +161,80 @@ class __db {
     }
 
     function create_table($tbl_name, $fields = array()) {
-        
+
         //List of types mysql
         //http://help.scibit.com/mascon/masconMySQL_Field_Types.html
-        $LISTOFTYPE['TINYINT']='4';
-        $LISTOFTYPE['SMALLINT']='6';
-        $LISTOFTYPE['MEDIUMINT']='9';
-        $LISTOFTYPE['INT']='11';
-        $LISTOFTYPE['INTEGER']='11';
-        $LISTOFTYPE['BIGINT']='20';
-        $LISTOFTYPE['FLOAT']='';
-        $LISTOFTYPE['DOUBLE']='';
-        $LISTOFTYPE['REAL']='';
-        $LISTOFTYPE['BIT']='1';
-        $LISTOFTYPE['BOOLEAN']='';
-        $LISTOFTYPE['PRECISION']='255';
-        $LISTOFTYPE['DECIMAL']='10';
-        $LISTOFTYPE['NUMERIC']='255';
-        $LISTOFTYPE['DATE']='';
-        $LISTOFTYPE['DATETIME']='';
-        $LISTOFTYPE['TIMESTAMP']='';
-        $LISTOFTYPE['TIME']='';
-        $LISTOFTYPE['YEAR']='';
-        $LISTOFTYPE['CHAR']='10';
-        $LISTOFTYPE['TINYBLOB']='';
-        $LISTOFTYPE['TINYTEXT']='';
-        $LISTOFTYPE['BLOB']='';
-        $LISTOFTYPE['TEXT']='';
-        $LISTOFTYPE['MEDIUMBLOB']='';
-        $LISTOFTYPE['MEDIUMTEXT']='';
-        $LISTOFTYPE['LONGBLOB']='';
-        $LISTOFTYPE['LONGTEXT']='';
-        $LISTOFTYPE['VARCHAR']='250';
+        $LISTOFTYPE['TINYINT'] = '4';
+        $LISTOFTYPE['SMALLINT'] = '6';
+        $LISTOFTYPE['MEDIUMINT'] = '9';
+        $LISTOFTYPE['INT'] = '11';
+        $LISTOFTYPE['INTEGER'] = '11';
+        $LISTOFTYPE['BIGINT'] = '20';
+        $LISTOFTYPE['FLOAT'] = '';
+        $LISTOFTYPE['DOUBLE'] = '';
+        $LISTOFTYPE['REAL'] = '';
+        $LISTOFTYPE['BIT'] = '1';
+        $LISTOFTYPE['BOOLEAN'] = '';
+        $LISTOFTYPE['PRECISION'] = '255';
+        $LISTOFTYPE['DECIMAL'] = '10';
+        $LISTOFTYPE['NUMERIC'] = '255';
+        $LISTOFTYPE['DATE'] = '';
+        $LISTOFTYPE['DATETIME'] = '';
+        $LISTOFTYPE['TIMESTAMP'] = '';
+        $LISTOFTYPE['TIME'] = '';
+        $LISTOFTYPE['YEAR'] = '';
+        $LISTOFTYPE['CHAR'] = '10';
+        $LISTOFTYPE['TINYBLOB'] = '';
+        $LISTOFTYPE['TINYTEXT'] = '';
+        $LISTOFTYPE['BLOB'] = '';
+        $LISTOFTYPE['TEXT'] = '';
+        $LISTOFTYPE['MEDIUMBLOB'] = '';
+        $LISTOFTYPE['MEDIUMTEXT'] = '';
+        $LISTOFTYPE['LONGBLOB'] = '';
+        $LISTOFTYPE['LONGTEXT'] = '';
+        $LISTOFTYPE['VARCHAR'] = '250';
         //remove spaces and check if same!
         //ALTER TABLE `bassam` CHANGE `hi_day` `hi_day` DATETIME NULL DEFAULT CURRENT_TIMESTAMP;
-        //$fields['name']='VARCHAR;250;no';
+        //$fields['name']='VARCHAR;250;no'; ALTER TABLE members ADD UNIQUE (username);
+
         global $lezaz;
-        $idcolum=0;
+        $idcolum = 0;
         if ($this->tableExists($tbl_name)) { //table exist
             //ALTER TABLE tablename MODIFY columnname INTEGER;
-           $oldfields= $this->query("SHOW COLUMNS FROM $tbl_name", '1');
-           
+            $oldfields = $this->query("SHOW COLUMNS FROM $tbl_name", '1');
+
             foreach ($oldfields as $field) {
-                  if($k=='id'){
-                    $idcolum=1;
-                  }else{
-                $arr_fields[$field['Field']]=$field['Type'];               
-                  }
-            }            
-           foreach ($fields as $k => $v) {
-               
-                if($arr_fields[$k]){ //field found then change and do nothing
+                if ($k == 'id') {
+                    $idcolum = 1;
+                } else {
+                    $arr_fields[$field['Field']] = $field['Type'];
+                }
+            }
+            foreach ($fields as $k => $v) {
+
+                if ($arr_fields[$k]) { //field found then change and do nothing
                     $this->execute("ALTER TABLE $tbl_name MODIFY $k $v;");
-                    unset($arr_fields[$k]);                    
-                }else{ //fields not found then add it                    
+                    unset($arr_fields[$k]);
+                } else { //fields not found then add it                    
                     $this->execute("ALTER TABLE $tbl_name ADD $k $v;");
-                } 
-            }
-            
-            foreach ($arr_fields as $k => $v) {              
-                 //field must drop
-                 $this->execute("ALTER TABLE $tbl_name DROP COLUMN $k;");                
-            }
-            if(!$idcolum){ // add colum id if not exist
-                $this->execute("ALTER TABLE $tbl_name ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT FIRST,  ADD PRIMARY KEY (id);");
+                }
             }
 
-        } else {            
+            foreach ($arr_fields as $k => $v) {
+                //field must drop
+                $this->execute("ALTER TABLE $tbl_name DROP COLUMN $k;");
+            }
+            if (!$idcolum) { // add colum id if not exist
+                $this->execute("ALTER TABLE $tbl_name ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT FIRST,  ADD PRIMARY KEY (id);");
+            }
+        } else {
             try {
                 $sql = "CREATE table $tbl_name(
                         id INT( 11 ) AUTO_INCREMENT PRIMARY KEY,";
-                foreach ($fields as $k => $v) { 
-                   $sql.="$k $v,";
+                foreach ($fields as $k => $v) {
+                    $sql.="$k $v,";
                 }
-                $sql= rtrim($sql,',').");";
+                $sql = rtrim($sql, ',') . ");";
                 $this->con->exec($sql);
             } catch (PDOException $e) {
                 $lezaz->set_msg($e->getMessage(), 'warinig');
@@ -239,7 +256,7 @@ class __db {
             return '';
         if (!$cacheTime)
             $cacheTime = SQL_CACHE;
-        if ($cacheTime != 0 && $cacheTime!=1) {
+        if ($cacheTime != 0 && $cacheTime != 1) {
             $this->clear_cache();
             // $query: mysql query word  $cacheTime: seconds
             $cachefile = CACHE_PATH . 'cacheSQLfile_' . $cacheTime . '_' . md5($query);
@@ -302,8 +319,10 @@ class __db {
         if (is_numeric($condetion))
             $condetion = 'id=' . $condetion;
         $sql = $this->query("select $row from `$table` where $condetion limit 1 ");
+        if (!$this->num_row("select $row from `$table` where $condetion limit 1 "))
+            return false;
         $sql = &$sql[1];
-        if ($row != '*' && !strpos($row,','))
+        if ($row != '*' && !strpos($row, ','))
             return $sql[$row];
         return $sql;
     }
