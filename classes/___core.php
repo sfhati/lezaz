@@ -230,7 +230,8 @@ Class __CORE {
             }
         }        
         if ($validate) {
-            if ($this->validaition($validate, $_GET[$k])) {
+            $option=$this->set('VALIDATION__OPTION__'.$k);            
+            if ($this->validaition($validate, $_POST[$k],$option)) {
                 return $_GET[$k];
             }
             $this->set("_MSG_".$k,'error');            
@@ -249,7 +250,8 @@ Class __CORE {
             }
         }
         if ($validate) {
-            if ($this->validaition($validate, $_POST[$k])) {
+            $option=$this->set('VALIDATION__OPTION__'.$k);            
+            if ($this->validaition($validate, $_POST[$k],$option)) {
                 return $_POST[$k];
             }
             $this->set("_MSG_".$k,'error');
@@ -394,7 +396,7 @@ Class __CORE {
         return $m;
     }
 
-    public function validaition($syntax, $str) {
+    public function validaition($syntax, $str, $options='') {
         global $lezaz;
         foreach (explode(';', $syntax) as $valid) {
             $varchek = explode(':', $valid);

@@ -38,7 +38,7 @@ if ($lezaz->get("UPDATE_submit_member")) {
             $data_insert = "";
             if ($lezaz->post("EDIT_submit_member")) {
                 $cond = "id = " . $lezaz->post("EDIT_submit_member");
-                $ty = 1;
+                $ty = 1;                
             }
                   
 
@@ -48,11 +48,16 @@ if ($lezaz->get("UPDATE_submit_member")) {
                           
                      $data_insert["userpassword"] = $lezaz->post("userpassword");
                            
+                                  if($_FILES["icon"]["name"]){
+                        $x= $lezaz->file->save($_FILES["icon"], "member", "img");
+                            $data_insert["icon"] = "member/".$x;
+                            }
+                           
 if(!$lezaz->msg() && $lezaz->db->save("members",$data_insert,$cond,$ty)){                
  $lezaz->set_msg("[save & update is done]","success");            
  $lezaz->go();          
 }else{
-$lezaz->set("_VAL_username", $_POST["username"]);$lezaz->set("_VAL_userpassword", $_POST["userpassword"]);}}?>  
+$lezaz->set("_VAL_username", $_POST["username"]);$lezaz->set("_VAL_userpassword", $_POST["userpassword"]);$lezaz->set("_VAL_icon", $_POST["icon"]);}}?>  
         <form id="member_form" class="form-horizontal" role="form" method="post"   enctype="multipart/form-data" >
    <?php if ($lezaz->get("UPDATE_submit_member")) { echo "<input type=\"hidden\" name=\"EDIT_submit_member\" value=\"".$lezaz->get("UPDATE_submit_member")."\"/>";} ?>  
             
@@ -87,6 +92,22 @@ $lezaz->set("_VAL_username", $_POST["username"]);$lezaz->set("_VAL_userpassword"
                          
             
               
+            
+                       
+			<div id="input-icon" class="form-group<?php if($lezaz->set("_MSG_icon")){echo " has-".$lezaz->set("_MSG_icon");} ?>">
+				 
+       <label class="col-sm-2 control-label no-padding-right" for="icon"> [site_icon] </label> 
+    
+				<div class="col-sm-10">
+                                   
+<input type="file" name="icon" id="icon"  data-no_file="bassam" class="col-sm-12 imagefile" />
+
+					
+				</div>
+			</div>
+                        <div class="space-10"></div> 
+            
+             <?php if($lezaz->set("_VAL_icon")){ echo $lezaz->set("_VAL_icon");} ?> 
 
             <div class="clearfix form-actions">   
                 <div class="col-md-offset-3 col-md-9">
@@ -96,19 +117,17 @@ $lezaz->set("_VAL_username", $_POST["username"]);$lezaz->set("_VAL_userpassword"
  </button>        
             
                      
-<button type="reset"   name="reset_31465"  value="[reset]"  id="reset_31465" class="btn  btn-grey btn-sm   "> 
+<button type="reset"   name="reset_3558"  value="[reset]"  id="reset_3558" class="btn  btn-grey btn-sm   "> 
     <i class="ace-icon fa fa-undo"></i>  [reset] 
  </button>        
                                                                          
                 </div>
-            </div>
+            </div> 
               
         </form>
                 
 <?php echo $lezaz->msg( "" ); ?>
  
-
-
 
         <!-- PAGE CONTENT ENDS -->
     </div><!-- /.col -->

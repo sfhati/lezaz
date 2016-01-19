@@ -1,5 +1,8 @@
 <?php
 
+          if ($lezaz->post("EDIT_submit_member")) {
+$lezaz->set("VALIDATION__OPTION__username"," and id != '".$lezaz->post("EDIT_submit_member")."'");
+          }
 $lezaz->set('ajxURL', '');
 $lezaz->set('useajax', '0');
 $lezaz->set('skin', 'no-skin');

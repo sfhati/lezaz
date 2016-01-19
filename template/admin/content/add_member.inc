@@ -17,22 +17,17 @@
         <lezaz:form id='member_form' type='database' table="members" >  
             <lezaz:input use="member_form"  type='text' id="username" label="[user name]" field-type="VARCHAR(250) NOT NULL" validation="r;m:8;x:15;ti:members,username" placeholder="Enter user name" /> 
             <lezaz:input use="member_form"  type='password' id="userpassword" label="[password]"  field-type="VARCHAR(250) NOT NULL" validation="r;m:8;x:15" placeholder="Enter password" /> 
+            <lezaz:input use="member_form"  type="image" id="icon" save="member" label="[site_icon]" field-type="VARCHAR(250) NOT NULL" size-label='2' size='10'  space='10' />
 
             <div class="clearfix form-actions">   
                 <div class="col-md-offset-3 col-md-9">
                     <lezaz:input id="submit_member" use="member_form"  type='submit' value="yes" label='[save]' icon='fa-check' color='info'/>
                     <lezaz:input type='reset' label='[reset]' icon='fa-undo' />                                                             
                 </div>
-            </div>
+            </div> 
         </lezaz:form>            
 lezaz:msg()
  
-
-<lezaz:table id="table_name">
-    <lezaz:field name="row1"  length="15" option="not null" unique="true" default="bassam"  comment="this is comment!"/>
-    <lezaz:field name="bassam" type="int" length="6" default="10"  comment="this is my new comment!"/>
-    <lezaz:field name="row3"  type="longtext"/>    
-</lezaz:table>
 
         <!-- PAGE CONTENT ENDS -->
     </div><!-- /.col -->

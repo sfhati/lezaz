@@ -147,7 +147,7 @@ if ($lezaz->get("UPDATE_' . $attrs['id'] . '")) {
             $data_insert = "";
             if ($lezaz->post("EDIT_' . $attrs['id'] . '")) {
                 $cond = "id = " . $lezaz->post("EDIT_' . $attrs['id'] . '");
-                $ty = 1;
+                $ty = 1;                
             }
                   
 
@@ -166,7 +166,7 @@ if(!$lezaz->msg() && $lezaz->db->save("'.$vars['table'].'",$data_insert,$cond,$t
                               $php_inside.=' 
                                   if($_FILES["' . $attrs['id'] . '"]["name"]){
                         $x= $lezaz->file->save($_FILES["' . $attrs['id'] . '"], "' . $attrs['save'] . '", "img");
-                        $lezaz->setsetting("' . $attrs['id'] . '",$x);  
+                            $data_insert["' . $attrs['id'] . '"] = "' . $attrs['save'] . '/".$x;
                             }
                           ';  
                 }else{
@@ -418,7 +418,10 @@ global $lezaz;
 			</div>
                         ' . $vars['space'] . ' 
             
-             ';
+          ';  
+        //TODO: show list of image of files when edit ,so u can delete it 
+        //if($lezaz->set("_VAL_' . $vars['id'] . '")){ echo $lezaz->set("_VAL_' . $vars['id'] . '");}  
+        
         return $input_html;
     }
     return '';
