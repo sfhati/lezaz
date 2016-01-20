@@ -121,7 +121,6 @@
               <script src="/template/Ace1.3.3/assets/js/excanvas.js"></script>
             <![endif]-->
 
-            [include:"{template}admin/jsajax"end include]	
 
 
 
