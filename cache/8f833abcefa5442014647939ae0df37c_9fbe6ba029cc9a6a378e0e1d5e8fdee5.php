@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php global $lezaz;?><!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -8,8 +8,12 @@
 		<meta name="description" content="User login page" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-<lezaz:import dir='{template}admin/css' type='css' compress='0'/>
-<lezaz:import dir='{template}admin/js' type='js' compress='0'/>
+<?php                     
+                    echo compressCSS("{template}admin/css",0,0);
+                        ?>
+<?php                     
+                    echo compressJS("{template}admin/js",0,0);
+                        ?>
 	</head>
 
 	<body class="login-layout">
@@ -28,10 +32,10 @@
     width: 30px;
     height: 30px;
 "></i>
-									<span class="light-blue">lezaz:setting(site_name)</span>
+									<span class="light-blue"><?php echo $lezaz->setting( "site_name" ); ?></span>
 									<span class="white" id="id-text2">Application</span>
 								</h1>
-								<h4 class="red">&copy; lezaz:setting(domain)</h4>
+								<h4 class="red">&copy; <?php echo $lezaz->setting( "domain" ); ?></h4>
 							</div>
 
 							<div class="space-6"></div>
@@ -44,7 +48,7 @@
 												<i class="ace-icon fa fa-coffee green"></i>
 												[Please Enter Your Information]
 											</h4>
-lezaz:msg()
+<?php echo $lezaz->msg( "" ); ?>
 											<div class="space-6"></div>
 
                                                                                         <form method="post" >

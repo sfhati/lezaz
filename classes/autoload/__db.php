@@ -358,7 +358,7 @@ class __db {
 
     function delete($table, $condetion) {
         if (is_numeric($condetion))
-            $condetion = 'id=' . $id;
+            $condetion = 'id=' . $condetion;
         $return = $this->query("select * from $table where $condetion");
         $this->_delete($table, $condetion);
         return $return;

@@ -45,13 +45,13 @@ function lezaz_if($vars, $html) {
     $html = str_replace('<lezaz_else/>', "<?php }else{ ?>", $html);
 
     if ($vars[id]) {       
-        $return = "\n" . '$lezaz_' . $vars[id] . '="' . $vars['pass'] . "\";\n";
+        $return = "\n" . '$lezaz_' . $vars[id] . '="' . $vars['fail'] . "\";\n";
         if ($vars['print'] == true)
             $return2 = "\n" . 'echo $lezaz_' . $vars[id] . ";\n";
     }
     return "
    <?php $return if ($vars[condition]) { 
-\n" . '$lezaz_' . $vars[id] . '="' . $vars['fail'] . "\";\n ?>      
+\n" . '$lezaz_' . $vars[id] . '="' . $vars['pass'] . "\";\n ?>      
  $html    
 <?php } $return2 ?>
 ";

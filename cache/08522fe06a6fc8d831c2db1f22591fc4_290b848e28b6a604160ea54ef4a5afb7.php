@@ -1,4 +1,4 @@
-<!-- #section:basics/navbar.layout -->
+<?php global $lezaz;?><!-- #section:basics/navbar.layout -->
 <div id="navbar" class="navbar navbar-default">
     <script type="text/javascript">
         try {
@@ -42,10 +42,10 @@
                 <!-- #section:basics/navbar.user_menu -->
                 <li class="light-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" src="{{upload}}site/lezaz:setting(logo1)" alt="admin" />
+                        <img class="nav-user-photo" src="http://fw.cms/uploaded/site/<?php echo $lezaz->setting( "logo1" ); ?>" alt="admin" />
                         <span class="user-info">
                             <small>[Welcome]</small>
-lezaz:set(user)
+<?php echo $lezaz->set( "user" ); ?>
                         </span>
 
                         <i class="ace-icon fa fa-caret-down"></i>
@@ -65,21 +65,28 @@ lezaz:set(user)
                                 [Profile]
                             </a>
                         </li>
-                        <lezaz:if condition="lezaz:language()=='en'">
+                        
+   <?php  if ($lezaz->language( "" )=='en') { 
+
+$lezaz_="1";
+ ?>      
+ 
                             <li>
                                 <a href="?set_language=ar">
                                     <i class="ace-icon fa fa-globe"></i>
                                     عربي
                                 </a>
                             </li>
-                            <lezaz_else/>
+                            <?php }else{ ?>
                             <li>
                                 <a href="?set_language=en">
                                     <i class="ace-icon fa fa-globe"></i>
                                     English
                                 </a>
                             </li>
-                        </lezaz:if>
+                            
+<?php }  ?>
+
                         <li class="divider"></li>
 
                         <li>

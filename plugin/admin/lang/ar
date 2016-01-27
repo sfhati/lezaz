@@ -159,3 +159,5 @@ add career=إضافة وظيفه
 Welcome=مرحبا
 save & update is done=تم الحفظ والتعديل بنجاح
 success=نجاح
+user_type=نوع المستخدم
+Error user name or password=خطأ في إسم المستخدم أو الرقم السري !
