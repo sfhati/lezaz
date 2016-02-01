@@ -59,8 +59,8 @@ function lezaz_sql($vars, $html) {
     }
     
     
-$sql= str_replace('"',"'",$vars[sql]);
-
+//$sql= str_replace('"',"'",$vars[sql]);
+$sql= $vars[sql];
     return "<?php 
 
 \$lezaz_".$vars[id]."_x='';

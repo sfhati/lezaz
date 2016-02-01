@@ -19,7 +19,7 @@
             
            <lezaz:input use="planning_form"  type="select" id="id_department" sql="select id,department_name from department" label="[department]" field-type="int(6)" size-label='2' size='10'  space='10' ></lezaz:input>                
            <lezaz:input use="planning_form"  type="select" id="id_oditor" sql="select id,username from members where user_type=2" label="[oditer]" field-type="int(6)" size-label='2' size='10'  space='10' ></lezaz:input>                
-           <lezaz:input use="planning_form"  type="select" id="id_objective" sql="select id,objective from objective" label="[objective]" field-type="int(6)" size-label='2' size='10'  space='10' multiple="multiple"></lezaz:input>                
+           <lezaz:input use="planning_form"  type="select" id="id_objective" sql="select id,objective from objective" label="[objective]" field-type="VARCHAR(250) NOT NULL" size-label='2' size='10'  space='10' multiple="multiple"></lezaz:input>                
             
             <lezaz:input use="planning_form"  type='text' id="note" label="[note]" field-type="longtext" validation="r" placeholder="note here" size-label='2' size='10'  space='10'/> 
             <lezaz:input use="planning_form"  type="image" id="icon" save="planning" label="[site_icon]" field-type="VARCHAR(250) NOT NULL"  size-label='2' size='10'  space='10'/>

@@ -9,10 +9,25 @@ $lezaz->listen('insert.planning', function($id, $data) use ($lezaz) {
     foreach ($data[id_objective] as $k => $v) {
         $obj.="$k=>$v";
     }
-    //insert alert 
-    //insert msg
+    $description = 'plan check list oditor in' . $data[date];
+    $url = '/615_2/?plan=' . $id;
+// alert notification
+alert($description,1,$url,$data[date],$data['id_oditor']);    
+alert($description,1,$url,$data[date],$_SESSION['member_information'][id]);    
+// alert msg
+alert($description,2,$url,date('d-m-Y'),$data['id_oditor']);    
+alert($description,2,$url,date('d-m-Y'),$_SESSION['member_information'][id]);    
+//send to all departmen user!
+$rows = $lezaz->db->query("select * from members where sub_type = '$data[id_department]'");
+         if (is_array($rows))
+        foreach ($rows as $row) { 
+             alert($description,1,$url,$data[date],$row[id]);    
+             alert($description,2,$url,date('d-m-Y'),$row[id]);    
+        }
     //update objective
-    $lezaz->set_msg("planning $id insert this data <br>" . $obj, 'info');
+$data_insertox1['id_objective']=  implode(',', $data['id_objective']);
+$lezaz->db->save('planning', $data_insertox1,'id='.$id,1);   
+    
 });
 
 

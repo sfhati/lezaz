@@ -40,21 +40,23 @@
     <lezaz:field name="related" type="int" length="6" default="0" comment="related with hazar_level3 table"/>
 </lezxz:table>
                 
-<lezxz:table id="alert">
+<lezaxz:table id="alert">
     <lezaz:field name="description" type="varchar" length="250" option="not null" comment="notefication comment"/>
     <lezaz:field name="type" type="int" length="6" default="0" comment="1 alert , 2 date , 3 other thing"/>
+    <lezaz:field name="url" type="varchar" length="250"  option="not null"/>
     <lezaz:field name="status" type="int" length="6" default="0" comment="1 mean done and see"/>
     <lezaz:field name="user" type="int" length="6" default="0" comment="member id"/>
-</lezxz:table>
+    <lezaz:field name="date" type="varchar" length="20" />
+</lezaxz:table>
 
-<lezaz:table id="check_list_oditer">
+<lezaxz:table id="check_list_oditer">
     <lezaz:field name="id_user" type="int" length="6" default="0" comment="member id"/>
     <lezaz:field name="id_plan" type="int" length="6" default="0"/>
     <lezaz:field name="id_obj" type="int" length="6" default="0"/>
     <lezaz:field name="id_list" type="int" length="6" default="0"/>
     <lezaz:field name="status" type="int" length="1" default="0" comment="1-0"/>
     <lezaz:field name="action" type="longtext" comment="corrective action"/>      
-</lezaz:table>
+</lezaxz:table>
                 
 lezaz:msg() 
 			

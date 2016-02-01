@@ -26,7 +26,7 @@
 
             in : lezaz#plan_sql[date] <br>
             <h4>Objective:</h4>
-            <lezaz:sql id='objective_sql' sql="Select * From objective where id=lezaz#plan_sql[id_objective]" limit="1000">  
+            <lezaz:sql id='objective_sql' sql="Select * From objective where id like '%lezaz#plan_sql[id_objective],%' or id like '%,lezaz#plan_sql[id_objective]%'" limit="1000">  
                 
                 <h5>lezaz#objective_sql[objective] </h5> <br>
                 <lezaz:sql id='list_sql' sql="Select * From check_list where id_objective=lezaz#plan_sql[id_objective]" limit="1000">  

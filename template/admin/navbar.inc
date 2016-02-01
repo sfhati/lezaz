@@ -40,34 +40,36 @@
         <div class="navbar-buttons navbar-header [style-pullar]" role="navigation">
             <ul class="nav ace-nav">
 
+<lezaz:sql id='notificationx_sql' sql="Select * From alert where status=0 and type=1 and user=$_SESSION[USER_ID] and date='{#lezaz~date(d-m-Y)#}' " limit="1000"></lezaz:sql>
+                 
 
                 <li class="purple">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <i class="ace-icon fa fa-bell icon-animated-bell"></i>
-                        <span class="badge badge-important">8</span>
+                        <span class="badge badge-important">lezaz#notificationx_sql_num</span>
                     </a>
 
                     <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
                         <li class="dropdown-header">
                             <i class="ace-icon fa fa-exclamation-triangle"></i>
-                            8 Notifications
+                            lezaz#notificationx_sql_num Notifications
                         </li>
-
                         <li class="dropdown-content ace-scroll" style="position: relative;"><div class="scroll-track" style="display: none;"><div class="scroll-bar"></div></div><div class="scroll-content" style="max-height: 200px;">
                                 <ul class="dropdown-menu dropdown-navbar navbar-pink">
-                                    <li>
-                                        <a href="#">
+ <lezaz:sql id='notification_sql' sql="Select * From alert where type=1 and user=$_SESSION[USER_ID] and date='{#lezaz~date(d-m-Y)#}' ORDER BY id DESC" limit="1000">  
+                                   <li>
+                                        <a href="lezaz#notification_sql[url]">
                                             <div class="clearfix">
                                                 <span class="pull-left">
                                                     <i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
-                                                    New Comments
+                                                    lezaz#notification_sql[description]
                                                 </span>
-                                                <span class="pull-right badge badge-info">+12</span>
+                                                
                                             </div>
                                         </a>
                                     </li>
 
-
+                                    </lezaz:sql>
 
                                 </ul>
                             </div></li>								
@@ -77,35 +79,36 @@
 
 
                 <li class="green">
+<lezaz:sql id='notificationx1_sql' sql="Select * From alert where status=0 and type=2 and user=$_SESSION[USER_ID] and date='{#lezaz~date(d-m-Y)#}'" limit="1000"></lezaz:sql>
+                    
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
-                        <span class="badge badge-success">5</span>
+                        <span class="badge badge-success">lezaz#notificationx1_sql_num</span>
                     </a>
 
                     <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
                         <li class="dropdown-header">
                             <i class="ace-icon fa fa-envelope-o"></i>
-                            5 Messages
+                            lezaz#notificationx1_sql_num Messages
                         </li>
 
                         <li class="dropdown-content ace-scroll" style="position: relative;"><div class="scroll-track" style="display: none;"><div class="scroll-bar"></div></div><div class="scroll-content" style="max-height: 200px;">
                                 <ul class="dropdown-menu dropdown-navbar">
-                                    <li>
-                                        <a href="#" class="clearfix">
-                                            <img src="../assets/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar">
-                                            <span class="msg-body">
-                                                <span class="msg-title">
-                                                    <span class="blue">Alex:</span>
-                                                    Ciao sociis natoque penatibus et auctor ...
+ <lezaz:sql id='notificationz_sql' sql="Select * From alert where type=2 and user=$_SESSION[USER_ID] and date='{#lezaz~date(d-m-Y)#}'  ORDER BY id DESC" limit="1000">  
+                                    
+                               <li>
+                                        <a href="lezaz#notificationz_sql[url]">
+                                            <div class="clearfix">
+                                                <span class="pull-left">
+                                                    <i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
+                                                    lezaz#notificationz_sql[description]
                                                 </span>
-
-                                                <span class="msg-time">
-                                                    <i class="ace-icon fa fa-clock-o"></i>
-                                                    <span>a moment ago</span>
-                                                </span>
-                                            </span>
+                                                
+                                            </div>
                                         </a>
                                     </li>
+
+                                    </lezaz:sql>
 
                                 </ul>
                             </div>

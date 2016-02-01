@@ -18,6 +18,7 @@ if(isset($_POST['login'])){
         if($user_information[username]==$lezaz->post('usernamex') && $user_information[userpassword]==$lezaz->post('userpasswordx') ){
             $_SESSION['member_permission'] = 'yes';
             $_SESSION['member_information'] =&$user_information;
+            $_SESSION['USER_ID']=$user_information[id];
             $lezaz->go();
         }
     }

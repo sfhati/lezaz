@@ -233,6 +233,8 @@ class __LEZAZ {
         $k = substr($t, $offset - 2, strlen($word) + 4);
         if ($k == '{{'.$word.'}}')
             $t = substr_replace($t, $code, $offset - 2, strlen($word) + 4);
+        else if ($k == '{#'.$word.'#}')
+            $t = substr_replace($t, '" . '.$code.' . "', $offset - 2, strlen($word) + 4);
         else
             $t = substr_replace($t, $code, $offset, strlen($word));
         return $this->syntax_dolar($t, $c);
@@ -256,6 +258,8 @@ class __LEZAZ {
         $k = substr($t, $offset - 2, strlen($word) + 4);
         if ($k == '{{'.$word.'}}')
             $t = substr_replace($t, $code, $offset - 2, strlen($word) + 4);
+        else if ($k == '{#'.$word.'#}')
+            $t = substr_replace($t, '" . '.$code.' . "', $offset - 2, strlen($word) + 4);
         else
             $t = substr_replace($t, $code, $offset, strlen($word));
         return $this->syntax_lezfunc($t, $c);
@@ -276,6 +280,8 @@ class __LEZAZ {
         $k = substr($t, $offset - 2, strlen($word) + 4);
         if ($k == '{{'.$word.'}}')
             $t = substr_replace($t, $code, $offset - 2, strlen($word) + 4);
+        else if ($k == '{#'.$word.'#}')
+            $t = substr_replace($t, '" . '.$code.' . "', $offset - 2, strlen($word) + 4);
         else
             $t = substr_replace($t, $code, $offset, strlen($word));
         return $this->syntax_hash($t, $c);
@@ -300,6 +306,8 @@ class __LEZAZ {
         $k = substr($t, $offset - 2, strlen($word) + 4);
         if ($k == '{{'.$word.'}}')
             $t = substr_replace($t, $code, $offset - 2, strlen($word) + 4);
+        else if ($k == '{#'.$word.'#}')
+            $t = substr_replace($t, '" . '.$code.' . "', $offset - 2, strlen($word) + 4);
         else
             $t = substr_replace($t, $code, $offset, strlen($word));
        return $this->syntax_func($t, $c);
