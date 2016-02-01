@@ -43,6 +43,7 @@ class __LEZAZ {
     public $element = '';
     public $topcode = '';
     public $declear = array();
+
     public function __construct($cache_path = '', $plugin_dir = '') {
         if ($cache_path)
             $this->cache_path = $cache_path;
@@ -97,9 +98,8 @@ class __LEZAZ {
             }
         }
 
-        $export_filename = $this->openfile($template_name);
-
-        ob_start();
+        $export_filename = $this->openfile($template_name);               
+        ob_start();   
         include($export_filename);
         return ob_get_clean();
     }
@@ -171,27 +171,25 @@ class __LEZAZ {
      * @param string $t syntax code
      * @return string php code  
      */
-    private function Syntax($str,$declear='') {
-           $element = ($this->get_tag($str));
-            if (!is_array($element))
-                return $str;
+    private function Syntax($str, $declear = '') {
+        $element = ($this->get_tag($str));
+        if (!is_array($element))
+            return $str;
 
-            $func = 'lezaz_' . $element['tag'];
-            if (is_callable($func)) {
-                $attr='';
-                foreach ($element['attributes'] as $k => $v) {
-                    $attr[$k] = $this->GetSyantax($v, 1);
-                }
-                $this_declear=$element['tag'].'_'.$attr['id'];
-                if($declear)
-                $this->declear[$declear][]=$attr;
-                $element_inner = $this->Syntax($element['inner'],$this_declear);
-                $new_inner = $func($attr, $element_inner);                
-                unset($this->declear[$this_declear]);
+        $func = 'lezaz_' . $element['tag'];
+        if (is_callable($func)) {
+            $attr = '';
+            foreach ($element['attributes'] as $k => $v) {
+                $attr[$k] = $this->GetSyantax($v, 1);
             }
-            return $this->Syntax(str_replace($element['htmltag'], $new_inner, $element['html']),$declear);
-
-
+            $this_declear = $element['tag'] . '_' . $attr['id'];
+            if ($declear)
+                $this->declear[$declear][] = $attr;
+            $element_inner = $this->Syntax($element['inner'], $this_declear);
+            $new_inner = $func($attr, $element_inner);
+            unset($this->declear[$this_declear]);
+        }
+        return $this->Syntax(str_replace($element['htmltag'], $new_inner, $element['html']), $declear);
     }
 
     /**
@@ -232,7 +230,11 @@ class __LEZAZ {
             $code = $code;
         else // need to print result , its form template as text 
             $code = '<?php echo ' . $code . '; ?>';
-        $t = substr_replace($t, $code, $offset, strlen($word));
+        $k = substr($t, $offset - 2, strlen($word) + 4);
+        if ($k == '{{'.$word.'}}')
+            $t = substr_replace($t, $code, $offset - 2, strlen($word) + 4);
+        else
+            $t = substr_replace($t, $code, $offset, strlen($word));
         return $this->syntax_dolar($t, $c);
     }
 
@@ -242,6 +244,7 @@ class __LEZAZ {
             return $t;
         $word = $out[0][0];
         $offset = $out[0][1];
+
         $code = str_replace('lezaz:', '$lezaz->', $word);
         preg_match('/\((.*)\)/', $word, $matches); // get parameter
         $code = str_replace($matches[0], '', $code);
@@ -250,7 +253,11 @@ class __LEZAZ {
             $code = $code . '( "' . implode('","', $param) . '" )';
         else // need to print result , its form template as text 
             $code = '<?php echo ' . $code . '( "' . implode('","', $param) . '" ); ?>';
-        $t = substr_replace($t, $code, $offset, strlen($word));
+        $k = substr($t, $offset - 2, strlen($word) + 4);
+        if ($k == '{{'.$word.'}}')
+            $t = substr_replace($t, $code, $offset - 2, strlen($word) + 4);
+        else
+            $t = substr_replace($t, $code, $offset, strlen($word));
         return $this->syntax_lezfunc($t, $c);
     }
 
@@ -260,12 +267,17 @@ class __LEZAZ {
             return $t;
         $word = $out[0][0];
         $offset = $out[0][1];
+
         $code = str_replace('lezaz#', '$lezaz_', $word);
         if ($c) // come form html lezaz code as parameter
             $code = $code;
         else // need to print result , its form template as text 
             $code = '<?php echo ' . $code . '; ?>';
-        $t = substr_replace($t, $code, $offset, strlen($word));
+        $k = substr($t, $offset - 2, strlen($word) + 4);
+        if ($k == '{{'.$word.'}}')
+            $t = substr_replace($t, $code, $offset - 2, strlen($word) + 4);
+        else
+            $t = substr_replace($t, $code, $offset, strlen($word));
         return $this->syntax_hash($t, $c);
     }
 
@@ -285,11 +297,13 @@ class __LEZAZ {
         else // need to print result , its form template as text 
             $code = '<?php echo ' . $code . '( "' . implode('","', $param) . '" ); ?>';
 
-        $t = substr_replace($t, $code, $offset, strlen($word));
-        return $this->syntax_func($t, $c);
+        $k = substr($t, $offset - 2, strlen($word) + 4);
+        if ($k == '{{'.$word.'}}')
+            $t = substr_replace($t, $code, $offset - 2, strlen($word) + 4);
+        else
+            $t = substr_replace($t, $code, $offset, strlen($word));
+       return $this->syntax_func($t, $c);
     }
-
-
 
     /**
      * write output file php 

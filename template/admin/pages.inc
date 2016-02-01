@@ -30,8 +30,7 @@
 					<div class="page-content">
 
                                             
-                                            
-                                          
+                                          <lezaz:block file="{template}admin/option"/>
                            
 						<!-- /section:settings.box -->
 

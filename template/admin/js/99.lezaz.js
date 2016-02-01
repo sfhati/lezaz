@@ -1,4 +1,10 @@
 jQuery(function($) {
+    $('#ace-settings-btn').on(ace.click_event, function(e) {
+        e.preventDefault();
+
+        $(this).toggleClass('open');
+        $('#ace-settings-box').toggleClass('open');
+    })
 
     whitelist_ext = ["jpeg", "jpg", "png", "gif", "bmp"];
     whitelist_mime = ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/bmp"];
@@ -45,8 +51,11 @@ jQuery(function($) {
         denyExt: ['exe', 'php']
     });
 
+    $('.date-picker').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
 
-
-
+    var oTable1 = $('#dynamic-table').dataTable();
 
 });

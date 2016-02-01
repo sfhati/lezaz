@@ -39,13 +39,87 @@
         <!-- #section:basics/navbar.dropdown -->
         <div class="navbar-buttons navbar-header [style-pullar]" role="navigation">
             <ul class="nav ace-nav">
+
+
+                <li class="purple">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <i class="ace-icon fa fa-bell icon-animated-bell"></i>
+                        <span class="badge badge-important">8</span>
+                    </a>
+
+                    <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+                        <li class="dropdown-header">
+                            <i class="ace-icon fa fa-exclamation-triangle"></i>
+                            8 Notifications
+                        </li>
+
+                        <li class="dropdown-content ace-scroll" style="position: relative;"><div class="scroll-track" style="display: none;"><div class="scroll-bar"></div></div><div class="scroll-content" style="max-height: 200px;">
+                                <ul class="dropdown-menu dropdown-navbar navbar-pink">
+                                    <li>
+                                        <a href="#">
+                                            <div class="clearfix">
+                                                <span class="pull-left">
+                                                    <i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
+                                                    New Comments
+                                                </span>
+                                                <span class="pull-right badge badge-info">+12</span>
+                                            </div>
+                                        </a>
+                                    </li>
+
+
+
+                                </ul>
+                            </div></li>								
+                    </ul>
+                </li>                
+
+
+
+                <li class="green">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
+                        <span class="badge badge-success">5</span>
+                    </a>
+
+                    <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+                        <li class="dropdown-header">
+                            <i class="ace-icon fa fa-envelope-o"></i>
+                            5 Messages
+                        </li>
+
+                        <li class="dropdown-content ace-scroll" style="position: relative;"><div class="scroll-track" style="display: none;"><div class="scroll-bar"></div></div><div class="scroll-content" style="max-height: 200px;">
+                                <ul class="dropdown-menu dropdown-navbar">
+                                    <li>
+                                        <a href="#" class="clearfix">
+                                            <img src="../assets/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar">
+                                            <span class="msg-body">
+                                                <span class="msg-title">
+                                                    <span class="blue">Alex:</span>
+                                                    Ciao sociis natoque penatibus et auctor ...
+                                                </span>
+
+                                                <span class="msg-time">
+                                                    <i class="ace-icon fa fa-clock-o"></i>
+                                                    <span>a moment ago</span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>                                                                
+                    </ul>
+                </li>         
+
                 <!-- #section:basics/navbar.user_menu -->
                 <li class="light-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         <img class="nav-user-photo" src="{{upload}}site/lezaz:setting(logo1)" alt="admin" />
                         <span class="user-info">
                             <small>[Welcome]</small>
-lezaz:set(user)
+                            lezaz:set(user)
                         </span>
 
                         <i class="ace-icon fa fa-caret-down"></i>

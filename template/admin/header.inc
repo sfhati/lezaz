@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="lezaz:language()">
-    <head>
+<html lang="lezaz:language()"> <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta charset="utf-8" />
 

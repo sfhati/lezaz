@@ -24,12 +24,7 @@
                 <option value="2">oditer</option>
                 <option value="3">department</option>
             </lezaz:input>                
-
-            <lezaz:input use="member_form"  type="select" id="sub_type" save="member" label="[sub_type]" field-type="int(6)" size-label='2' size='10'  space='10' >
-                <option value="1">electric</option>
-                <option value="2">engineer</option>
-                <option value="3">technical</option>
-            </lezaz:input>                
+           <lezaz:input use="member_form"  type="select" id="sub_type" sql="select id,department_name from department" label="[department]" field-type="int(6)" size-label='2' size='10'  space='10' ></lezaz:input>                                        
             
             <div class="clearfix form-actions">   
                 <div class="col-md-offset-3 col-md-9">

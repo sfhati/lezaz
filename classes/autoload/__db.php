@@ -85,7 +85,7 @@ class __db {
             return false;
     }
 
-    private function insert($table, $data) {
+    private function insert($table, $data,$feilds='') {
         global $lezaz;
         try {
             $this->con->exec("INSERT INTO " . $table . " SET $data;");
@@ -98,14 +98,23 @@ class __db {
                 return false;
             }
         }
-        return $this->con->lastInsertId();
+        $id= $this->con->lastInsertId();
+        $lezaz->trigger('insert.'.$table,array($id,$feilds));
+        return $id;
     }
 
-    private function update($table, $data, $condition = "") {
-        return (trim($condition) != "") ? $this->con->exec("UPDATE " . $table . " SET " . $data . " WHERE " . $condition . ";") : $this->con->exec("UPDATE " . $table . " SET " . $data . ";");
+    private function update($table, $data, $condition = "",$feilds='') {
+        global $lezaz;
+        $id= $this->row($table, $condition, 'id');
+        $lezaz->trigger('update.'.$table,array($id,$feilds,$condition));
+        return  (trim($condition) != "") ? $this->con->exec("UPDATE " . $table . " SET " . $data . " WHERE " . $condition . ";") : $this->con->exec("UPDATE " . $table . " SET " . $data . ";");
     }
 
     private function _delete($table, $condition = "") {
+        global $lezaz;
+        $date= $this->row($table, $condition, 'id');
+        $id=$data['id'];
+        $lezaz->trigger('delete.'.$table,array($id,$data,$condition));
         return (trim($condition) != "") ? $this->con->exec("DELETE FROM " . $table . " WHERE " . $condition . ";") : $this->con->exec("DELETE FROM " . $table . ";");
     }
 
@@ -331,6 +340,9 @@ class __db {
         $syntax_sql = '';
 
         foreach ($feilds as $key => $val) {
+            if(is_array($val)){
+                $val=serialize($val);
+            }
             $val = addslashes($val);
             if ($syntax_sql)
                 $syntax_sql.=' , ';
@@ -352,8 +364,8 @@ class __db {
           } */
 
         if ($type)
-            return $this->update($table, $syntax_sql, $condetion);
-        return $this->insert($table, $syntax_sql);
+            return $this->update($table, $syntax_sql, $condetion,$feilds);
+        return $this->insert($table, $syntax_sql,$feilds);
     }
 
     function delete($table, $condetion) {

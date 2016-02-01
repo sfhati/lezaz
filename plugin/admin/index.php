@@ -7,7 +7,7 @@ $lezaz->set('ajxURL', '');
 $lezaz->set('useajax', '0');
 $lezaz->set('skin', 'no-skin');
 $lezaz->set('user', 'admin');
-if (!$_SESSION['language'])
+//if (!$_SESSION['language'])
     $_SESSION['language'] = 'en';
 $lezaz->language('en');
 
