@@ -56,6 +56,8 @@
     <lezaz:field name="id_list" type="int" length="6" default="0"/>
     <lezaz:field name="status" type="int" length="1" default="0" comment="1-0"/>
     <lezaz:field name="action" type="longtext" comment="corrective action"/>      
+    <lezaz:field name="files" type="varchar" length="250"/>      
+    <lezaz:field name="date" type="varchar" length="20"/>      
 </lezaxz:table>
                 
 lezaz:msg() 

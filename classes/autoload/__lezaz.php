@@ -98,8 +98,8 @@ class __LEZAZ {
             }
         }
 
-        $export_filename = $this->openfile($template_name);               
-        ob_start();   
+        $export_filename = $this->openfile($template_name);
+        ob_start();
         include($export_filename);
         return ob_get_clean();
     }
@@ -228,13 +228,17 @@ class __LEZAZ {
         $this->topcode.="\n global $code; \n";
         if ($c) // come form html lezaz code as parameter
             $code = $code;
-        else // need to print result , its form template as text 
+        else{ // need to print result , its form template as text 
             $code = '<?php echo ' . $code . '; ?>';
+            $code1 = '<?php echo ' . $code . '; ?>';
+        }
         $k = substr($t, $offset - 2, strlen($word) + 4);
-        if ($k == '{{'.$word.'}}')
+        if ($k == '{{' . $word . '}}')
             $t = substr_replace($t, $code, $offset - 2, strlen($word) + 4);
-        else if ($k == '{#'.$word.'#}')
-            $t = substr_replace($t, '" . '.$code.' . "', $offset - 2, strlen($word) + 4);
+        else if ($k == '{#' . $word . '#}')
+            $t = substr_replace($t, '" . ' . $code . ' . "', $offset - 2, strlen($word) + 4);
+        else if ($k == '{=' . $word . '=}')
+            $t = substr_replace($t, $code1 , $offset - 2, strlen($word) + 4);
         else
             $t = substr_replace($t, $code, $offset, strlen($word));
         return $this->syntax_dolar($t, $c);
@@ -253,13 +257,17 @@ class __LEZAZ {
         $param = explode(',', $matches[1]);
         if ($c) // come form html lezaz code as parameter
             $code = $code . '( "' . implode('","', $param) . '" )';
-        else // need to print result , its form template as text 
+        else{ // need to print result , its form template as text 
             $code = '<?php echo ' . $code . '( "' . implode('","', $param) . '" ); ?>';
+            $code1 = '<?php echo ' . $code . '( "' . implode('","', $param) . '" ); ?>';
+        }
         $k = substr($t, $offset - 2, strlen($word) + 4);
-        if ($k == '{{'.$word.'}}')
+        if ($k == '{{' . $word . '}}')
             $t = substr_replace($t, $code, $offset - 2, strlen($word) + 4);
-        else if ($k == '{#'.$word.'#}')
-            $t = substr_replace($t, '" . '.$code.' . "', $offset - 2, strlen($word) + 4);
+        else if ($k == '{#' . $word . '#}')
+            $t = substr_replace($t, '" . ' . $code . ' . "', $offset - 2, strlen($word) + 4);
+        else if ($k == '{=' . $word . '=}')
+            $t = substr_replace($t, $code1 , $offset - 2, strlen($word) + 4);
         else
             $t = substr_replace($t, $code, $offset, strlen($word));
         return $this->syntax_lezfunc($t, $c);
@@ -275,13 +283,17 @@ class __LEZAZ {
         $code = str_replace('lezaz#', '$lezaz_', $word);
         if ($c) // come form html lezaz code as parameter
             $code = $code;
-        else // need to print result , its form template as text 
+        else{ // need to print result , its form template as text 
             $code = '<?php echo ' . $code . '; ?>';
+            $code1 = '<?php echo ' . $code . '; ?>';
+        }
         $k = substr($t, $offset - 2, strlen($word) + 4);
-        if ($k == '{{'.$word.'}}')
+        if ($k == '{{' . $word . '}}')
             $t = substr_replace($t, $code, $offset - 2, strlen($word) + 4);
-        else if ($k == '{#'.$word.'#}')
-            $t = substr_replace($t, '" . '.$code.' . "', $offset - 2, strlen($word) + 4);
+        else if ($k == '{#' . $word . '#}')
+            $t = substr_replace($t, '" . ' . $code . ' . "', $offset - 2, strlen($word) + 4);
+        else if ($k == '{=' . $word . '=}')
+            $t = substr_replace($t, $code1 , $offset - 2, strlen($word) + 4);
         else
             $t = substr_replace($t, $code, $offset, strlen($word));
         return $this->syntax_hash($t, $c);
@@ -300,17 +312,20 @@ class __LEZAZ {
 
         if ($c) // come form html lezaz code as parameter
             $code = $code . '( "' . implode('","', $param) . '" )';
-        else // need to print result , its form template as text 
+        else { // need to print result , its form template as text 
             $code = '<?php echo ' . $code . '( "' . implode('","', $param) . '" ); ?>';
-
+            $code1 = '<?php echo ' . $code . '( "' . implode('","', $param) . '" ); ?>';
+        }
         $k = substr($t, $offset - 2, strlen($word) + 4);
-        if ($k == '{{'.$word.'}}')
+        if ($k == '{{' . $word . '}}')
             $t = substr_replace($t, $code, $offset - 2, strlen($word) + 4);
-        else if ($k == '{#'.$word.'#}')
-            $t = substr_replace($t, '" . '.$code.' . "', $offset - 2, strlen($word) + 4);
+        else if ($k == '{#' . $word . '#}')
+            $t = substr_replace($t, '" . ' . $code . ' . "', $offset - 2, strlen($word) + 4);
+        else if ($k == '{=' . $word . '=}')
+            $t = substr_replace($t, $code1 , $offset - 2, strlen($word) + 4);
         else
             $t = substr_replace($t, $code, $offset, strlen($word));
-       return $this->syntax_func($t, $c);
+        return $this->syntax_func($t, $c);
     }
 
     /**

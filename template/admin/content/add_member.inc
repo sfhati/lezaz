@@ -23,7 +23,9 @@
                 <option value="1">admin</option>
                 <option value="2">oditer</option>
                 <option value="3">department</option>
-            </lezaz:input>                
+            </lezaz:input>         
+                        <lezaz:input use="member_form"  type='text' id="age" label="[age]"  field-type="VARCHAR(250) NOT NULL" validation="r;n" placeholder="Enter email" size-label='2' size='10'  space='10'/> 
+
            <lezaz:input use="member_form"  type="select" id="sub_type" sql="select id,department_name from department" label="[department]" field-type="int(6)" size-label='2' size='10'  space='10' ></lezaz:input>                                        
             
             <div class="clearfix form-actions">   

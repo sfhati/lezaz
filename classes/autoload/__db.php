@@ -277,6 +277,7 @@ class __db {
         }
 // execute query select sql
         $D = 0;
+        try {
         $dd = $this->con->query($query);
         while ($row = $dd->fetch(PDO::FETCH_ASSOC)) {
             $D++;
@@ -284,6 +285,10 @@ class __db {
                 $returntext[$D][$k] = $v;
             }
         }
+           } catch (PDOException $e) {
+                $lezaz->set_msg($e->getMessage().'<hr>'.$query, 'warinig');
+                return false;
+            }
 
         // if not cache use 
         if (SQL_CACHE == 0) {
