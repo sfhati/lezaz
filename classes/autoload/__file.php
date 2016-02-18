@@ -17,7 +17,7 @@ class __file {
         global $lezaz;
          $ext = end(explode('.', $file['name']));
 
-
+if(is_array($validation)){
         if (is_array($validation['whitelist']))
             if (!in_array($ext, $validation['whitelist'])) {
                 $lezaz->set_msg('[ERR_TYPE]' . $file['name'] . '<br>', 'danger');
@@ -34,7 +34,7 @@ class __file {
                 $lezaz->set_msg('[ERR_SIZE]' . $file['name']. ':' .  $file_size . 'KB<br>', 'danger');
                 return FALSE;
             }
-
+}
         if (!$ext) {
             $lezaz->set_msg('[ERR_FILENAME]: ' . $file['name'] . '<br>', 'danger');
             return FALSE;

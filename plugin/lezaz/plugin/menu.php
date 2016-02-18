@@ -1,5 +1,11 @@
 <?php
-
+/*
+    <lezaz:menu id="5" text="Leadership" url="5" icon="" text-icon="5" permetion="is_root()">
+        <lezaz:menu id="51" text="Leadership & commitment" url="51" icon="" text-icon="5.1"></lezaz:menu>
+        <lezaz:menu id="52" text="Policy" url="52" icon="" text-icon="5.2"></lezaz:menu>
+        <lezaz:menu id="53" text="Roles & authorities" url="53" icon="" text-icon="5.3"></lezaz:menu>
+    </lezaz:menu>
+*/
 function lezaz_menu($vars, $html) {
     global $lezaz;
     $return = '';
@@ -23,7 +29,7 @@ function lezaz_menu($vars, $html) {
     }
     $return = $if_syntax1 . '
     <li class="lezaz:set(' . $vars['id'] . ') ' . $set . '">
-        <a href="/' . $vars['url'] . '" class="' . $class . '">
+        <a href="' . $vars['url'] . '" class="' . $class . '">
             <i class="menu-icon fa ' . $vars['icon'] . '">' . $vars['text-icon'] . '</i>
             <span class="menu-text"> ' . $vars['text'] . ' </span>
             ' . $aclass . '

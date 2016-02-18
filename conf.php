@@ -18,6 +18,7 @@ set_time_limit('100030');
 ini_set('memory_limit', '80M');
 date_default_timezone_set('Asia/Amman');
 define('SITE_DOMAIN',$_SERVER[HTTP_HOST]);
+define('LANGUAGE', 'en');
 
 // database mysql configration 
     define('db_type', 'mysql');

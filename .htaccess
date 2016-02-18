@@ -13,7 +13,6 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?directory_lezaz=$1 [QSA,L]
 RewriteCond %{REQUEST_URI} \.(gif|jpg|jpeg|png)$ 
-RewriteRule .* template/panel/images/image_not_found.jpg [L]
  
 #Block Bad Bots
 RewriteCond %{HTTP_USER_AGENT} ^WebBandit [OR]

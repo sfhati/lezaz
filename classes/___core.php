@@ -25,7 +25,6 @@ Class __CORE {
     protected $output = null;
     public $main_template = 'index';
     private $valriables = array();
-    private $language = 'en';
     private $router_vars = array(
         '@num' => '([0-9\.,]+)',
         '@alpha' => '([a-zA-Z]+)',
@@ -50,9 +49,14 @@ Class __CORE {
     }
 
     public function language($set = '') {
-        if ($set)
-            $this->language = $set;
-        return $this->language;
+        if ($set) {
+            $_SESSION['language'] = $set;
+        } else {
+            if ($_SESSION['language'])
+                return $_SESSION['language'];
+            $_SESSION['language'] = LANGUAGE;
+            return $_SESSION['language'];
+        }
     }
 
     public function add_router($key, $regex) {
@@ -144,11 +148,9 @@ Class __CORE {
     /*     * ******************************* END/Events/Hooks/ ************************ */
 
     public function go($to = '', $using = 302) {
-        if (!$to) {
-            $to = SITE_LINK . trim($_GET['directory_lezaz'], '/');
-        } else {
-            $scheme = parse_url($to, PHP_URL_SCHEME);
-            $to = (!empty($scheme) ? $to : ( ltrim($to, '/')));
+        $scheme = parse_url($to, PHP_URL_SCHEME);
+        if (!$scheme) {
+            $to = SITE_LINK . ( trim($to, '/'));
         }
         if (headers_sent())
             return call_user_func_array(__FUNCTION__, array($to, 'html'));
@@ -224,37 +226,37 @@ Class __CORE {
     public function get($k, $validate = '') {
         if (!isset($_GET[$k]))
             return false;
-        if(!$validate) {
-            if($this->setting('VALIDATION__'.$k)){
-                $validate=$this->setting('VALIDATION__'.$k);
+        if (!$validate) {
+            if ($this->setting('VALIDATION__' . $k)) {
+                $validate = $this->setting('VALIDATION__' . $k);
             }
-        }        
+        }
         if ($validate) {
-            $option=$this->set('VALIDATION__OPTION__'.$k);            
-            if ($this->validaition($validate, $_POST[$k],$option)) {
+            $option = $this->set('VALIDATION__OPTION__' . $k);
+            if ($this->validaition($validate, $_POST[$k], $option)) {
                 return $_GET[$k];
             }
-            $this->set("_MSG_".$k,'error');            
+            $this->set("_MSG_" . $k, 'error');
             return false;
         }
         return $_GET[$k];
     }
 
     public function post($k, $validate = '') {
-        
+
         if (!isset($_POST[$k]))
             return false;
-        if(!$validate) {
-            if($this->setting('VALIDATION__'.$k)){
-                $validate=$this->setting('VALIDATION__'.$k);
+        if (!$validate) {
+            if ($this->setting('VALIDATION__' . $k)) {
+                $validate = $this->setting('VALIDATION__' . $k);
             }
         }
         if ($validate) {
-            $option=$this->set('VALIDATION__OPTION__'.$k);            
-            if ($this->validaition($validate, $_POST[$k],$option)) {
+            $option = $this->set('VALIDATION__OPTION__' . $k);
+            if ($this->validaition($validate, $_POST[$k], $option)) {
                 return $_POST[$k];
             }
-            $this->set("_MSG_".$k,'error');
+            $this->set("_MSG_" . $k, 'error');
             return false;
         }
         return $_POST[$k];
@@ -396,7 +398,7 @@ Class __CORE {
         return $m;
     }
 
-    public function validaition($syntax, $str, $options='') {
+    public function validaition($syntax, $str, $options = '') {
         global $lezaz;
         foreach (explode(';', $syntax) as $valid) {
             $varchek = explode(':', $valid);
@@ -484,9 +486,9 @@ Class __CORE {
                 case 'tablein':
                 case 'ti':
                     $feild = explode(',', $varchek2);
-                  //  $lezaz->set_msg($lezaz->db->row($feild[0], "`$feild[1]`='$str' $options", $feild[1]),'warning');
+                    //  $lezaz->set_msg($lezaz->db->row($feild[0], "`$feild[1]`='$str' $options", $feild[1]),'warning');
                     if ($lezaz->db->row($feild[0], "`$feild[1]`='$str' $options", $feild[1])) {
-                        $lezaz->set_msg('[ERR_tableIn]', 'warning');                        
+                        $lezaz->set_msg('[ERR_tableIn]', 'warning');
                         return FALSE;
                     }
                     break;

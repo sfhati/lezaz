@@ -13,7 +13,8 @@
   space       number from 1-12
   size-label   number from 1-12  defult is 3                                                                         null
   format      for date type u can use dd-mm-yyy
- 
+  language    yes/no                                                                                          no
+
   validation >>
   optional or o: Only validate when the field is not empty
   required or r: Field is required
@@ -77,11 +78,15 @@
 
 function lezaz_form($vars, $html) {
     global $lezaz;
+
     $declear = $lezaz->lezaz->declear['form_' . $vars['id']];
     if (!isset($vars['type']))
         $vars['type'] = 'database';
     if ($vars['type'] == 'setting') {
         foreach ($declear as $attrs) {
+            $lnguge = '';
+            if (strtolower($attrs['language']) == 'yes')
+                $lnguge = '.$lezaz->language()';
             if ($attrs['type'] == 'submit' && $attrs['use'] == $vars['id']) {
                 $php_code_top = '<?php
               if($lezaz->post("' . $attrs['id'] . '")){
@@ -89,23 +94,23 @@ function lezaz_form($vars, $html) {
 
                 $php_code_bottom = ' 
  $lezaz->set_msg("[save & update is done]","success");                
- $lezaz->go();                
+ $lezaz->go("' . $vars['redirect'] . '");                
 }
                    ?>';
             } else if ($attrs['use'] == $vars['id']) {
                 if ($attrs['type'] == 'image' || $attrs['type'] == 'images') {
                     $php_inside.=' 
                                   if($_FILES["' . $attrs['id'] . '"]["name"]){
-                        $x= $lezaz->file->save($_FILES["' . $attrs['id'] . '"], "' . $attrs['save'] . '", "img");
+                        $x= $lezaz->file->save($_FILES["' . $attrs['id'] . '"], "' . $attrs['save'] . '"' . $lnguge . ', "img");
                         $lezaz->setsetting("' . $attrs['id'] . '",$x);  
                             }
                           ';
                 } else {
                     $php_inside.='  
-                     $lezaz->setsetting("' . $attrs['id'] . '",$lezaz->post("' . $attrs['id'] . '"));
+                     $lezaz->setsetting("' . $attrs['id'] . '"' . $lnguge . ',$lezaz->post("' . $attrs['id'] . '"));
                           ';
                     $php_inside2.='  
-                     $lezaz->set("_VAL_' . $attrs['id'] . '", $lezaz->setting("' . $attrs['id'] . '"));
+                     $lezaz->set("_VAL_' . $attrs['id'] . '", $lezaz->setting("' . $attrs['id'] . '"' . $lnguge . '));
                           ';
                 }
             }
@@ -123,19 +128,31 @@ function lezaz_form($vars, $html) {
     } else if ($vars['type'] == 'database' && $vars['table']) {
 
         foreach ($declear as $attrs) {
+            $lnguge = '';
+            if ($attrs['language']) {
+                $lnguge = explode(',', $attrs['language']);
+            }
+            // for create fields in table 
             if ($attrs['field-type']) {
-                $field[$attrs['id']] = $attrs['field-type'];
+                if ($attrs['language']) { // create fields with same name for languages 
+                    foreach ($lnguge as $lng) {
+                        $field[$attrs['id'] . "_{$lng}"] = $attrs['field-type'];
+                    }
+                    $php_code_top2.= ' $lezaz->set("_VAL_' . $attrs['id'] . '",$memp["' . $attrs['id'] . '_".$lezaz->language()]); ';
+                } else {
+                    // create field 
+                    $field[$attrs['id']] = $attrs['field-type'];
+                    $php_code_top2.= ' $lezaz->set("_VAL_' . $attrs['id'] . '",$memp["' . $attrs['id'] . '"]); ';
+                }
             }
             if ($attrs['type'] == 'submit' && $attrs['use'] == $vars['id']) {
                 $attr_id = $attrs['id'];
-                $php_code_top = '<?php
+                $php_code_top1 = '<?php
 if ($lezaz->get("UPDATE_' . $attrs['id'] . '")) {
-    $memp = $lezaz->db->row("' . $vars['table'] . '", " `id`=".$lezaz->get("UPDATE_' . $attrs['id'] . '"));
-    if ($memp && is_array($memp)) {  
-        foreach($memp as $k=>$v){
-        $lezaz->set("_VAL_".$k,$v);
-        }       
-    }else{
+    $memp = $lezaz->db->row("' . $vars['table'] . '"' . $lnguge . ', " `id`=".$lezaz->get("UPDATE_' . $attrs['id'] . '"));
+    if ($memp && is_array($memp)) { ';
+
+                $php_code_top3 = '    }else{
          $lezaz->set_msg("[Record Not Found!]","info");      
     }         
 }                    
@@ -158,22 +175,32 @@ if ($lezaz->get("UPDATE_' . $attrs['id'] . '")) {
                 $php_code_bottom = ' 
 if(!$lezaz->msg() && $lezaz->db->save("' . $vars['table'] . '",$data_insert,$cond,$ty)){                
  $lezaz->set_msg("[save & update is done]","success");            
- $lezaz->go();          
+ $lezaz->go("' . $vars['redirect'] . '");          
 }else{
 ';
             } else if ($attrs['use'] == $vars['id']) {
-                $php_code_bottom_x.= '$lezaz->set("_VAL_' . $attrs['id'] . '", $_POST["' . $attrs['id'] . '"]);';
+                if ($attrs['language']) { // create fields with same name for languages                     
+                    $php_code_bottom_x.= '$lezaz->set("_VAL_' . $attrs['id'] . '_".$lezaz->language(), $_POST["' . $attrs['id'] . '"]);';
+                } else {
+                    $php_code_bottom_x.= '$lezaz->set("_VAL_' . $attrs['id'] . '", $_POST["' . $attrs['id'] . '"]);';
+                }
                 if ($attrs['type'] == 'image' || $attrs['type'] == 'images') {
                     $php_inside.=' 
                                   if($_FILES["' . $attrs['id'] . '"]["name"]){
-                        $x= $lezaz->file->save($_FILES["' . $attrs['id'] . '"], "' . $attrs['save'] . '", "img");
-                            $data_insert["' . $attrs['id'] . '"] = "' . $attrs['save'] . '/".$x;
+                        $x= $lezaz->file->save($_FILES["' . $attrs['id'] . '"], "' . $attrs['save'] . '"' . $lnguge . ', "img");
+                            $data_insert["' . $attrs['id'] . '"] = "' . $attrs['save'] . '' . $lnguge . '/".$x;
                             }
                           ';
                 } else {
-                    $php_inside.='
+                    if ($attrs['language']) {
+                        $php_inside.='
+                     $data_insert["' . $attrs['id'] . '_".$lezaz->language()] = $lezaz->post("' . $attrs['id'] . '");
+                          ';
+                    } else {
+                        $php_inside.='
                      $data_insert["' . $attrs['id'] . '"] = $lezaz->post("' . $attrs['id'] . '");
                           ';
+                    }
                 }
             }
         }
@@ -182,6 +209,8 @@ if(!$lezaz->msg() && $lezaz->db->save("' . $vars['table'] . '",$data_insert,$con
                 . 'echo "<input type=\"hidden\" name=\"EDIT_' . $attr_id . '\" value=\"".$lezaz->get("UPDATE_' . $attr_id . '")."\"/>";'
                 . '} ?>' . $html;
         if ($vars['create'] != 'off' || $vars['create'] == 'on') {
+            $field['datetime_created'] = "timestamp DEFAULT CURRENT_TIMESTAMP";
+            $field['datetime_updated'] = "timestamp default now() on update now()";
             $lezaz->db->create_table($vars['table'], $field);
         }
 
@@ -190,7 +219,7 @@ if(!$lezaz->msg() && $lezaz->db->save("' . $vars['table'] . '",$data_insert,$con
                      ' . $php_inside2 . '
                         
                         ?>  ';
-
+        $php_code_top = $php_code_top1 . $php_code_top2 . $php_code_top3;
         if ($php_code_top && $php_code_bottom) {
             $php_code = $php_inside2 . $php_code_top . $php_inside . $php_code_bottom . $php_code_bottom_x . '}}?>';
         }
@@ -212,10 +241,10 @@ function lezaz_input($vars, $html) {
         'validation', 'icon', 'help', 'msgvalidation', 'color', 'border',
         'hover', 'option', 'icon-right', 'skin', 'save'
     );
-    
+
     // insert other attr we get from syntax user create 
-    foreach($vars as $vkey=>$vvalue){
-        if(!in_array($vkey, $our_attr)){
+    foreach ($vars as $vkey => $vvalue) {
+        if (!in_array($vkey, $our_attr)) {
             $attr_complete.=" $vkey =\"$vvalue\" ";
         }
     }
@@ -271,10 +300,10 @@ function lezaz_input($vars, $html) {
         if (!trim($vars['label']))
             $vars['icon'].=' icon-only ';
         $button_html = ' 
-<button type="' . $vars['type'] . '"   name="' . $vars['name'] . '"  value="' . $vars['value'] . 
-                '"  id="' . $vars['id'] . '" class="btn  ' . $vars['color'] . ' ' . $vars['size'] . 
-                ' ' . $vars['option'] . ' ' . $vars['border'] . ' ' . $vars['hover'] . ' ' . 
-                $vars['class'] . '" '. $attr_complete . '>' .
+<button type="' . $vars['type'] . '"   name="' . $vars['name'] . '"  value="' . $vars['value'] .
+                '"  id="' . $vars['id'] . '" class="btn  ' . $vars['color'] . ' ' . $vars['size'] .
+                ' ' . $vars['option'] . ' ' . $vars['border'] . ' ' . $vars['hover'] . ' ' .
+                $vars['class'] . '" ' . $attr_complete . '>' .
                 " 
     $icon_html  $vars[label] $icon_right_html
  " . '</button> ' . $vars['space'] . '       
@@ -285,7 +314,7 @@ function lezaz_input($vars, $html) {
 
 ############################## Text #############################################################################
 
-    if ($vars['type'] == 'text' || $vars['type'] == 'password'|| $vars['type'] == 'date') {
+    if ($vars['type'] == 'text' || $vars['type'] == 'password' || $vars['type'] == 'date') {
         if (!isset($vars['value']))
             $vars['value'] = $html;
         if ($icon_html)
@@ -299,26 +328,73 @@ function lezaz_input($vars, $html) {
         if ($vars['valudation']) {
             $validation = '<?php $_SESSION[\'lezaz-validation\'][\'' . $vars['id'] . '\']=' . $vars['valudation'] . '; ?>';
         }
-        if($vars['type'] == 'date'){
+        if ($vars['type'] == 'date') {
             $vars['class'].=' date-picker ';
             $vars['type'] = 'text';
-            $format='data-date-format="dd-mm-yyyy"';
-            if($vars['format']){
-                $format='data-date-format="'.$vars['format'].'"';
+            $format = 'data-date-format="dd-mm-yyyy"';
+            if ($vars['format']) {
+                $format = 'data-date-format="' . $vars['format'] . '"';
             }
-            if(!$vars['icon'])
-            $icon_html='<span class="input-group-addon"><i class="ace-icon fa fa-calendar"></i></span>';
+            if (!$vars['icon'])
+                $icon_html = '<span class="input-group-addon"><i class="ace-icon fa fa-calendar"></i></span>';
         }
-        
+
         $input_html = '
                        
 			<div id="input-' . $vars['id'] . '" class="form-group<?php if($lezaz->set("_MSG_' . $vars['id'] . '")){echo " has-".$lezaz->set("_MSG_' . $vars['id'] . '");} ?>">
 				' . $label_text . '
 				<div class="col-sm-' . $vars['size'] . '">
                                    ' . $icon_span . '
-<input type="' . $vars['type'] . '" name="' . $vars['name'] . '" id="' . $vars['id'] . 
-                '" value="<?php if($lezaz->set("_VAL_' . $vars['id'] . '")){echo $lezaz->set("_VAL_' . $vars['id'] . '");}else{ echo "' . $vars['value'] . '"; } ?>" ' . 
-                ' class="col-sm-12 ' . $vars['class'] . '"  '. $attr_complete . ' '. $format . '/>
+<input type="' . $vars['type'] . '" name="' . $vars['name'] . '" id="' . $vars['id'] .
+                '" value="<?php if($lezaz->set("_VAL_' . $vars['id'] . '")){echo $lezaz->set("_VAL_' . $vars['id'] . '");}else{ echo "' . $vars['value'] . '"; } ?>" ' .
+                ' class="col-sm-12 ' . $vars['class'] . '"  ' . $attr_complete . ' ' . $format . '/>
+' . $icon_right_html . $icon_html . $close_span . '
+					
+				</div>
+			</div>
+                        ' . $vars['space'] . ' 
+            
+             ';
+        return $input_html;
+    }
+
+
+
+############################## Textarea #############################################################################
+
+    if ($vars['type'] == 'textarea' || $vars['type'] == 'editor') {
+        if (!isset($vars['value']))
+            $vars['value'] = $html;
+        if ($icon_html)
+            $icon_span = ' <span class="input-icon">';
+        if ($icon_right_html)
+            $icon_span = ' <span class="input-icon input-icon-right">';
+        if ($icon_span)
+            $close_span = '</span>';
+        if (!$vars['size'])
+            $vars['size'] = '9';
+        if ($vars['valudation']) {
+            $validation = '<?php $_SESSION[\'lezaz-validation\'][\'' . $vars['id'] . '\']=' . $vars['valudation'] . '; ?>';
+        }
+        if ($vars['type'] == 'date') {
+            $vars['class'].=' date-picker ';
+            $vars['type'] = 'text';
+            $format = 'data-date-format="dd-mm-yyyy"';
+            if ($vars['format']) {
+                $format = 'data-date-format="' . $vars['format'] . '"';
+            }
+            if (!$vars['icon'])
+                $icon_html = '<span class="input-group-addon"><i class="ace-icon fa fa-calendar"></i></span>';
+        }
+
+        $input_html = '
+                       
+			<div id="input-' . $vars['id'] . '" class="form-group<?php if($lezaz->set("_MSG_' . $vars['id'] . '")){echo " has-".$lezaz->set("_MSG_' . $vars['id'] . '");} ?>">
+				' . $label_text . '
+				<div class="col-sm-' . $vars['size'] . '">
+                                   ' . $icon_span . '
+<textarea name="' . $vars['name'] . '" id="' . $vars['id'] . '"' .
+                ' class="col-sm-12 ' . $vars['class'] . '"  ' . $attr_complete . ' ' . $format . '><?php if($lezaz->set("_VAL_' . $vars['id'] . '")){echo $lezaz->set("_VAL_' . $vars['id'] . '");}else{ echo "' . $vars['value'] . '"; } ?></textarea>
 ' . $icon_right_html . $icon_html . $close_span . '
 					
 				</div>
@@ -368,8 +444,8 @@ function lezaz_input($vars, $html) {
 <?php if($lezaz->set("_VAL_' . $vars['name'] . '")){ $_VAL_' . $vars['name'] . '_chk = "checked";} ?>            
 <div class="checkbox col-sm-' . $vars['size'] . '">
     <label>
-            <input id="' . $vars['id'] . '"  name="' . $vars['name'] . '"  value="' . 
-                $vars['value'] . '" class="' . $class . ' ' . $vars['class'] . '" type="' . $vars['type'] . '" <?php echo $_VAL_' . $vars['name'] . '_chk; ?>  '. $attr_complete . '>
+            <input id="' . $vars['id'] . '"  name="' . $vars['name'] . '"  value="' .
+                $vars['value'] . '" class="' . $class . ' ' . $vars['class'] . '" type="' . $vars['type'] . '" <?php echo $_VAL_' . $vars['name'] . '_chk; ?>  ' . $attr_complete . '>
             <span class="lbl"> ' . $vars['label'] . '</span>
     </label>
 </div>          
@@ -422,7 +498,7 @@ function lezaz_input($vars, $html) {
 				' . $label_text . '
 				<div class="col-sm-' . $vars['size'] . '">
                                    ' . $icon_span . '
-<select class="' . $add_class . ' col-sm-12 form-control ' . $vars['class'] . '" id="' . $vars['id'] . '" name="' . $vars['id'] . $ddtoname . '" ' . $add_option . ' data-placeholder="' . $vars['placeholder'] . '"  '. $attr_complete . '>
+<select class="' . $add_class . ' col-sm-12 form-control ' . $vars['class'] . '" id="' . $vars['id'] . '" name="' . $vars['id'] . $ddtoname . '" ' . $add_option . ' data-placeholder="' . $vars['placeholder'] . '"  ' . $attr_complete . '>
     ' . $options_html . $sqlphp . ' 
 ' . $icon_right_html . $icon_html . $close_span . '
 	</select>				
@@ -452,7 +528,7 @@ function lezaz_input($vars, $html) {
 				' . $label_text . '
 				<div class="col-sm-' . $vars['size'] . '">
                                    ' . $icon_span . '
-<input type="file" name="' . $vars['name'] . $namearray . '" id="' . $vars['id'] . '" ' . $multiple . $placeholder . ' data-no_file="bassam" class="col-sm-12 ' . $class . ' ' . $vars['class'] . '"  '. $attr_complete . '/>
+<input type="file" name="' . $vars['name'] . $namearray . '" id="' . $vars['id'] . '" ' . $multiple . $placeholder . ' data-no_file="bassam" class="col-sm-12 ' . $class . ' ' . $vars['class'] . '"  ' . $attr_complete . '/>
 ' . $icon_right_html . $icon_html . $close_span . '
 					
 				</div>
