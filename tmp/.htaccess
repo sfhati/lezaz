@@ -1,48 +1,10 @@
 IndexIgnore *
-#RewriteEngine on
-#RewriteBase / 
-
-#RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-#RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
-
-#RewriteRule ^page/([0-9]+)/(.*)$ /?id=$1&parameter=$2
-#RewriteCond %{QUERY_STRING} ^p=(.*)
-#RewriteRule ^/?product\.php$ http://website.com.au/product_%1.php? [L,R=301]
-#RewriteRule ^admin$ /?chng_tpl=login
-#RewriteRule ^admin/$ /?chng_tpl=login
-#RewriteRule ^admin/(.*)$ /?chng_tpl=login&template_folder=$1
-#RewriteRule ^t/(.*)$ /?chng_tplt=$1%{QUERY_STRING} [NC,L]
-
-
-
-#ErrorDocument 404 /?id=error404
-
-#RewriteCond %{REQUEST_FILENAME} !-f 
-#RewriteCond %{REQUEST_URI} \.(gif|jpg|jpeg|png)$ 
-#RewriteRule .* template/panel/images/image_not_found.jpg [L]
-
- ServerSignature Off
-
+ServerSignature Off
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    
-    # On some web hosts this code may not work because of the 'RewriteBase' 
-    # so you should use `RewriteBase`
-    # And set it to the real absolute path of horus installation directory
-    # example: 
-    # RewriteBase /path/to/current_directory
-
-    # the next line tells apache to handle the requested file if exists
-    # or it will pass it to horus url_rewrite
     RewriteCond %{REQUEST_FILENAME} !-f
-
-    # the next line just like the above, but it check for folders not files
     RewriteCond %{REQUEST_FILENAME} !-d
-
-    # rewrite /xxx to index.php/xxx
     RewriteRule ^(.*)$ index.php/$1 [QSA,L]
-
-    # tell horus don't use index.php/ in urls
     setEnv SIMULATOR  off
 </IfModule>
 

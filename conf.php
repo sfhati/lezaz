@@ -107,9 +107,6 @@ if ($dh = opendir($dir)) {
     closedir($dh);
 }
 
-// Load after Classes Load
-//include(CLASSES_PATH . 'afterClassLoad.php');
-
 
 
 
