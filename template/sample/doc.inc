@@ -15,7 +15,7 @@
         <link href="{{theme}}css/bootstrap.css" rel="stylesheet" />
 
         <style>
-            body {
+            body { 
                 padding-top: 60px;
                 direction: rtl;
                 font-size: 18px;
