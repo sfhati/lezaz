@@ -25,7 +25,7 @@ lezaz:func(parm) // echo result from lezaz class its mean $lezaz->func(parm)
 
 >>>setting file in theme folder with name setting.ini
 $lezaz->setting('bassamxz') // get setting
-$lezaz->setting('bassamxz','defult value') // get setting , if not exeist then print defult value.
+$lezaz->setting('bassamxz','defult value') // get setting , if not exist then print defult value.
 $lezaz->setsetting('bassamxz','xxcc'); // add setting
 $lezaz->setsetting('bassamxz'); // remove setting
     

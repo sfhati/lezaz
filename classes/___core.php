@@ -30,6 +30,7 @@ Class __CORE {
         '@alpha' => '([a-zA-Z]+)',
         '@alnum' => '([a-zA-Z0-9\.\w]+)',
         '@str' => '([a-zA-Z0-9-_\.\w]+)',
+        '@sstr' => '([a-zA-Z0-9-_\.\w\s]+)',
         '@*' => '(.*)',
         '@date' => '(([0-9]{1,2})\/([0-9]{1,2})\/(([0-9]{2})(.{0}|.{2})))',
         '@null' => '^');
@@ -119,8 +120,16 @@ Class __CORE {
      * @return  void
      */
     public function listen($tag, $callback, $prority = 0) {
-        $this->events[$tag][$prority][] = $callback;
-        ksort($this->events[$tag]);
+        if (is_array($tag)) {
+            foreach ($tag as $tags) {
+                $this->events[$tags][$prority][] = $callback;
+                ksort($this->events[$tags]);
+            }
+        } else {
+            $this->events[$tag][$prority][] = $callback;
+            ksort($this->events[$tag]);
+        }
+        
     }
 
     /**

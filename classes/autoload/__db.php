@@ -100,6 +100,8 @@ class __db {
         }
         $id= $this->con->lastInsertId();
         $lezaz->trigger('insert.'.$table,array($id,$feilds));
+        $lezaz->trigger('action.'.$table,$id);
+        
         return $id;
     }
 
@@ -107,6 +109,7 @@ class __db {
         global $lezaz;
         $id= $this->row($table, $condition, 'id');
         $lezaz->trigger('update.'.$table,array($id,$feilds,$condition));
+        $lezaz->trigger('action.'.$table,$id);
         return  (trim($condition) != "") ? $this->con->exec("UPDATE " . $table . " SET " . $data . " WHERE " . $condition . ";") : $this->con->exec("UPDATE " . $table . " SET " . $data . ";");
     }
 

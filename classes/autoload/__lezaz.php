@@ -11,7 +11,7 @@
  * 
  * examples of usage :
  *   $syntaxcode = new __SYNTAX( );
- *   $arrthis = $syntaxcode->openfile('template/sfhati/mobile.inc');
+ *   $arrthis = $syntaxcode->openfile('template/sfhati/mobile.inc','ar');
  * 
  * 
  * 
@@ -43,6 +43,7 @@ class __LEZAZ {
     public $element = '';
     public $topcode = '';
     public $declear = array();
+    public $translate = array();
 
     public function __construct($cache_path = '', $plugin_dir = '') {
         if ($cache_path)
@@ -65,6 +66,10 @@ class __LEZAZ {
             }
             closedir($dh);
         }
+
+        $this->translate['all'] = array('{{lng}}', '{{lnguage}}', '{{ltr}}');
+        $this->translate['ar'] = array('ar', 'arabic', 'rtl');
+        $this->translate['en'] = array('en', 'english', 'ltr');
     }
 
     public function include_tpl($template_name) {
@@ -98,8 +103,9 @@ class __LEZAZ {
             }
         }
 
-        $export_filename = $this->openfile($template_name);
+        $export_filename = $this->openfile($template_name, $lezaz->language());
         ob_start();
+
         include($export_filename);
         return ob_get_clean();
     }
@@ -110,12 +116,12 @@ class __LEZAZ {
      * @param string $templatefile full path for template file
      * @return string php code  
      */
-    public function openfile($templatefile) {
+    public function openfile($templatefile, $lng) {
         //check if exist file template
         if (!file_exists($templatefile))
             return 'File not found!';
 
-        $export_php_file = $this->cache_path . md5($templatefile) . '_' . md5_file($templatefile) . '.php';
+        $export_php_file = $this->cache_path . md5($templatefile) . '_' . md5_file($templatefile) . '_' . $lng . '.php';
         //check if already translate 
         if (file_exists($export_php_file))
             return $export_php_file;
@@ -126,6 +132,10 @@ class __LEZAZ {
 
         // if there is php code will show as content in output
         $this->ALL_SYNTAX = str_replace(array('<?', '?>'), array('&lt;?', '?&gt;'), $this->ALL_SYNTAX);
+        //translate before translating syntax code 
+       
+        $this->ALL_SYNTAX = str_replace( $this->translate['all'],  $this->translate[$lng], $this->ALL_SYNTAX);
+
         //start translate template code
         $this->topcode = '';
         $t = $this->Syntax($this->ALL_SYNTAX);
@@ -135,7 +145,7 @@ class __LEZAZ {
 
 
         //delete old php files from cache folder
-        $this->clearcache(md5($templatefile));
+        $this->clearcache(md5($templatefile), $lng);
         //
         $t = '<?php global $lezaz;' . $this->topcode . '?>' . $t;
         //write php file 
@@ -151,13 +161,13 @@ class __LEZAZ {
      * @param string $file full path and file name     
      * @return none!  
      */
-    private function clearcache($templatefile) {
+    private function clearcache($templatefile, $lng) {
         $dir = $this->cache_path;
         if ($dh = opendir($dir)) {
 
             while (($file = readdir($dh)) !== false) {
                 $pathtemplate = explode('_', $file);
-                if ($pathtemplate[0] == $templatefile) {
+                if ($pathtemplate[0] == $templatefile && $pathtemplate[2] == $lng) {
                     @unlink($dir . $file);
                 }
             }
