@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php global $lezaz;?><!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -12,16 +12,16 @@
         <title>Theme Template for Bootstrap</title>
 
         <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
         <!-- Optional theme -->
-        <link rel="stylesheet" href="{{theme}}css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
 
     </head>
 
     <body role="document">
-       
+
         <!-- Fixed navbar -->
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -596,13 +596,13 @@
                 </ol>
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
-                        <img src="{{theme}}images/slide_1.png" alt="First slide">
+                        <img src="{theme}images/slide_1.png" alt="First slide">
                     </div>
                     <div class="item">
-                        <img src="{{theme}}images/slide_2.png" alt="First slide">
+                        <img src="{theme}images/slide_2.png" alt="First slide">
                     </div>
                     <div class="item">
-                        <img src="{{theme}}images/slide_3.png" alt="First slide">
+                        <img src="{theme}images/slide_3.png" alt="First slide">
                     </div>
                 </div>
                 <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
