@@ -14,14 +14,14 @@
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 ini_set('display_errors', '1');
 ini_set("session.gc_maxlifetime", '2592000'); // 30 days
-set_time_limit('100030');
+set_time_limit('30');
 ini_set('memory_limit', '80M');
 date_default_timezone_set('Asia/Amman');
 define('SITE_DOMAIN',$_SERVER[HTTP_HOST]);
 define('LANGUAGE', 'en');
 
 // database mysql configration 
-    define('db_type', 'mysql');
+    define('db_type', '');
     define('db_host', 'localhost');
     define('db_port', '');
     define('db_name', 'fw');
@@ -62,9 +62,9 @@ define('THEME_LINK', TEMPLATE_LINK . THEME_FOLDER . '/');
 define('SITE_EMAIL', 'info@' . SITE_DOMAIN);
 define('Main_Domain', 'http://server.sfhati.com/');
 define('Version', '1.00');
-define('DEVELOP_MODE', true); // no sql cache is defult
+define('DEVELOP_MODE', true); // 
 
-define('SQL_CACHE', '0'); // no sql cache is defult
+define('SQL_CACHE', '0'); // in secuend
 define('CRYPT_CACHE', true); // no sql cache is defult
 define('SALT','FR4d32cdvTYdw2s#gt54');
 define('LEZAZ_START_TIME', microtime(1), true);

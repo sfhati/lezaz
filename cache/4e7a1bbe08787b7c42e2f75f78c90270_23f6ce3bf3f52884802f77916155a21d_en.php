@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php global $lezaz;?><!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -15,27 +15,28 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
         <!-- Optional theme -->
-        <link rel="stylesheet" href="{{theme}}css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="http://fw.cms/template/sample/css/bootstrap-theme.min.css">
      
 
     </head>
 
     <body role="document">
 
-    <lezaz:if condition="lezaz:set(b)==$lezaz_b">
+    
+   <?php  if ($lezaz->set( "b" )==$lezaz_b) { 
+
+$lezaz_="1";
+ ?>      
+ 
         
-        Yes lezaz:set(b) = 2
+        Yes <?php echo $lezaz->set( "b" ); ?> = 2
         
-    </lezaz:if>  
+        
+<?php }  ?>
+  
 
     
-   <lezaz:comment c="1">
-    <lezaz:if condition="lezaz:set(b)==2">
-        
-        Yes lezaz:set(b) = 2
-        
-    </lezaz:if>  
-    </lezaz:comment>    
+       
         <!-- Fixed navbar -->
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -610,13 +611,13 @@
                 </ol>
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
-                        <img src="{{theme}}images/slide_1.png" alt="First slide">
+                        <img src="http://fw.cms/template/sample/images/slide_1.png" alt="First slide">
                     </div>
                     <div class="item">
-                        <img src="{{theme}}images/slide_2.png" alt="First slide">
+                        <img src="http://fw.cms/template/sample/images/slide_2.png" alt="First slide">
                     </div>
                     <div class="item">
-                        <img src="{{theme}}images/slide_3.png" alt="First slide">
+                        <img src="http://fw.cms/template/sample/images/slide_3.png" alt="First slide">
                     </div>
                 </div>
                 <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">

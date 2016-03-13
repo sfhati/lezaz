@@ -161,12 +161,13 @@ class __LEZAZ {
      * @param string $file full path and file name     
      * @return none!  
      */
-    private function clearcache($templatefile, $lng) {
+    private function clearcache($templatefile, $lng) {        
         $dir = $this->cache_path;
         if ($dh = opendir($dir)) {
 
             while (($file = readdir($dh)) !== false) {
-                $pathtemplate = explode('_', $file);
+                $newFileName = substr($file, 0 , (strrpos($file, ".")));
+                $pathtemplate = explode('_', $newFileName);
                 if ($pathtemplate[0] == $templatefile && $pathtemplate[2] == $lng) {
                     @unlink($dir . $file);
                 }

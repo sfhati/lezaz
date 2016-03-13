@@ -10,3 +10,4 @@ $lezaz->router('documentation', function() use ($lezaz) {
     $lezaz->main_template='doc';   
 });
 
+$lezaz->set('b',2);

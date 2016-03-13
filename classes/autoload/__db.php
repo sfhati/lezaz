@@ -60,6 +60,7 @@ class __db {
                     break;
                 default:
                     $this->con = null;
+                    return false;
                     break;
             }
 
