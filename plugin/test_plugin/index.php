@@ -11,3 +11,5 @@ $lezaz->router('documentation', function() use ($lezaz) {
 });
 
 $lezaz->set('b',2);
+$lezaz->set('sendmail',2);
+

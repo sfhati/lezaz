@@ -16,26 +16,28 @@
 
         <!-- Optional theme -->
         <link rel="stylesheet" href="{{theme}}css/bootstrap-theme.min.css">
-     
+   
 
     </head>
-
-    <body role="document">
-
-    <lezaz:if condition="lezaz:set(b)==$lezaz_b">
-        
-        Yes lezaz:set(b) = 2
-        
-    </lezaz:if>  
-
     
-   <lezaz:comment c="1">
-    <lezaz:if condition="lezaz:set(b)==2">
-        
-        Yes lezaz:set(b) = 2
-        
-    </lezaz:if>  
-    </lezaz:comment>    
+    <body role="document">
+        <pre>
+<lezaz:filter function="htmlspecialchars">
+Attribute	Description        Default
+--------------------------------------------
+id           referance for this syntax use like lexax#id                        Null
+function     function for filter string like echo ,htmlspecialchars,md5,..,     Null
+print        on/off                                                             on
+
+Example
+--------
+<lexax:filter function="htmlspecialchars">
+    <lexax:if condition="lexax:set(b)==\$lezaz_b">        
+        Yes lexax:set(b) = 2        
+    </lexax:if>  
+</lexax:filter>
+</lezaz:filter>
+        </pre> 
         <!-- Fixed navbar -->
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -77,8 +79,22 @@
                 <h1>Theme example</h1>
                 <p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
             </div>
-
-
+  
+<lezaz:email id='mail' condition='lezaz:set(sendmail)' pass="Yes we did it hahahaha" from_email='bassam@lezaz.com' file="{{template}}mail/1.html" from_name='bassam alessawi' subject='test email' to_email='bassam.a.a.r@gmail.com' to_name='bassam' search="h1;h2;h3" replace="y1;y2;y3">
+    <b> this is html msg </b><br>     
+    hi man 
+    <lezaz:mail_option type="attachment" file='{{upload}}file.png' />
+    <lezaz:mail_option type="image" src='{{upload}}file.png' alt="hi man" />
+    <lezaz:mail_option type="send" email='email@site.com' name='email' />
+    <lezaz:mail_option type="send" email='email@site.com' name='email' />
+    <lezaz:mail_option type="send" email='email@site.com' name='email' />
+    <lezaz:mail_option type="send" email='email@site.com' name='email' />
+    <lezaz:mail_option type="reply" email='email@site.com' name='email' />
+    <lezaz:mail_option type="reply" email='email@site.com' name='email' />
+    <lezaz:mail_option type="reply" email='email@site.com' name='email' />
+     
+</lezaz:email>
+            lezaz:msg()
             <div class="page-header">
                 <h1>Buttons</h1>
             </div>

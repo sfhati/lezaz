@@ -16,27 +16,32 @@
 
         <!-- Optional theme -->
         <link rel="stylesheet" href="http://fw.cms/template/sample/css/bootstrap-theme.min.css">
-     
+   
 
     </head>
-
+    
     <body role="document">
+        <pre>
+<?php $varx = <<<END
 
-    
-   <?php  if ($lezaz->set( "b" )==$lezaz_b) { 
+Attribute	Description        Default
+--------------------------------------------
+id           referance for this syntax use like lexax#id                        Null
+function     function for filter string like echo ,htmlspecialchars,md5,..,     Null
+print        on/off                                                             on
 
-$lezaz_="1";
- ?>      
- 
-        
-        Yes <?php echo $lezaz->set( "b" ); ?> = 2
-        
-        
-<?php }  ?>
-  
+Example
+--------
+<lexax:filter function="htmlspecialchars">
+    <lexax:if condition="lexax:set(b)==\$lezaz_b">        
+        Yes lexax:set(b) = 2        
+    </lexax:if>  
+</lexax:filter>
 
-    
-       
+END;
+$lezaz_id_1458321773_3263394= htmlspecialchars($varx);
+echo $lezaz_id_1458321773_3263394; ?>
+        </pre> 
         <!-- Fixed navbar -->
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -78,8 +83,49 @@ $lezaz_="1";
                 <h1>Theme example</h1>
                 <p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
             </div>
-
-
+  
+<?php 
+$attachment[]=$lezaz->convert_path("http://fw.cms/uploaded/file.png",1);
+$image["f0db016a9e32af95bf804086bc2803e8"]=$lezaz->convert_path("http://fw.cms/uploaded/file.png",1);
+$to_email[]="email@site.com";
+$to_name[]=" email";
+$to_email[]="email@site.com";
+$to_name[]=" email";
+$to_email[]="email@site.com";
+$to_name[]=" email";
+$to_email[]="email@site.com";
+$to_name[]=" email";
+$to_email[]="email@site.com";
+$to_name[]=" email";
+$to_email[]="email@site.com";
+$to_name[]=" email";
+$to_email[]="email@site.com";
+$to_name[]=" email";
+$to_email[]="email@site.com";
+$to_name[]=" email";
+$replyto_email[]="email@site.com";
+$replyto_name[]=" email";
+$replyto_email[]="email@site.com";
+$replyto_name[]=" email";
+$replyto_email[]="email@site.com";
+$replyto_name[]=" email";
+$email_html=file_get_contents($lezaz->convert_path("http://fw.cms/template/mail/1.html",1));
+$replace="";
+$search="";
+$search[]="h1";
+$search[]="h2";
+$search[]="h3";
+$replace[]="y1";
+$replace[]="y2";
+$replace[]="y3";
+ 
+       $email_html = str_replace($search, $replace, $email_html); 
+              if($lezaz->set( "sendmail" )){
+$lezaz->mailer->sendmail("bassam@lezaz.com", "bassam alessawi", $to_email, $to_name, $replyto_email, $replyto_name,$ccto_email,$ccto_name,$bccto_email,$bccto_name, "test email", $email_html, $image ,$attachment, "Yes we did it hahahaha", "")  ;       
+  
+              }
+?>
+            <?php echo $lezaz->msg( "" ); ?>
             <div class="page-header">
                 <h1>Buttons</h1>
             </div>

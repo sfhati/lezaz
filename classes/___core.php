@@ -372,8 +372,11 @@ Class __CORE {
         $arr_link = array(PLUGIN_LINK, TEMPLATE_LINK, TMP_LINK, CACHE_LINK, UPLOADED_LINK, THEME_LINK);
         if ($link) {
             $template_name = str_replace($arr_link, $arr_path, $template_name);
+            $template_name = str_replace(array('/','\\'), DIRECTORY_SEPARATOR, $template_name);
         } else {
             $template_name = str_replace($arr_path, $arr_link, $template_name);
+            $template_name = str_replace(array('/','\\'), '/', $template_name);
+            
         }
         return $template_name;
     }

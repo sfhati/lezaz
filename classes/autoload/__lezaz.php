@@ -352,6 +352,7 @@ class __LEZAZ {
         $fp = fopen($file, 'w');
         $content = str_replace('{{this}}', str_replace(SITE_PATH, '/', dirname($this->filename)) . '/', $content);
         $content = str_replace('{{upload}}', UPLOADED_LINK, $content);
+        $content = str_replace('{{uploaded}}', UPLOADED_LINK, $content);
         $content = str_replace('{{plugin}}', PLUGIN_LINK, $content);
         $content = str_replace('{{template}}', TEMPLATE_LINK, $content);
         $content = str_replace('{{tmp}}', TMP_LINK, $content);
