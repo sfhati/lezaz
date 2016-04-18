@@ -1,3 +1,7 @@
+Website : http://lezaz.org
+Video youtube : https://www.youtube.com/watch?v=_KMxLd4mcrM&index=10&list=PLfmjPOLGRrvptly-gRs39-2lGV3WKncit&utm_source=Hsoub%20I%2FO&utm_medium=Social&utm_campaign=Hsoub%20I%2FO%20Post-38767
+
+
 معنى لزاز
 تاج العروس - (ج 1 / ص 3800)
 لِزازٌ : فرَسٌ للنبيِّ صلّى الله تعالى عليه وسلَّم سُمِّي به لشِدَّةِ تَلَزُّزِه واجتماعِ خَلْقِه وهي التي أَهْدَاها المُقَوْقِسُ مَلِكُ الإسكَندرِيَّة مع مارِيَةَ القِبْطِيَّة . 
