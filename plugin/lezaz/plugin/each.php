@@ -30,10 +30,8 @@ function lezaz_each($vars, $html) {
     $types = array('session', 'server', 'get', 'post', 'cookie', 'request');
     if (in_array(strtolower($vars[type]), $types)) {
         $code = '$_' . strtoupper($vars[type]) . '[' . $vars['array'] . ']';
-        $global = '';
     } else {
-        $code = '$' . $vars['array'] . ';';
-        $global = 'global $' . $vars['array'] . ';';
+        $code =  $vars['array'] ;
     }
 
     if (!is_numeric($vars['counter']))

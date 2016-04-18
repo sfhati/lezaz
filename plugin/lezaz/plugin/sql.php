@@ -11,7 +11,7 @@ style1
 multipage    for using pagination value = true                             false      
 print        print result attr if value = any pass like 1,true,yes         0
 counter      initial value for counter parameter                           1
-
+split        repeat value for each row use like a,b,c now 1st row lezaz#id_split=a 2nd row lezaz#id_split=b 3rd lezaz#id_split=c 4th lezaz#id_split=a etc..
 inside code you can use lezaz#id[field] >> print field value
                         lezaz#id_num >> print number of rows 
                         lezaz#id_counter >> print counter for this row or last counter if use after colse sql
@@ -41,7 +41,10 @@ function lezaz_sql($vars, $html) {
     else
       $counter=$vars['counter']; 
 
-
+if($vars['split']){
+   $split= ' $sql_split= explode(",", "'.$vars['split'].'");$split_count=count($sql_split)-1;$splitx=0;';
+   $split_code='$lezaz_'.$vars[id].'_split=$sql_split[$splitx];if($splitx==$split_count){$splitx=0;}else{$splitx++;}';
+}
     if (strtolower($vars['print']) == 'no' || strtolower($vars['print']) == 'false')
         $vars['print'] = 0;
     $vars['print'] = (bool) $vars['print'];
@@ -67,13 +70,14 @@ $sql= $vars[sql];
 $pagination_code        
 \$limit = ''; 
 $limit 
-
+$split
    \$$vars[id] = \$lezaz->db->query(\"$sql \$limit\");
   \$lezaz_$vars[id]_num =  \$lezaz->db->num_row(\"$sql\");
  $pagination
 \$lezaz_".$vars[id]."_counter=$counter + \$page_number;
         if (is_array(\$$vars[id]))
         foreach (\$$vars[id] as \$lezaz_".$vars[id].") {
+            $split_code
             if (is_array(\$lezaz_".$vars[id].")){
             \$lezaz_".$vars[id]."_x = (\$lezaz_".$vars[id]."_x == '$style[1]') ? '$style[0]' : '$style[1]';
             

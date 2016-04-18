@@ -242,7 +242,7 @@ Class __CORE {
         }
         if ($validate) {
             $option = $this->set('VALIDATION__OPTION__' . $k);
-            if ($this->validaition($validate, $_POST[$k], $option)) {
+            if ($this->validaition($validate, $_GET[$k], $option)) {
                 return $_GET[$k];
             }
             $this->set("_MSG_" . $k, 'error');

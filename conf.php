@@ -41,7 +41,7 @@ define('CLASSES_FOLDER', 'classes');
 define('CACHE_FOLDER', 'cache');
 define('TMP_FOLDER', 'tmp');
 define('PLUGIN_FOLDER', 'plugin');
-define('THEME_FOLDER', 'sample');
+define('THEME_FOLDER', 'mytheme');
 
 define('TEMPLATE_PATH', SITE_PATH . TEMPLATE_FOLDER . DIRECTORY_SEPARATOR);
 define('UPLOADED_PATH', SITE_PATH . UPLOADED_FOLDER . DIRECTORY_SEPARATOR);
@@ -65,8 +65,8 @@ define('Version', '1.00');
 define('DEVELOP_MODE', true); // 
 
 define('SQL_CACHE', '0'); // in secuend
-define('CRYPT_CACHE', true); // no sql cache is defult
-define('SALT','FR4d32cdvTYdw2s#gt54');
+define('CRYPT_CACHE', FALSE); // no sql cache is defult
+define('SALT','FR4d32cddw2s#gt54');
 define('LEZAZ_START_TIME', microtime(1), true);
 define('LEZAZ_START_PEAK_MEM', memory_get_peak_usage(true));
 

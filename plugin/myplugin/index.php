@@ -1,0 +1,3 @@
+<?php
+
+$lezaz->language('ar');

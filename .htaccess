@@ -32,7 +32,7 @@ setEnv LEZAZ  off
 ErrorDocument 404 /?404
 
 
-<Files ~ "(php\.ini|\.inc|\.htaccess|conf\.php)$">
+<Files ~ "(\.inc|\.ini|\.htaccess|conf\.php)$">
 order deny,allow
 deny from all
 </Files>

@@ -61,6 +61,8 @@ if(is_array($validation)){
     function write($file, $content) {
         if(!$file) return false;
         @unlink($file);
+        $this->mkdir(dirname($file));
+        if(!is_dir(dirname($file))) return false;
         $fp = fopen($file, 'w');
         if (flock($fp, LOCK_EX | LOCK_NB)) {
             fwrite($fp, $content);

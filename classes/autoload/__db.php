@@ -76,6 +76,8 @@ class __db {
      * @brief transaction, execute the transactional operations.
      * @param string $type shortcut for trasaction to execute. i.e: B=begin, C=commit & R=rollback. */
     public function transaction($type) {
+        if (!db_type)
+            return false;
         if ($type == "B")
             $this->con->beginTransaction();
         elseif ($type == "C")
@@ -86,7 +88,9 @@ class __db {
             return false;
     }
 
-    private function insert($table, $data,$feilds='') {
+    private function insert($table, $data, $feilds = '') {
+        if (!db_type)
+            return false;
         global $lezaz;
         try {
             $this->con->exec("INSERT INTO " . $table . " SET $data;");
@@ -99,33 +103,53 @@ class __db {
                 return false;
             }
         }
-        $id= $this->con->lastInsertId();
-        $lezaz->trigger('insert.'.$table,array($id,$feilds));
-        $lezaz->trigger('action.'.$table,$id);
-        
+        $id = $this->con->lastInsertId();
+        $lezaz->trigger('insert.' . $table, array($id, $feilds));
+        $lezaz->trigger('action.' . $table, $id);
+
         return $id;
     }
 
-    private function update($table, $data, $condition = "",$feilds='') {
+    private function update($table, $data, $condition = "", $feilds = '') {
+        if (!db_type)
+            return false;
         global $lezaz;
-        $id= $this->row($table, $condition, 'id');
-        $lezaz->trigger('update.'.$table,array($id,$feilds,$condition));
-        $lezaz->trigger('action.'.$table,$id);
-        return  (trim($condition) != "") ? $this->con->exec("UPDATE " . $table . " SET " . $data . " WHERE " . $condition . ";") : $this->con->exec("UPDATE " . $table . " SET " . $data . ";");
+        try {
+            $return = (trim($condition) != "") ? $this->con->exec("UPDATE " . $table . " SET " . $data . " WHERE " . $condition . ";") : $this->con->exec("UPDATE " . $table . " SET " . $data . ";");
+        } catch (PDOException $e) {
+            $lezaz->set_msg($e->getMessage(), 'danger');
+            return false;
+        }
+
+        $id = $this->row($table, $condition, 'id');
+        $lezaz->trigger('update.' . $table, array($id, $feilds, $condition));
+        $lezaz->trigger('action.' . $table, $id);
+        return $return;
     }
 
     private function _delete($table, $condition = "") {
+        if (!db_type)
+            return false;
         global $lezaz;
-        $date= $this->row($table, $condition, 'id');
-        $id=$data['id'];
-        $lezaz->trigger('delete.'.$table,array($id,$data,$condition));
-        return (trim($condition) != "") ? $this->con->exec("DELETE FROM " . $table . " WHERE " . $condition . ";") : $this->con->exec("DELETE FROM " . $table . ";");
+        $date = $this->row($table, $condition, 'id');
+        $id = $data['id'];
+        try {
+            $return = (trim($condition) != "") ? $this->con->exec("DELETE FROM " . $table . " WHERE " . $condition . ";") : $this->con->exec("DELETE FROM " . $table . ";");
+        } catch (PDOException $e) {
+            $lezaz->set_msg($e->getMessage(), 'danger');
+            return false;
+        }
+
+        $lezaz->trigger('delete.' . $table, array($id, $data, $condition));
+        return $return;
     }
 
     /**
      * @brief execute, this method is special for execute store procedures.
      * @param string $sp_query is the sp to execute. */
     public function execute($sp_query) {
+        if (!db_type)
+            return false;
         global $lezaz;
         try {
             $return = $this->con->exec($sp_query);
@@ -140,6 +164,8 @@ class __db {
      * @param string $database must specify database for get tables.
      * @return object with the result set with table names in the database. */
     public function ShowTables() {
+        if (!db_type)
+            return false;
         $dbtype = db_type;
 
         if ($dbtype == "sqlsrv" || $dbtype == "mssql" || $dbtype == "ibm" || $dbtype == "dblib" || $dbtype == "odbc" || $dbtype == "sqlite2" || $dbtype == "sqlite3") {
@@ -159,6 +185,8 @@ class __db {
     }
 
     function tableExists($table) {
+        if (!db_type)
+            return false;
 
         // Try a select statement against the table
         // Run it in try/catch in case PDO is in ERRMODE_EXCEPTION.
@@ -174,6 +202,8 @@ class __db {
     }
 
     function create_table($tbl_name, $fields = array()) {
+        if (!db_type)
+            return false;
 
         //List of types mysql
         //http://help.scibit.com/mascon/masconMySQL_Field_Types.html
@@ -260,10 +290,14 @@ class __db {
     /**
      * @brief disconnect, ends your connection, never forget this method for server performance. */
     public function disconnect() {
+        if (!db_type)
+            return false;
         $this->con = null;
     }
 
     function query($query, $cacheTime = 0) {
+        if (!db_type)
+            return false;
         global $lezaz;
         if (!$query)
             return '';
@@ -282,17 +316,17 @@ class __db {
 // execute query select sql
         $D = 0;
         try {
-        $dd = $this->con->query($query);
-        while ($row = $dd->fetch(PDO::FETCH_ASSOC)) {
-            $D++;
-            foreach ($row as $k => $v) {
-                $returntext[$D][$k] = $v;
+            $dd = $this->con->query($query);
+            while ($row = $dd->fetch(PDO::FETCH_ASSOC)) {
+                $D++;
+                foreach ($row as $k => $v) {
+                    $returntext[$D][$k] = $v;
+                }
             }
+        } catch (PDOException $e) {
+            $lezaz->set_msg($e->getMessage() . '<hr>' . $query, 'warinig');
+            return false;
         }
-           } catch (PDOException $e) {
-                $lezaz->set_msg($e->getMessage().'<hr>'.$query, 'warinig');
-                return false;
-            }
 
         // if not cache use 
         if (SQL_CACHE == 0) {
@@ -310,6 +344,8 @@ class __db {
     }
 
     function num_row($query) {
+        if (!db_type)
+            return false;
         if (!$query)
             return 0;
         $result = $this->con->query($query);
@@ -319,6 +355,8 @@ class __db {
     }
 
     private function clear_cache() {
+        if (!db_type)
+            return false;
         if ($dh = opendir(CACHE_PATH)) {
             while (($file = readdir($dh)) !== false) {
                 if (strpos($file, 'SQLfile_')) {
@@ -334,6 +372,8 @@ class __db {
     }
 
     function row($table, $condetion, $row = '*') {
+        if (!db_type)
+            return false;
         if (is_numeric($condetion))
             $condetion = 'id=' . $condetion;
         $sql = $this->query("select $row from `$table` where $condetion limit 1 ");
@@ -346,11 +386,14 @@ class __db {
     }
 
     function save($table, $feilds, $condetion = '', $type = 0) {
+        if (!db_type)
+            return false;
         $syntax_sql = '';
-
+        if (!is_array($feilds))
+            return false;
         foreach ($feilds as $key => $val) {
-            if(is_array($val)){
-                $val=serialize($val);
+            if (is_array($val)) {
+                $val = serialize($val);
             }
             $val = addslashes($val);
             if ($syntax_sql)
@@ -373,11 +416,13 @@ class __db {
           } */
 
         if ($type)
-            return $this->update($table, $syntax_sql, $condetion,$feilds);
-        return $this->insert($table, $syntax_sql,$feilds);
+            return $this->update($table, $syntax_sql, $condetion, $feilds);
+        return $this->insert($table, $syntax_sql, $feilds);
     }
 
     function delete($table, $condetion) {
+        if (!db_type)
+            return false;
         if (is_numeric($condetion))
             $condetion = 'id=' . $condetion;
         $return = $this->query("select * from $table where $condetion");
