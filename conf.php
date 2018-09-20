@@ -1,5 +1,5 @@
 <?php
-/**
+/***
  * The base configurations of the Sfhati.
  *
  * This file has the following configurations: MySQL settings, Table Prefix,
